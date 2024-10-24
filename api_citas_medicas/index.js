@@ -5,25 +5,18 @@ import sequelize from './config/database';
 //import mongoose from 'mongoose'
 import router from './router'
 import * as dotenv from 'dotenv'
+import './models/Day'; // Asegúrate de que este modelo esté importado para que se sincronice
+
 dotenv.config()
-// CONEXION A LA BASE DE DATOS
-/* mongoose.Promise = global.Promise
-const dbUrl = "mongodb://localhost:27017/courses_online";
-mongoose.connect(
-    dbUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    }
-).then(mongoose => console.log("CONECTADO A LA BASE DE DATOS MONGODB PUERTO 27017"))
-.catch(err => console.log(err));
- */
+
 
 const syncDatabase = async () => {
     try {
         await sequelize.sync(); // Crea la tabla si no existe
-        console.log("Tablas sincronizadas con la base de datos");
+        console.log("Tablas sincronizadas con la base de datos- SISTEMA FUNCIONAL  ");
     } catch (err) {
         console.error("Error al sincronizar las tablas:", err);
+        process.exit(1); // Sale del proceso si falla la sincronización
     }
 };
 

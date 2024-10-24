@@ -17,7 +17,8 @@ const Patient = sequelize.define('Patient',{
     },
     email : {
         type : DataTypes.STRING(30),
-        allowNull: true
+        allowNull: true,
+        unique : true
     },
     phone : {
         type : DataTypes.STRING(30),
@@ -55,15 +56,15 @@ const Patient = sequelize.define('Patient',{
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    fc : {
+    fc : {//frecuencia cardiaca
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    fr : {
+    fr : { //frecuencia respiratoria
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    pa : {
+    pa : { // freciencia artererial
         type : DataTypes.FLOAT,
         allowNull : false
     },
