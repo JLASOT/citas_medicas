@@ -39,18 +39,16 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING(30),
         allowNull: true
     },
-    is_instructor: {
+    address:{
+        type: DataTypes.STRING(60),
+    },
+    specialitieId: { // Clave foránea
         type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: null
-    },
-    profession: {
-        type: DataTypes.STRING(250),
-        allowNull: true
-    },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: true
+        references: {
+            model: 'Specialities', // Nombre de la tabla en plural
+            key: 'id'
+        },
+        allowNull: false 
     }
 }, {
     timestamps: true

@@ -1,5 +1,6 @@
 import {DataTypes} from 'sequelize';
 import sequelize from '../config/database';
+import Tutor from './Tutor'
 
 const Patient = sequelize.define('Patient',{
     name :{
@@ -17,8 +18,7 @@ const Patient = sequelize.define('Patient',{
     },
     email : {
         type : DataTypes.STRING(30),
-        allowNull: true,
-        unique : true
+        allowNull: true
     },
     phone : {
         type : DataTypes.STRING(30),
@@ -56,15 +56,15 @@ const Patient = sequelize.define('Patient',{
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    fc : {//frecuencia cardiaca
+    fc : {
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    fr : { //frecuencia respiratoria
+    fr : {
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    pa : { // freciencia artererial
+    pa : {
         type : DataTypes.FLOAT,
         allowNull : false
     },
@@ -83,5 +83,16 @@ const Patient = sequelize.define('Patient',{
 },{
     timestamps : true
 });
+
+Patient.hasMany(Tutor,{
+    foreignKey: 'patientId',
+    sourceKey: 'id'
+})
+
+Tutor.belongsTo(Patient,{
+    foreignKey: 'patientId',
+    targetKey: 'id'
+})
+
 
 export default Patient;

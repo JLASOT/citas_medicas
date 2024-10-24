@@ -144,6 +144,10 @@ export default {
                     ]
                 },
                 order: [['createdAt', 'DESC']], // Ordenar por createdAt en orden descendente
+                include: [{
+                    model: models.Specialitie, // Incluye el modelo de Speciality
+                    //attributes: ['id', 'name'], // Especifica los atributos que deseas obtener de la especialidad
+                }],
             });
             res.status(200).json({
                 users: USERS,
