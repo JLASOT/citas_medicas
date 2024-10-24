@@ -5,6 +5,7 @@ import Hour from './Hour';
 import Tutor from './Tutor';
 import Specialitie from './Specialitie';
 import Payment from './Payment';
+import DayHour from './DayHour';
 
 export default{
     User,
@@ -13,5 +14,6 @@ export default{
     Hour,
     Tutor,
     Specialitie,
-    Payment
+    Payment,
+    DayHour
 }
