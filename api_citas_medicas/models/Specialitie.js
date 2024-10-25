@@ -31,4 +31,8 @@ User.belongsTo(Specialitie,{
     targetKey: 'id'
 });
 
+/* console.log("Usuario Especialidad ID:", user.specialitieId);
+console.log("Especialidad ID proporcionada:", specialitieId); */
+
+
 export default Specialitie;

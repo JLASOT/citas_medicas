@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import path from 'path'
 import sequelize from './config/database';
-//import mongoose from 'mongoose'
 import router from './router'
 import * as dotenv from 'dotenv'
 import './models/Day'; // Asegúrate de que este modelo esté importado para que se sincronice

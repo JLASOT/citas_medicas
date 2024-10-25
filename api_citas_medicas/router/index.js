@@ -7,6 +7,7 @@ import Tutor from './Tutor';
 import Specialitie from './Specialitie';
 import Payment from './Payment';
 import DayHour from './DayHour';
+import Appointment from './Appointment';
 
 
 const router = routerx(); // Crear la instancia de router
@@ -20,5 +21,7 @@ router.use('/tutor', Tutor);
 router.use('/specialitie', Specialitie);
 router.use('/payment', Payment);
 router.use('/dayhours', DayHour);
+router.use('/appointment',Appointment);
+
 
 export default router;

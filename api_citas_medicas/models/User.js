@@ -53,5 +53,6 @@ const User = sequelize.define('User', {
 }, {
     timestamps: true
 });
-
+//console.log("Usuario Especialidad ID:", User.specialitieId);
+//console.log("Especialidad ID proporcionada:", specialitieId);
 export default User;
