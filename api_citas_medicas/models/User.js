@@ -48,11 +48,9 @@ const User = sequelize.define('User', {
             model: 'Specialities', // Nombre de la tabla en plural
             key: 'id'
         },
-        allowNull: false 
+        allowNull: true 
     }
 }, {
     timestamps: true
 });
-//console.log("Usuario Especialidad ID:", User.specialitieId);
-//console.log("Especialidad ID proporcionada:", specialitieId);
 export default User;

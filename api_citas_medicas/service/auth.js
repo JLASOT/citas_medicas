@@ -1,15 +1,15 @@
 import token from './token'
 
 export default {
-    veryfyTienda: async(req,res,next) => {
-        if(!req.headers,token){
+    veryfyMedico: async(req,res,next) => {
+        if(!req.headers.token){
             res.status(404).send({
                 message: 'NO SE ENVIO EL TOKEN',
             });
         }
         const response = await token.decode(req.headers.token);
         if(response){
-            if(response.rol == 'cliente' || response.rol == 'admin'){
+            if(response.rol == 'medico' || response.rol == 'admin'){
                 next()
             }else{
                 res.status(403).send({
@@ -23,7 +23,7 @@ export default {
         }
     },
     veryfyAdmin: async(req,res,next) => {
-        if(!req.headers,token){
+        if(!req.headers.token){
             res.status(404).send({
                 message: 'NO SE ENVIO EL TOKEN',
             });

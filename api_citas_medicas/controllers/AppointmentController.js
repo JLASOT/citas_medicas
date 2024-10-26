@@ -123,6 +123,12 @@ import models from "../models";
                         message: 'Usuario no encontrado',
                     });
                 }
+
+                if (user.rol !== 'medico'){
+                    return res.status(400).json({
+                        message: 'El usuario no es un Medico'
+                    })
+                }
         
                 // Verificar que el usuario esté asociado con la especialidad indicada
                 if (parseInt(user.specialitieId) !== parseInt(specialitieId)) {
@@ -185,7 +191,18 @@ import models from "../models";
                             { model: models.Patient },
                             { model: models.Specialitie },
                             { model: models.User },
-                            { model: models.DayHour }
+                            { model: models.DayHour,
+                                include:[
+                                   { 
+                                     model: models.Day,
+                                     attributes:['name']
+                                   },
+                                   {
+                                    model: models.Hour,
+                                    attributes:['name']
+                                   }
+                                ]
+                             }
                         ]
                     });
                     if (!appointment) {
@@ -202,7 +219,18 @@ import models from "../models";
                             { model: models.Patient },
                             { model: models.Specialitie },
                             { model: models.User },
-                            { model: models.DayHour }
+                            { model: models.DayHour,
+                                include:[
+                                    { 
+                                      model: models.Day,
+                                      attributes:['name']
+                                    },
+                                    {
+                                     model: models.Hour,
+                                     attributes:['name']
+                                    }
+                                 ]
+                             }
                         ]
                     });
                     return res.status(200).json({

@@ -68,7 +68,7 @@ const Patient = sequelize.define('Patient',{
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    gender : {
+    gender : {  //1 masculino 2 femenino
         type : DataTypes.INTEGER,
         allowNull : false
     },

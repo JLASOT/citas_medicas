@@ -42,15 +42,17 @@ export default {
             // email y contraseña
             // req.body.email y req.body.password
             const user = await models.User.findOne({
-                email: req.body.email,
-                state: 1,
+                where: {
+                    email: req.body.email,
+                    state: 1
+                }
             });
             if (user) {
                 // COMPARAR LAS CONTRASEÑA
                 let compare = await bcrypt.compare(req.body.password, user.password);
                 if (compare) {
                     // UN USUARIO EXISTENTE Y ACTIVO
-                    let tokenT = await token.encode(user._id, user.rol, user.email);
+                    let tokenT = await token.encode(user.id, user.rol, user.email);
 
                     const USER_BODY = {
                         token: tokenT,
@@ -58,6 +60,7 @@ export default {
                             name: user.name,
                             surname: user.surname,
                             email: user.email,
+                            id: user.id
                             // avatar: user.avatar 
                         }
                     }
@@ -84,11 +87,12 @@ export default {
     update: async (req, res) => {
         try {
             // aba@gmail.com
+            const userId = req.params.id;
             // Verificar si el email ya está en uso por otro usuario
             const VALID_USER = await models.User.findOne({
                 where: {
                     email: req.body.email,
-                    id: { [Op.ne]: req.body._id }, // Asegúrate de no encontrar al usuario actual
+                    id: { [Op.ne]: userId }, // Asegúrate de no encontrar al usuario actual
                 },
             });
             if (VALID_USER) {
@@ -103,12 +107,12 @@ export default {
             }
 
             const [updated] = await models.User.update(req.body, {
-                where: { id: req.body._id },
+                where: { id: userId },
             });
 
             if (updated) {
                 // Si el usuario fue actualizado, obtener los nuevos datos
-                const updatedUser = await models.User.findByPk(req.body._id);
+                const updatedUser = await models.User.findByPk(userId);
 
                 return res.status(200).json({
                     message: 'EL USUARIO SE EDITÓ CORRECTAMENTE',
@@ -131,7 +135,7 @@ export default {
 
     list: async (req, res) => {
         try {
-            const search = req.query.search || ''; // Maneja el caso donde no hay búsqueda
+            /* const search = req.query.search || ''; // Maneja el caso donde no hay búsqueda
 
             // Utiliza findAll para obtener los usuarios con condiciones
             const USERS = await models.User.findAll({
@@ -151,7 +155,33 @@ export default {
             });
             res.status(200).json({
                 users: USERS,
-            });
+            }); */
+
+            let _id = req.params['id'];
+                if (_id) {
+                    const user = await models.User.findByPk(_id, {
+                        include: [
+                            { model: models.Specialitie },
+                        ]
+                    });
+                    if (!user) {
+                        return res.status(404).json({
+                            message: 'Usuario no encontrado',
+                        });
+                    }
+                    res.status(200).json({
+                        users: user,
+                    });
+                } else {
+                    const users = await models.User.findAll({
+                        include: [       
+                            { model: models.Specialitie },
+                        ]
+                    });
+                    return res.status(200).json({
+                        users: users,
+                    });
+                }
         } catch (error) {
             console.log(error);
             res.status(500).send({

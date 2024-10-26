@@ -17,7 +17,7 @@ const syncDatabase = async () => {
         console.error("Error al sincronizar las tablas:", err);
         process.exit(1); // Sale del proceso si falla la sincronización
     }
-};
+};  
 
 syncDatabase();
 

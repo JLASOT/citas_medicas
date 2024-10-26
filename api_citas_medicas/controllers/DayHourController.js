@@ -3,6 +3,35 @@ import models from "../models";
 export default {
     create: async (req, res) => {
         try {
+
+            const { userId, dayId, hourId } = req.body;
+            const user = await models.User.findByPk(userId);
+            if(!user){
+                return res.status(404).json({
+                    message: 'Usuario no encontrado',
+                });
+            }
+            if (user.rol !== 'medico'){
+                return res.status(400).json({
+                    message: 'El usuario no es un Medico'
+                })
+            }
+    
+            // Verificar si ya existe un registro con el mismo userId, dayId y hourId
+            const existingDayHour = await models.DayHour.findOne({
+                where: {
+                    userId: userId,
+                    dayId: dayId,
+                    hourId: hourId
+                }
+            });
+    
+            if (existingDayHour) {
+                return res.status(400).json({
+                    message: "Ya existe un registro con el mismo usuario, día y hora."
+                });
+            }
+    
             const dayHour = await models.DayHour.create(req.body);
             res.status(200).json({
                 dayHour: dayHour,
