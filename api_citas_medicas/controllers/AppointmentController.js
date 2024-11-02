@@ -158,13 +158,13 @@ import models from "../models";
                         userId: userId,
                         specialitieId: specialitieId,
                         dayHourId: dayHourId,
-                        dateAppointment: req.body.dateAppointment // Asegúrate de que también compares la fecha
+                        dateAppointment: req.body.dateAppointment 
                     },
                 });
         
                 if (existingAppointment) {
                     return res.status(400).json({
-                        message: 'Ya existe una cita médica para otro paciente en el mismo día y hora con el mismo usuario y especialidad.',
+                        message: 'Ya existe una cita médica en la misma fecha y hora.',
                     });
                 }
         

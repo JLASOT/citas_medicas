@@ -50,11 +50,19 @@ export default {
 
             let _id = req.params['id'];
             if (_id) {
-                const Payment = await models.Payment.findByPk(_id/* ,{
+                const Payment = await models.Payment.findByPk(_id,{
                     include:[{
-                        model: models.Patient,
-                    }]
-                } */);
+                        model: models.Appointment,
+                        include:[
+                            {
+                                model: models.Patient,
+                                attributes:['name','surname']
+                            }
+                        ]
+                    },
+                    
+                ]
+                } );
                 if (!Payment) {
                     return res.status(404).json({
                         message: 'pago no encontrado',
