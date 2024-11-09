@@ -1,0 +1,108 @@
+
+<app-header></app-header>
+<main class="dashboard">
+  <div class="content">
+    <app-sidebar></app-sidebar>
+  <div class="card" style="margin-top: 10px; margin-bottom: 10px; width: 90%;">
+    <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}"
+      #dt
+      [value]="patients"
+      dataKey="id"
+      [rowHover]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading"
+      [paginator]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+      [filterDelay]="0"
+      [globalFilterFields]="['name', 'surname', 'email', 'phone']"
+    >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.printTable()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+        <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+        <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+        <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+        <!-- <p-button [style]="{'margin': '5px'}" label="Imprimir" icon="pi pi-print" (click)="printTable()" class="p-button-info" ></p-button> -->
+      </div>
+  </ng-template>
+      <ng-template pTemplate="caption">
+        <div class="table-header" >
+          Lista de Pacientes
+          <div style="margin-left: 80%; " >
+            <span class="p-input-icon-left" >
+              <i class="pi pi-search"></i>
+              <input  pInputText type="text" (input)="onGlobalFilter($event, dt)" placeholder="Buscar" />
+            </span>
+          </div>          
+        </div>
+      </ng-template>
+  
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="ci">CI <p-sortIcon field="ci"></p-sortIcon></th>
+          <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="surname">Apellido <p-sortIcon field="surname"></p-sortIcon></th>
+          <th pSortableColumn="edad">Edad <p-sortIcon field="edad"></p-sortIcon></th>
+          <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+          <th pSortableColumn="phone">Teléfono <p-sortIcon field="phone"></p-sortIcon></th>
+          <th pSortableColumn="blood_type">Tipo de Sangre <p-sortIcon field="blood_type"></p-sortIcon></th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-patient>
+        <tr>
+          <td>{{ patient.ci }}</td>
+          <td>{{ patient.name }}</td>
+          <td>{{ patient.surname }}</td>
+          <td>{{ patient.edad }}</td>
+          <td>{{ patient.email }}</td>
+          <td>{{ patient.phone }}</td>
+          <td>{{ patient.blood_type }}</td>
+          <td>
+            <p-button 
+                        icon="pi pi-pencil" 
+                        class="mr-2" 
+                        [rounded]="true" 
+                        [outlined]="true" 
+                        severity="success" 
+                        [routerLink]="" />
+                    <p-button 
+                        icon="pi pi-trash" 
+                        severity="danger" 
+                        [rounded]="true" 
+                        [outlined]="true" 
+                        [disabled]="!isAdmin()" (onClick)="deletePatient(patient.id)" 
+                    />
+
+            <!-- <p-button [style]="{'margin-right': '20px'}" (click)="viewPatientDetails(patient)">Ver Detalles</p-button> -->
+            <!-- <p-button *ngIf="authService?.isAdmin" [routerLink]="['/patient/delete', patient.id]">Eliminar</p-button> -->
+          </td>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No se encontraron pacientes.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  
+    <!-- Detalles del paciente seleccionado -->
+    <div *ngIf="selectedPatient" class="patient-details">
+      <h3>Detalles del Paciente</h3>
+      <p><strong>Nombre:</strong> {{ selectedPatient.name }} {{ selectedPatient.surname }}</p>
+      <p><strong>CI:</strong> {{ selectedPatient.ci }}</p>
+      <p><strong>Email:</strong> {{ selectedPatient.email }}</p>
+      <p><strong>Teléfono:</strong> {{ selectedPatient.phone }}</p>
+      <p><strong>Tipo de Sangre:</strong> {{ selectedPatient.blood_type }}</p>
+      <p><strong>Edad:</strong> {{ selectedPatient.edad }}</p>
+    </div>
+  </div>
+  </div>
+  
+</main>
+
+

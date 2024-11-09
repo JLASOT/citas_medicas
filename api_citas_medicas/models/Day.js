@@ -9,10 +9,6 @@ const Day = sequelize.define('Day', {
         allowNull: false,
         unique: true
     },
-    description: {
-        type: DataTypes.STRING(250),
-        allowNull: true
-    },
 }, {
     timestamps: true // Si no necesitas createdAt y updatedAt, puedes agregar { timestamps: false }
 });

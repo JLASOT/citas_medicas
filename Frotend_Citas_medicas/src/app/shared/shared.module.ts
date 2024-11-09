@@ -10,6 +10,8 @@ import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenubarModule } from 'primeng/menubar';
+import { ChipModule } from 'primeng/chip';
+import { SidebarModule } from 'primeng/sidebar';
 
 
 
@@ -28,7 +30,9 @@ import { MenubarModule } from 'primeng/menubar';
     ToastModule,
     CardModule,
     PanelMenuModule,
-    MenubarModule
+    MenubarModule,
+    ChipModule,
+    SidebarModule
   ],
   exports:[
     HeaderComponent,

@@ -1,0 +1,16 @@
+/* Contenedor principal para alinear contenido y mantener footer en la parte inferior */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Espacio expandible para el contenido principal */
+.container h2 {
+    flex-grow: 1;
+}
+
+/* Asegura que el footer esté al final */
+app-footer {
+    margin-top: auto;
+}

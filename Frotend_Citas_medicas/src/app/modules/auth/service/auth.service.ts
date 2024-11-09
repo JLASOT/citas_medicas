@@ -60,4 +60,18 @@ export class AuthService {
     }, 50);
   }
 
+  isAdmin(): boolean {
+    const user = this.user;
+    return user && user.rol === 'admin'
+  };
+
+  isAuthenticated(): boolean { 
+    if (!this.token) { 
+      return false; 
+    } 
+    const expiration = (JSON.parse(atob(this.token.split('.')[1]))).exp; 
+    return Math.floor((new Date()).getTime() / 1000) < expiration; 
+  }
+
+
 }

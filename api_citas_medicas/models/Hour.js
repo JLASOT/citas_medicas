@@ -7,10 +7,6 @@ const Hour =sequelize.define('Hour',{
         allowNull: false,
         unique: true
     },
-    description: {
-        type: DataTypes.STRING(250),
-        allowNull: true
-    },
 }, {
         timestamps: true
     }

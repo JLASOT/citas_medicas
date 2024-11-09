@@ -11,6 +11,7 @@ export default {
         } catch (error) {
             res.status(500).send({
                 message: "OCURRIO UN PROBLEMA",
+                error: error.message,
             });
         }
     },
@@ -47,7 +48,7 @@ export default {
     list: async (req, res) => {
         try {
 
-            let _id = req.params['id'];
+            /* let _id = req.params['id'];
             if (_id) {
                 const patient = await models.Patient.findByPk(_id);
                 if (!patient) {
@@ -58,12 +59,12 @@ export default {
                 return res.status(200).json({
                     patient: patient
                 })
-            } else {
+            } else { */
                 const patient = await models.Patient.findAll();
                 return res.status(200).json({
                     patient: patient,
                 })
-            }
+            // }
         } catch (error) {
             res.status(500).send({
                 message: "OCURRIO UN PROBLEMA",
@@ -72,6 +73,34 @@ export default {
         }
 
     },
+    listPatient: async (req, res) => {
+        try {
+            let _id = req.params['id'];
+            if (_id) {
+                const patient = await models.Patient.findByPk(_id,{
+                    include: [{ 
+                        model: models.Tutor, 
+                        as: 'tutors' // Asegúrate de que el alias coincida con el definido en la asociación 
+                    }]
+                });
+                if (!patient) {
+                    return res.status(404).json({
+                        message: 'Paciente no encontrado',
+                    })
+                }
+                return res.status(200).json({
+                    patient: patient
+                })
+            } 
+        } catch (error) {
+            res.status(500).send({
+                message: "OCURRIO UN PROBLEMA",
+                error: error.message,
+            });
+        }
+
+    },
+    
     remove: async (req, res) => {
         try {
             let _id = req.params["id"];

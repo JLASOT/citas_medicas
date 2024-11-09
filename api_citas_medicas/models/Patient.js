@@ -60,16 +60,12 @@ const Patient = sequelize.define('Patient',{
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    fr : {
-        type : DataTypes.FLOAT,
-        allowNull : false
-    },
     pa : {
         type : DataTypes.FLOAT,
         allowNull : false
     },
-    gender : {  //1 masculino 2 femenino
-        type : DataTypes.INTEGER,
+    gender : {  //M masculino F femenino
+        type : DataTypes.CHAR(1),
         allowNull : false
     },
     addres : {
@@ -86,7 +82,8 @@ const Patient = sequelize.define('Patient',{
 
 Patient.hasMany(Tutor,{
     foreignKey: 'patientId',
-    sourceKey: 'id'
+    sourceKey: 'id',
+    as: 'tutors'
 })
 
 Tutor.belongsTo(Patient,{

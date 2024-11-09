@@ -60,7 +60,8 @@ export default {
                             name: user.name,
                             surname: user.surname,
                             email: user.email,
-                            id: user.id
+                            id: user.id,
+                            rol: user.rol,
                             // avatar: user.avatar 
                         }
                     }

@@ -1,0 +1,26 @@
+/* Centrar el formulario de login */
+.login-container {
+    display: flex;
+    justify-content: center;  /* Centra el contenido horizontalmente */
+    align-items: center;  /* Centra el contenido verticalmente */
+    height: 100vh;  /* Ocupa toda la altura de la ventana */
+}
+
+.card {
+    width: 400px;  /* El ancho de la tarjeta */
+    margin: 0 auto;  /* Centra la tarjeta en el contenedor */
+}
+
+/* Estilos para los campos del formulario */
+.form-input {
+    width: 100%;  /* Asegura que los campos de entrada tengan el ancho completo */
+}
+.input-password{
+    margin-top: 25px;
+}
+
+/* Estilo adicional para los botones y otros elementos si es necesario */
+.flex {
+    display: flex;
+    justify-content: center;
+}

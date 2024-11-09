@@ -11,10 +11,6 @@ const DayHour = sequelize.define('DayHour', {
         primaryKey: true, // Clave primaria
         allowNull: false
     },
-    description: {
-        type: DataTypes.STRING(250),
-        allowNull: true
-    },
     userId: { // Clave foránea para User
         type: DataTypes.INTEGER,
         references: {

@@ -3,9 +3,20 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
-body{
-    background: #c2e59c;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #64b3f4, #c2e59c);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #64b3f4, #c2e59c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-font-family: var(--font-family);
-}
+
+
+html, body {
+    height: 100%;  /* Asegura que el body ocupe toda la altura */
+    margin: 0;  /* Elimina márgenes por defecto */
+    padding: 0;  /* Elimina padding por defecto */
+  }
+  
+  body {
+    min-height: 100vh;  /* Asegura que el body ocupe al menos toda la altura de la ventana */
+    background-image: url('./assets/images/fondo.webp');
+    background-size: cover; /* Para cubrir todo el fondo */
+    background-position: center; /* Para centrar la imagen */
+    background-repeat: no-repeat; /* Para evitar que la imagen se repita */
+    background-attachment: fixed;
+  }
+  

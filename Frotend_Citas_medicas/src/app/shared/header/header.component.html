@@ -1,24 +1,13 @@
 
+<!-- <div class="card">
+  <p-menubar [model]="items" />
+</div> -->
 
-    <div class="card">
-      <p-menubar [style]="{ 'height': '100px', 'align-items': 'center', 'margin-left':'8px' , 'background-color':'#fffbf4' }" >
-          <ng-template pTemplate="start">
-              <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
-          </ng-template>
-          <ng-template pTemplate="end">
-           <!--  <a *ngIf="user" class="user-link">
-              <i class="feather-user"></i>
-              {{ user.name }} {{ user.surname ? user.surname : '' }}
-            </a> -->
-            <p-button *ngIf="user" class="user-link" [style]="{ 'margin-right': '10px' }" [rounded]="true" [text]="true" [raised]="true" severity="info " routerLink="/auth/login" >
-              <i class="pi pi-user" style="color: #1465e0; margin-right: 5px;"></i>
-              {{ user.name }} {{ user.surname ? user.surname : '' }}
-            </p-button>
-
-            <p-button [style]="{ 'margin-right': '10px' }" [rounded]="true" [text]="true" [raised]="true" severity="info " routerLink="/auth/login" *ngIf="!user" class="login-link">
-              <i class="pi pi-user" style="color: #1465e0"></i> Ingresa
-            </p-button>
-            <p-button (click)="logout()" icon="pi pi-sign-out" [rounded]="true" [text]="true" [raised]="true" severity="info"></p-button>
-          </ng-template>
-      </p-menubar>
-  </div>
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <p-button *ngIf="user" class="user-link" [style]="{ 'margin-right': '10px' }" [rounded]="true" [text]="true" [raised]="true" severity="info" routerLink="/auth/login">
+      <i class="pi pi-user" style="color: #1465e0; margin-right: 5px;"></i>
+      {{ user.name }} {{ user.surname ? user.surname : '' }}
+    </p-button>
+  </ng-template>
+</p-menubar>

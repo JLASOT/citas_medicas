@@ -1,0 +1,11 @@
+
+.footer{
+    background-color: aliceblue;
+    padding: 6px;
+    border-radius: 8px;
+    margin: 10px;
+    text-align: center;
+}
+.footer h3{
+    margin: 0;
+}

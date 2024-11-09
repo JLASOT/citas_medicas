@@ -1,0 +1,183 @@
+<app-header></app-header>
+<main class="dashboard">
+  <div class="content">
+    <app-sidebar></app-sidebar>
+    <div class="card">
+      <!-- patient-add.component.html -->
+      <div class="patient-form-container">
+        <h2>Registrar Paciente</h2>
+
+        <p-card>
+          <div class="card flex flex-row gap-3">
+            <!-- Primer campo dentro de una tarjeta -->
+            <div class="card flex justify-content-center">
+              <span class="p-float-label">
+                <input
+                  pInputText
+                  id="name"
+                  name="name"
+                  required
+                  [(ngModel)]="patient.name"
+                />
+                <label htmlFor="username">Nombre</label>
+              </span>
+            </div>
+
+            <!-- Segundo campo dentro de una tarjeta -->
+            <div class="card flex justify-content-center">
+              <span class="p-float-label">
+                <input
+                  pInputText
+                  id="surname"
+                  name="surname"
+                  required
+                  [(ngModel)]="patient.surname"
+                />
+                <label htmlFor="surname">Apellidos</label>
+              </span>
+            </div>
+
+            <div class="card flex justify-content-center">
+              <span class="p-float-label">
+                <input
+                  pInputText
+                  id="ci"
+                  name="ci"
+                  required
+                  [(ngModel)]="patient.ci"
+                />
+                <label htmlFor="ci">C.I.</label>
+              </span>
+            </div>
+
+            <div class="card flex justify-content-center">
+              <span class="p-float-label">
+                <input
+                  pInputText
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  [(ngModel)]="patient.email"
+                />
+                <label htmlFor="email">Email.</label>
+              </span>
+            </div>
+
+            <div class="card flex justify-content-center">
+              <span class="p-float-label">
+                <input
+                  pInputText
+                  type="number"
+                  id="phone"
+                  name="phone"
+                  required
+                  [(ngModel)]="patient.phone"
+                />
+                <label htmlFor="email">Celular.</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="card flex justify-content-center">
+            <p-dropdown
+              [options]="blood_type"
+              [(ngModel)]="patient.blood_type"
+              optionLabel="name"
+              [showClear]="true"
+              placeholder="Tipo se Sangre"
+              (onChange)="onBloodTypeChange($event)"
+            ></p-dropdown>
+          </div>
+
+          <form (ngSubmit)="onSubmit()" #patientForm="ngForm">
+            
+
+            <label for="edad">Edad:</label>
+            <input
+              type="number"
+              id="edad"
+              [(ngModel)]="patient.edad"
+              name="edad"
+              required
+            />
+
+            <label for="temperature">Temperatura:</label>
+            <input
+              type="number"
+              id="temperature"
+              [(ngModel)]="patient.temperature"
+              name="temperature"
+              required
+            />
+
+            <label for="talla">Talla:</label>
+            <input
+              type="number"
+              id="talla"
+              [(ngModel)]="patient.talla"
+              name="talla"
+              required
+            />
+
+            <label for="peso">Peso:</label>
+            <input
+              type="number"
+              id="peso"
+              [(ngModel)]="patient.peso"
+              name="peso"
+              required
+            />
+
+            <label for="fc">Frecuencia Cardiaca:</label>
+            <input
+              type="number"
+              id="fc"
+              [(ngModel)]="patient.fc"
+              name="fc"
+              required
+            />
+
+            <label for="fr">Frecuencia Respiratoria:</label>
+            <input
+              type="number"
+              id="fr"
+              [(ngModel)]="patient.fr"
+              name="fr"
+              required
+            />
+
+            <label for="pa">Presión Arterial:</label>
+            <input
+              type="text"
+              id="pa"
+              [(ngModel)]="patient.pa"
+              name="pa"
+              required
+            />
+
+            <label for="gender">Género:</label>
+            <select
+              id="gender"
+              [(ngModel)]="patient.gender"
+              name="gender"
+              required
+            >
+              <option value="1">Masculino</option>
+              <option value="0">Femenino</option>
+            </select>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!patientForm.form.valid"
+            >
+              Registrar Paciente
+            </button>
+          </form>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>

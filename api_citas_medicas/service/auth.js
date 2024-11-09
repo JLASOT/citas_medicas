@@ -29,10 +29,14 @@ export default {
             });
         }
         const response = await token.decode(req.headers.token);
+        //console.log('Decodificación de token:', response); // Verifica el contenido del token decodificado
+        
         if(response){
             if(response.rol == 'admin'){
+                console.log('Usuario es administrador');
                 next()
             }else{
+                console.log('Usuario no tiene permisos de administrador');
                 res.status(403).send({
                     message: 'NO ESTA PERMITIDO VISITAR ESTA PAGINA',
                 });

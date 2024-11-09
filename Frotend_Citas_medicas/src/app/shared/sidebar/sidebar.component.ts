@@ -13,25 +13,21 @@ export class SidebarComponent implements OnInit {
     ngOnInit() {
         this.items = [
             {
-                label: 'File',
+                label: 'Pacientes',
                 icon: 'pi pi-fw pi-file',
                 items: [
                     {
-                        label: 'New',
+                        label: 'Nuevo',
                         icon: 'pi pi-fw pi-plus',
-                        items: [
-                            {
-                                label: 'Bookmark',
-                                icon: 'pi pi-fw pi-bookmark'
-                            },
-                            {
-                                label: 'Video',
-                                icon: 'pi pi-fw pi-video'
-                            }
-                        ]
+                        routerLink: '/patient/register'
                     },
                     {
-                        label: 'Delete',
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-trash',
+                        routerLink: '/patient/lista'
+                    },
+                    {
+                        label: 'Editar',
                         icon: 'pi pi-fw pi-trash'
                     },
                     { 
@@ -44,7 +40,7 @@ export class SidebarComponent implements OnInit {
                 ]
             },
             {
-                label: 'Edit',
+                label: 'citas medicas',
                 icon: 'pi pi-fw pi-pencil',
                 items: [
                     {

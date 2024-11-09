@@ -8,8 +8,11 @@ export default {
     },
     decode: async(token) => {
         try {
-            const {_id} = await jwt.verify(token,'courses_udemy');
-            const user = models.User.findOne({_id: _id,state : 1});
+            const decoded = jwt.verify(token, 'courses_udemy');
+            //const {_id} = await jwt.verify(token,'courses_udemy');
+
+            //const user = models.User.findOne({_id: _id,state : 1});
+            const user = await models.User.findOne({ where: { id: decoded._id, state: 1 } });
             if(user){
                 return user;
             }

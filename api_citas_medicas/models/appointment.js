@@ -17,6 +17,11 @@ const Appointment = sequelize.define('Appointment',{
         type: DataTypes.STRING(20),
         allowNull: false
     },
+    // estado 1 = en proceso 2  atendido  0 cancelado
+    stateAppointment : {
+        type : DataTypes.INTEGER,
+        defaultValue : 1
+    },
     patientId:{
         type: DataTypes.INTEGER,
         allowNull: false,
