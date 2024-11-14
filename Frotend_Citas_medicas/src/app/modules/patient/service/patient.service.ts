@@ -32,6 +32,19 @@ export class PatientService {
       return this.http.post(URL, data, { headers });
     }
 
+    updatePatient(id: number, data: any): Observable<any> {
+      let headers = new HttpHeaders({ "token": this.authService.token });
+      const URL = `${URL_SERVICIOS}/patients/${id}`;
+      return this.http.put(URL, data, { headers });
+    }
+
+    getPatientById(id: string): Observable<any> {
+      let headers = new HttpHeaders({ 'token': this.authService.token });
+      const URL = `${URL_SERVICIOS}/patients/${id}`;
+      return this.http.get(URL, { headers });
+    }
+    
+
     deletePatient(id: number): Observable<any> {
       const headers = new HttpHeaders({ 'token': this.authService.token });
       const URL = `${URL_SERVICIOS}/patients/${id}`;

@@ -23,10 +23,12 @@ export class SidebarComponent implements OnInit {
                     },
                     {
                         label: 'Lista',
-                        icon: 'pi pi-fw pi-trash',
+                        icon: 'pi pi-fw pi-list',
                         routerLink: '/patient/lista'
                     },
-                    {
+
+                    
+                    /* {
                         label: 'Editar',
                         icon: 'pi pi-fw pi-trash'
                     },
@@ -36,7 +38,7 @@ export class SidebarComponent implements OnInit {
                     {
                         label: 'Export',
                         icon: 'pi pi-fw pi-external-link'
-                    }
+                    } */
                 ]
             },
             {

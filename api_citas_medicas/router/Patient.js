@@ -3,6 +3,7 @@ import patientController from '../controllers/PatientController'
 import auth from '../service/auth';
 const router = routerx();
 
+
 router.post("/",patientController.create);
 router.put("/:id",patientController.update);
 router.get("/",patientController.list);

@@ -4,7 +4,7 @@ import auth from '../service/auth';
 
 const router = routerx();
 
-router.post("/",auth.veryfyAdmin,userController.register)
+router.post("/",userController.register)
 router.post("/login",userController.login)
 
 router.put("/:id",userController.update)

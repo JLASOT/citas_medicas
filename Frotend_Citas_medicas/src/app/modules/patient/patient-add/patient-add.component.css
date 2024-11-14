@@ -1,29 +1,33 @@
+/* Asegurar que .dashboard ocupe toda la altura disponible */
 .dashboard {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh; /* Esto asegura que .dashboard ocupe toda la altura de la ventana */
 }
 
 .content {
     display: flex;
-    flex-grow: 1;
+    flex-grow: 1; /* Esto hace que .content ocupe el espacio restante */
+    flex-direction: row; /* Si quieres que .content esté en una fila */
+    gap: 20px;
 }
-
 app-header {
     flex: 0 0 200px;
-    height: auto;
+    height: auto; /* El header tiene un tamaño fijo */
+
 }
 
 app-sidebar {
     flex: 0 0 200px;
     padding: 10px;
-    height: auto;
+    height: auto; /* El sidebar tiene un tamaño fijo */
 }
 
 .main-content {
-    flex: 1;
+    flex: 1; /* Esto asegura que .main-content ocupe el espacio restante */
     padding-left: 20px;
     border-radius: 10px;
+    overflow-y: auto; /* Si el contenido excede, habilita desplazamiento */
 }
 
 /* Ajuste del formulario para alinear campos horizontalmente */
@@ -39,5 +43,5 @@ app-sidebar {
     flex: 1 1 45%; /* Los campos ocuparán el 45% del ancho del contenedor */
     max-width: 45%; /* Asegura que no se expandan más allá del 45% */
     margin-bottom: 25px; /* Separación entre campos */
-    
 }
+

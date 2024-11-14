@@ -20,7 +20,7 @@ export const routes:Routes =[
     loadChildren:() => import("./modules/dashboard/dashboard.module").then(m => m.DashboardModule),
   },
   {
-    //canActivate: [authGuard],
+    canActivate: [authGuard],
     path:'patient',
     loadChildren:() => import("./modules/patient/patient.module").then(m => m.PatientModule),
   },

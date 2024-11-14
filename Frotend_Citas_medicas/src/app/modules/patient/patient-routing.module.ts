@@ -4,6 +4,8 @@ import { PatientComponent } from './patient.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientAddComponent } from './patient-add/patient-add.component';
 import { PatientDeleteComponent } from './patient-delete/patient-delete.component';
+import { adminGuard } from '../auth/service/admin.guard';
+import { PatientEditComponent } from './patient-edit/patient-edit.component';
 
 const routes: Routes = [
   {
@@ -15,13 +17,20 @@ const routes: Routes = [
         component: PatientListComponent
       },
       {
+        canActivate:[adminGuard],
         path:'register',
         component: PatientAddComponent
       },
       {
+        
         path:'delete/:id',
         component: PatientDeleteComponent
       },
+      {
+        path:'edit/:id',
+        component: PatientEditComponent
+      },
+      
       
     ]
   }

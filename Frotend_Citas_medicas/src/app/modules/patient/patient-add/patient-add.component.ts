@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../service/patient.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
-interface blood_type {
-  name: string;
+interface BloodType {
+  label: string;
+  value: string;
+}
+interface GenderOption {
+  label: string;
   value: string;
 }
 
@@ -13,7 +17,8 @@ interface blood_type {
   styleUrls: ['./patient-add.component.css'],
 })
 export class PatientAddComponent implements OnInit {
-  //blood_type: blood_type[] | undefined;
+  genderOptions: GenderOption[] | undefined;
+  blood_type: BloodType[] | undefined;
 
   patient: any = {
     name: '',
@@ -22,7 +27,7 @@ export class PatientAddComponent implements OnInit {
     email: '',
     phone: '',
     blood_type: '',
-    edad: null, // Agregar estos campos
+    edad: null,
     temperature: null,
     talla: null,
     peso: null,
@@ -32,36 +37,42 @@ export class PatientAddComponent implements OnInit {
     gender: '',
   };
 
-  blood_type: blood_type[] = [
-    { name: 'A+', value: 'A+' },
-    { name: 'A-', value: 'A-' },
-    { name: 'B+', value: 'B+' },
-    { name: 'B-', value: 'B-' },
-    { name: 'AB+', value: 'AB+' },
-    { name: 'AB-', value: 'AB-' },
-    { name: 'O+', value: 'O+' },
-    { name: 'O-', value: 'O-' },
-  ];
 
-  ngOnInit() {}
   constructor(private patientService: PatientService, private router: Router) {}
-  onBloodTypeChange(event: any): void {
-    this.patient.blood_type = event.value.value;// Asegúrate de que sea un string 
-    console.log('Selected blood type:', this.patient.blood_type); 
+
+  ngOnInit() {
+    this.genderOptions = [
+      { label: 'Masculino', value: 'M' },
+      { label: 'Femenino', value: 'F' },
+    ];
+    this.blood_type = [
+      { label: 'A+', value: 'A+' },
+      { label: 'A-', value: 'A-' },
+      { label: 'B+', value: 'B+' },
+      { label: 'B-', value: 'B-' },
+      { label: 'AB+', value: 'AB+' },
+      { label: 'AB-', value: 'AB-' },
+      { label: 'O+', value: 'O+' },
+      { label: 'O-', value: 'O-' },
+    ]
   }
-  
+
   onSubmit(): void {
+    // Verificar que el género sea un string
+    if (typeof this.patient.gender !== 'string') {
+      alert('Seleccione un género válido');
+      return;
+    }
+
     this.patientService.registerPatient(this.patient).subscribe(
       (response) => {
         console.log('Paciente registrado exitosamente:', response);
-        // Redirigir al listado de pacientes o mostrar un mensaje de éxito
         this.router.navigate(['/patient/lista']);
       },
       (error) => {
         console.error('Error al registrar el paciente:', error);
         alert(
-          'Error al registrar el paciente: ' + error.error.message ||
-            'Error desconocido'
+          'Error al registrar el paciente: ' + (error.error?.message || 'Error desconocido')
         );
       }
     );
