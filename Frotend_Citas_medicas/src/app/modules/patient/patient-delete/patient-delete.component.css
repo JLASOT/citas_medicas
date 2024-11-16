@@ -1,0 +1,20 @@
+/* En tu archivo styles.css o patient-delete.component.css */
+
+.custom-popup {
+  background-color: #f5f5f5 !important;  /* Fondo gris claro */
+  border-radius: 12px !important;  /* Bordes redondeados */
+}
+
+.custom-confirm-button {
+  background-color: #d33 !important;  /* Botón rojo */
+  color: white !important;  /* Texto blanco */
+  font-weight: bold !important;  /* Texto en negrita */
+  padding: 10px 20px !important;  /* Aumentar el padding */
+}
+
+.custom-cancel-button {
+  background-color: #3085d6 !important;  /* Botón azul */
+  color: white !important;  /* Texto blanco */
+  font-weight: bold !important;  /* Texto en negrita */
+  padding: 10px 20px !important;  /* Aumentar el padding */
+}

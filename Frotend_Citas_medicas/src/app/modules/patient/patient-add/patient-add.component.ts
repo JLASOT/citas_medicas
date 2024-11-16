@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../service/patient.service';
 import { Router } from '@angular/router';
 
+//alerta
+import Swal from 'sweetalert2';
+
+
 interface BloodType {
   label: string;
   value: string;
@@ -46,6 +50,7 @@ export class PatientAddComponent implements OnInit {
       { label: 'Femenino', value: 'F' },
     ];
     this.blood_type = [
+      { label: 'OR+', value: 'OR+' },
       { label: 'A+', value: 'A+' },
       { label: 'A-', value: 'A-' },
       { label: 'B+', value: 'B+' },
@@ -60,21 +65,40 @@ export class PatientAddComponent implements OnInit {
   onSubmit(): void {
     // Verificar que el género sea un string
     if (typeof this.patient.gender !== 'string') {
-      alert('Seleccione un género válido');
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Seleccione un género válido',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      });
       return;
     }
-
+  
     this.patientService.registerPatient(this.patient).subscribe(
       (response) => {
         console.log('Paciente registrado exitosamente:', response);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Paciente registrado exitosamente.',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK'
+        });
         this.router.navigate(['/patient/lista']);
       },
       (error) => {
         console.error('Error al registrar el paciente:', error);
-        alert(
-          'Error al registrar el paciente: ' + (error.error?.message || 'Error desconocido')
-        );
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'Error al registrar el paciente: ' + (error.error?.message || 'Error desconocido'),
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK'
+        });
       }
     );
   }
+  
+  
 }

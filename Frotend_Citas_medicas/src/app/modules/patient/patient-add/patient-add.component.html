@@ -2,124 +2,105 @@
 <main class="dashboard">
   <div class="content">
     <app-sidebar></app-sidebar>
-    <div class="card">
-      <!-- patient-add.component.html -->
+    <div class="right-panel">
       <div class="patient-form-container">
-        <h2>Registrar Paciente</h2>
-
-        <form (ngSubmit)="onSubmit()" #patientForm="ngForm">
-          <p-card>
-
-            <div class="card flex flex-row gap-3">
-              <!-- Primer campo dentro de una tarjeta -->
-              <div class="card flex justify-content-center">
-                <span class="p-float-label">
-                  <input pInputText id="name" name="name" required [(ngModel)]="patient.name" />
-                  <label htmlFor="username">Nombre</label>
-                </span>
-              </div>
-
-              <!-- Segundo campo dentro de una tarjeta -->
-              <div class="card flex justify-content-center">
-                <span class="p-float-label">
-                  <input pInputText id="surname" name="surname" required [(ngModel)]="patient.surname" />
-                  <label htmlFor="surname">Apellidos</label>
-                </span>
-              </div>
-
-              <div class="card flex justify-content-center">
-                <span class="p-float-label">
-                  <input pInputText type="number" id="ci" name="ci" required [(ngModel)]="patient.ci" />
-                  <label htmlFor="ci">C.I.</label>
-                </span>
-              </div>
-
-              <div class="card flex justify-content-center">
-                <span class="p-float-label">
-                  <input pInputText type="email" id="email" name="email" required [(ngModel)]="patient.email" />
-                  <label htmlFor="email">Email.</label>
-                </span>
-              </div>
-
-              <div class="card flex justify-content-center">
-                <span class="p-float-label">
-                  <input pInputText type="number" id="phone" name="phone" required [(ngModel)]="patient.phone" />
-                  <label htmlFor="email">Celular.</label>
-                </span>
-              </div>
-            </div>
-
-
-            <div class="card flex justify-content-center">
-              <p-dropdown 
-              [options]="blood_type" 
-              [(ngModel)]="patient.blood_type" 
-              optionLabel="value" 
+        <h2 class="form-title">Registrar Paciente</h2>
+        <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText id="name" name="name" required [(ngModel)]="patient.name" />
+              <label htmlFor="name">Nombre</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText id="surname" name="surname" required [(ngModel)]="patient.surname" />
+              <label htmlFor="surname">Apellidos</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="ci" name="ci" required [(ngModel)]="patient.ci" />
+              <label htmlFor="ci">C.I.</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="email" id="email" name="email" required [(ngModel)]="patient.email" />
+              <label htmlFor="email">Email</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="phone" name="phone" required [(ngModel)]="patient.phone" />
+              <label htmlFor="phone">Celular</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <p-dropdown
+              [options]="blood_type"
+              [(ngModel)]="patient.blood_type"
+              optionLabel="value"
               optionValue="value"
               [showClear]="true"
-              placeholder="Tipo se Sangre" 
-              id="blood_type" name="blood_type"
-              ></p-dropdown>
-            </div>
-
-
-            <div class="card flex justify-content-center">
-              <span class="p-float-label">
-                <input pInputText type="number" id="edad" name="edad" required [(ngModel)]="patient.edad" />
-                <label htmlFor="edad">Edad.</label>
-              </span>
-            </div>
-
-            <div class="card flex justify-content-center">
-              <span class="p-float-label">
-                <input pInputText type="number" id="temperature" name="temperature" required
-                  [(ngModel)]="patient.temperature" />
-                <label htmlFor="temperature">Temperatura.</label>
-              </span>
-            </div>
-
-            <div class="card flex justify-content-center">
-              <span class="p-float-label">
-                <input pInputText type="number" id="talla" name="talla" required [(ngModel)]="patient.talla" />
-                <label htmlFor="talla">Estatura.</label>
-              </span>
-            </div>
-
-            <div class="card flex justify-content-center">
-              <span class="p-float-label">
-                <input pInputText type="number" id="peso" name="peso" required [(ngModel)]="patient.peso" />
-                <label htmlFor="peso">Peso.</label>
-              </span>
-            </div>
-
-            <div class="card flex justify-content-center">
-              <span class="p-float-label">
-                <input pInputText type="number" id="fc" name="fc" required [(ngModel)]="patient.fc" />
-                <label htmlFor="fc">Frecuencia Cardiaca.</label>
-              </span>
-            </div>
-
-            <div class="card flex justify-content-center">
-              <span class="p-float-label">
-                <input pInputText type="number" id="pa" name="pa" required [(ngModel)]="patient.pa" />
-                <label htmlFor="pa">Presion Arterial.</label>
-              </span>
-            </div>
-            <p-dropdown 
-            [options]="genderOptions" 
-            [(ngModel)]="patient.gender" 
-            optionLabel="label" 
-            optionValue="value"
-            [showClear]="true" 
-            placeholder="Seleccione un género" 
-            id="gender" name="gender">
+              placeholder="Tipo de Sangre"
+              id="blood_type"
+              name="blood_type">
             </p-dropdown>
-            <div>  
-              <p-button type="submit" class="btn btn-primary" [disabled]="!patientForm.form.valid">
-                Registrar Paciente
-              </p-button>
-            </div>
-          </p-card>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="edad" name="edad" required [(ngModel)]="patient.edad" />
+              <label htmlFor="edad">Edad</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="temperature" name="temperature" required [(ngModel)]="patient.temperature" />
+              <label htmlFor="temperature">Temperatura</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="talla" name="talla" required [(ngModel)]="patient.talla" />
+              <label htmlFor="talla">Estatura</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="peso" name="peso" required [(ngModel)]="patient.peso" />
+              <label htmlFor="peso">Peso</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="fc" name="fc" required [(ngModel)]="patient.fc" />
+              <label htmlFor="fc">Frecuencia Cardiaca</label>
+            </span>
+          </div>
+          <div class="form-group">
+            <span class="p-float-label">
+              <input pInputText type="number" id="pa" name="pa" required [(ngModel)]="patient.pa" />
+              <label htmlFor="pa">Presión Arterial</label>
+            </span>
+          </div>
+          <div class="form-group full-width">
+            <p-dropdown
+              [options]="genderOptions"
+              [(ngModel)]="patient.gender"
+              optionLabel="label"
+              optionValue="value"
+              [showClear]="true"
+              placeholder="Seleccione un género"
+              id="gender"
+              name="gender">
+            </p-dropdown>
+          </div>
+          <div class="form-group full-width">
+            <p-button type="submit" class="btn btn-primary" [disabled]="!patientForm.form.valid">
+              Registrar Paciente
+            </p-button>
+          </div>
         </form>
       </div>
     </div>

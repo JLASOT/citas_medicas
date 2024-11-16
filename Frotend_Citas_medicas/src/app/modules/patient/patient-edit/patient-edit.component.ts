@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../service/patient.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';  // Asegúrate de importar SweetAlert2
 
 interface BloodType {
   label: string;
@@ -52,6 +53,7 @@ export class PatientEditComponent implements OnInit {
       { label: 'Femenino', value: 'F' },
     ];
     this.blood_type = [
+      { label: 'OR+', value: 'OR+' },
       { label: 'A+', value: 'A+' },
       { label: 'A-', value: 'A-' },
       { label: 'B+', value: 'B+' },
@@ -69,8 +71,6 @@ export class PatientEditComponent implements OnInit {
       this.getPatientData(patientId);
     }
   }
-
-  
 
   // Obtener los datos del paciente usando el ID
   getPatientData(id: string): void {
@@ -99,11 +99,29 @@ export class PatientEditComponent implements OnInit {
       this.patientService.updatePatient(this.patient.id, this.patient).subscribe(
         (response) => {
           console.log('Paciente actualizado exitosamente:', response);
+          
+          // Mostrar alerta de éxito con SweetAlert2
+          Swal.fire({
+            icon: 'success',
+            title: '¡Paciente actualizado!',
+            text: 'Los datos del paciente se han actualizado exitosamente.',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3085d6',
+          });
+
           this.router.navigate(['/patient/lista']);
         },
         (error) => {
           console.error('Error al actualizar el paciente:', error);
-          alert('Error al actualizar el paciente.');
+          
+          // Mostrar alerta de error con SweetAlert2
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo actualizar el paciente. Inténtalo nuevamente.',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#d33',
+          });
         }
       );
     } else {

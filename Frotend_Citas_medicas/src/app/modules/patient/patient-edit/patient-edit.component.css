@@ -44,4 +44,16 @@ app-sidebar {
     max-width: 45%; /* Asegura que no se expandan más allá del 45% */
     margin-bottom: 25px; /* Separación entre campos */
 }
-
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .form-column {
+    flex: 1;
+    min-width: 250px; /* Asegura que las columnas no sean demasiado estrechas */
+    max-width: 33%; /* 3 columnas */
+    box-sizing: border-box;
+  }
+  

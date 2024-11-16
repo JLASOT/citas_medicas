@@ -1,47 +1,87 @@
-/* Asegurar que .dashboard ocupe toda la altura disponible */
-.dashboard {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Esto asegura que .dashboard ocupe toda la altura de la ventana */
-}
-
 .content {
     display: flex;
-    flex-grow: 1; /* Esto hace que .content ocupe el espacio restante */
-    flex-direction: row; /* Si quieres que .content esté en una fila */
-    gap: 20px;
-}
-app-header {
-    flex: 0 0 200px;
-    height: auto; /* El header tiene un tamaño fijo */
-
-}
-
-app-sidebar {
+    flex-direction: row;
+    height: 100vh;
+  }
+  
+  app-sidebar {
     flex: 0 0 200px;
     padding: 10px;
-    height: auto; /* El sidebar tiene un tamaño fijo */
-}
-
-.main-content {
-    flex: 1; /* Esto asegura que .main-content ocupe el espacio restante */
-    padding-left: 20px;
-    border-radius: 10px;
-    overflow-y: auto; /* Si el contenido excede, habilita desplazamiento */
-}
-
-/* Ajuste del formulario para alinear campos horizontalmente */
-.patient-form-container {
+  }
+  
+  .right-panel {
+    flex: 1;
     display: flex;
-    flex-wrap: wrap; /* Permite que los campos se ajusten si es necesario */
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .patient-form-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .form-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    justify-content: space-between; /* Distribuye los campos de manera equitativa */
-}
-
-/* Ajustes para las tarjetas de los campos de entrada */
-.patient-form-container .card {
-    flex: 1 1 45%; /* Los campos ocuparán el 45% del ancho del contenedor */
-    max-width: 45%; /* Asegura que no se expandan más allá del 45% */
-    margin-bottom: 25px; /* Separación entre campos */
-}
-
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input[pInputText], p-dropdown {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+  }
+  
+  input[pInputText]:hover, p-dropdown:hover {
+    border-color: #007bff;
+  }
+  
+  input[pInputText]:focus, p-dropdown:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .full-width {
+    grid-column: span 3;
+  }
+  
+  p-button {
+    width: 100%;
+    max-width: 250px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  p-button:hover {
+    background-color: #0056b3;
+  }
+  
