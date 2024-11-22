@@ -1,0 +1,99 @@
+<div class="patient-form-container">
+    <h2 class="form-title">Registrar Usuario</h2>
+    <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
+
+        <div class="formgrid grid" style="display: flex; gap: 1rem;">
+
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="name" name="name" required [(ngModel)]="user.name" />
+                    <label htmlFor="name">Nombre</label>
+                </span>
+            </div>
+
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="surname" name="surname" [(ngModel)]="user.surname" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.surname">Name is required.</small>
+                    <label htmlFor="surname">Apellidos</label>
+                </span>
+            </div>
+
+        </div>
+
+        <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
+
+
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <p-dropdown [options]="role" [(ngModel)]="user.rol" optionLabel="label" optionValue="value"
+                        [showClear]="true" placeholder="Rol" id="role" name="role">
+                    </p-dropdown>
+                    <label htmlFor="rol">Rol</label>
+                </span>
+            </div>
+
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="email" name="email" [(ngModel)]="user.email" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.email">Name is required.</small>
+                    <label htmlFor="email">Email</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+
+                <span class="p-float-label">
+                    <input pInputText type="password" id="password" name="password" [(ngModel)]="user.password" required
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.password">Name is required.</small>
+                    <label htmlFor="password">password</label>
+                </span>
+            </div>
+
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="phone" type="number" name="phone" [(ngModel)]="user.phone" required
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.phone">Name is required.</small>
+                    <label htmlFor="phone">Celular</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="address" name="address" [(ngModel)]="user.address" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.address">Name is required.</small>
+                    <label htmlFor="address">Direccion</label>
+                </span>
+            </div>
+            <!--       <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="specialitieId" name="specialitieId" [(ngModel)]="user.specialitieId" required
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.specialitieId">Name is required.</small>
+                    <label htmlFor="specialitieId">especilidad</label>
+                </span>
+            </div> -->
+
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <p-dropdown [options]="specialities" [(ngModel)]="selectedSpeciality" name="selectedSpeciality"
+                        optionLabel="name" [showClear]="true" placeholder="Seleccione especialidad">
+                    </p-dropdown>
+                    <label htmlFor="especialidad">Especialidad</label>
+                </span>
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <button pButton pRipple type="submit" label="Registrar" icon="pi pi-save"
+                [disabled]="!patientForm.form.valid"></button>
+            <p-button [style]="{'margin-left':'5px'}" icon="pi pi-times" label="Cancelar" severity="secondary"
+                routerLink="/user/lista"></p-button>
+        </div>
+    </form>
+</div>

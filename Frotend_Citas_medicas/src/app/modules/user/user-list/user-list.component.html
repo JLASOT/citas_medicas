@@ -1,0 +1,172 @@
+<div class="card" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
+
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+          <button pButton pRipple label="New" routerLink="/user/register"icon="pi pi-plus" class="p-button-success mr-2" ></button>
+          <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+              class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+              class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+    
+            <!-- <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-plus" routerLink="/user/register"
+              class="p-button-primary mr-2" pTooltip="NUEVO" tooltipPosition="bottom"></button>
+       -->
+        </ng-template>
+  
+      <ng-template pTemplate="right">
+         <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+      </ng-template>
+  </p-toolbar>
+  
+  
+      <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="users" dataKey="id"
+        [rowHover]="true" 
+        [rows]="10" 
+        [showCurrentPageReport]="true" 
+        [rowsPerPageOptions]="[10, 25, 50]" 
+        [loading]="loading"
+        [paginator]="true" 
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+        [filterDelay]="0" 
+        [globalFilterFields]="['name', 'surname','rol','email','phone','specialitieId']">
+    
+        <ng-template pTemplate="caption">
+          <div class="table-header">
+            Lista de Usuarios
+    
+            <div style="margin-left: 70%; ">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="onGlobalFilter($event, dt)" placeholder="Buscar" />
+              </span>
+    
+            </div>
+            <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.printTable()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+            
+    
+          </div>
+        </ng-template>
+    
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="surname">Apellidos <p-sortIcon field="surname"></p-sortIcon></th>
+            <th pSortableColumn="rol">ROL <p-sortIcon field="ci"></p-sortIcon></th>
+            <th pSortableColumn="email">EMAIL <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="phone">CELULAR <p-sortIcon field="relationship"></p-sortIcon></th>
+            <th pSortableColumn="address">DIRECCION <p-sortIcon field="paciente"></p-sortIcon></th>
+            <th pSortableColumn="specialitieId">especialidad <p-sortIcon field="specialitieId"></p-sortIcon></th>
+            <th>Acciones</th>
+          </tr>
+        </ng-template>
+    
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.rol }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.Specialitie?.name || 'Sin especialidad' }}</td>
+
+          <!--   <td>{{ user.Patient.name}} {{user.Patient.surname}}</td> -->
+            <td>
+              <!-- <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
+                [routerLink]="['/user/edit', user.id]" /> -->
+                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
+              [routerLink]="['/user/edit', user.id]" />
+              <p-button icon="pi pi-trash" (onClick)="deleteUser(user.id)" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
+                />
+    
+              <!-- <p-button [style]="{'margin-right': '20px'}"    (onClick)="deleteSpecialitie(user.id)"  (click)="viewPatientDetails(user)">Ver Detalles</p-button> -->
+              <!-- <p-button *ngIf="authService?.isAdmin" [routerLink]="['/user/delete', user.id]">Eliminar</p-button> -->
+            </td>
+          </tr>
+        </ng-template>
+    
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">No se encontraron pacientes.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    
+      <!-- Detalles del paciente seleccionado -->
+<!--       <div *ngIf="selectedSpecialitie" class="user-details">
+        <h3>Detalles del Paciente</h3>
+        <p><strong>NOMBRE:</strong> {{ selectedSpecialitie.name }}</p>
+        <p><strong>DESCRIPCION:</strong> {{ selectedSpecialitie.description }}</p>
+    
+      </div> -->
+    </div>
+  
+  
+    <!-- modal para agregar un nuvo tutor y editar  -->
+    <!-- <p-dialog [(visible)]="tutorDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true" styleClass="p-fluid">
+      <ng-template pTemplate="content"> -->
+          <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/tutor/' + tutor.image" [alt]="tutor.image" class="block m-auto pb-3" *ngIf="tutor.image" /> -->
+      <!--     <div class="field">
+              <label for="name">Name</label>
+              <input type="text" pInputText id="name" [(ngModel)]="user.name" required autofocus />
+              <small class="p-error" *ngIf="submitted && !user.name">Name is required.</small>
+          </div> -->
+          
+      <!--     <div class="field"style="margin-top: 10px ;">
+            <label for="surname">apellidos</label>
+            <input type="text" pInputText id="surname" [(ngModel)]="user.surname" required autofocus />
+            <small class="p-error" *ngIf="submitted && !user.name">Name is required.</small>
+        </div> -->
+          
+       <!--    <div class="field"style="margin-top: 10px ;">
+            <label for="ci">CI</label>
+            <input type="number" pInputText id="ci" [(ngModel)]="user.ci" required autofocus />
+            <small class="p-error" *ngIf="submitted && !user.ci">CI is required.</small>
+        </div> -->
+  
+    <div class="formgrid grid" style="display: flex; gap: 1rem;">
+  
+        <!-- <div class="field col" style="margin-top: 10px ;">
+          <label for="email">EMAIL</label>
+          <input type="email" pInputText id="email" [(ngModel)]="user.email" required autofocus />
+          <small class="p-error" *ngIf="submitted && !user.email">Name is required.</small>
+        </div> -->
+  
+        <div class="field col" style="margin-top: 10px ;">
+          <!-- <label for="patient">paciente</label>
+          <input type="number" pInputText id="patient" [(ngModel)]="user.patientId" required autofocus />
+          <small class="p-error" *ngIf="submitted && !user.phone">Name is required.</small>
+       -->
+       <!-- <label for="paciente">Paciente</label>
+        <p-autoComplete 
+          [(ngModel)]="selectedItem" 
+          [suggestions]="suggestions" 
+          (completeMethod)="search($event)" 
+          inputId="patient" 
+          [minLength]="3"
+          field="fullName" 
+          [size]="30"
+          placeholder="nombre del paciente">
+        </p-autoComplete> -->
+      </div>
+  
+    </div>
+  
+  <!--   <div class="formgrid grid" style="display: flex; gap: 1rem;">     
+              <div class="field col" style="margin-top: 10px ;">
+                  <label for="relationship">Parentesco</label>
+                  <input type="text" pInputText id="relationship" [(ngModel)]="user.relationship" required autofocus />
+                  <small class="p-error" *ngIf="submitted && !user.phone">Name is required.</small>
+              </div>   
+    </div> -->
+  
+  
+  
+      <!-- </ng-template> -->
+  
+<!--       <ng-template pTemplate="footer">
+          <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+          <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveTutors()"></button>
+      </ng-template>
+  </p-dialog>
+ -->

@@ -10,6 +10,7 @@
     flex-grow: 1; /* Esto hace que .content ocupe el espacio restante */
     flex-direction: row; /* Si quieres que .content esté en una fila */
     gap: 20px;
+  
 }
 app-header {
     flex: 0 0 200px;
@@ -36,6 +37,8 @@ app-sidebar {
     flex-wrap: wrap; /* Permite que los campos se ajusten si es necesario */
     gap: 20px;
     justify-content: space-between; /* Distribuye los campos de manera equitativa */
+    margin-top: 10px;
+    margin-left: 100px;
 }
 
 /* Ajustes para las tarjetas de los campos de entrada */

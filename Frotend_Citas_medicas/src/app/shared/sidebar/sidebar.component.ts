@@ -14,7 +14,7 @@ export class SidebarComponent implements OnInit {
         this.items = [
             {
                 label: 'Pacientes',
-                icon: 'pi pi-fw pi-file',
+                icon: 'pi pi-fw pi-user',
                 items: [
                     {
                         label: 'Nuevo',
@@ -39,6 +39,35 @@ export class SidebarComponent implements OnInit {
                         label: 'Export',
                         icon: 'pi pi-fw pi-external-link'
                     } */
+                ]
+            },
+            {
+                label: 'Especialidad',
+                icon: 'pi pi-fw pi-file',
+                items: [
+                    {
+                        label: 'Nuevo',
+                        icon: 'pi pi-fw pi-plus',
+                        routerLink: '/specialitie/register'
+                    },
+                    {
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: '/specialitie/lista'
+                    },
+
+                ]
+            },
+            {
+                label: 'Tutores',
+                icon: 'pi pi-fw pi-file',
+                items: [
+                    {
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: '/tutor/lista'
+                    },
+
                 ]
             },
             {
@@ -69,32 +98,14 @@ export class SidebarComponent implements OnInit {
                 items: [
                     {
                         label: 'New',
-                        icon: 'pi pi-fw pi-user-plus'
+                        icon: 'pi pi-fw pi-user-plus',
+                        routerLink: '/user/register'
                     },
                     {
-                        label: 'Delete',
-                        icon: 'pi pi-fw pi-user-minus'
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: '/user/lista'
                     },
-                    {
-                        label: 'Search',
-                        icon: 'pi pi-fw pi-users',
-                        items: [
-                            {
-                                label: 'Filter',
-                                icon: 'pi pi-fw pi-filter',
-                                items: [
-                                    {
-                                        label: 'Print',
-                                        icon: 'pi pi-fw pi-print'
-                                    }
-                                ]
-                            },
-                            {
-                                icon: 'pi pi-fw pi-bars',
-                                label: 'List'
-                            }
-                        ]
-                    }
                 ]
             },
             {

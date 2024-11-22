@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PatientService } from '../service/patient.service';
 import { AuthService } from '../../auth/service/auth.service';
+import { SpecialitieService } from '../service/specialitie.service';
+
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
@@ -8,33 +9,35 @@ import 'jspdf-autotable';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-patient-list',
-  templateUrl: './patient-list.component.html',
-  styleUrls: ['./patient-list.component.css'],
+  selector: 'app-specialitie-list',
+  templateUrl: './specialitie-list.component.html',
+  styleUrls: ['./specialitie-list.component.css']
 })
-export class PatientListComponent implements OnInit {
-  patients: any[] = []; // Arreglo para almacenar los pacientes
-  selectedPatient: any = null; // Paciente seleccionado para ver detalles
+export class SpecialitieListComponent implements OnInit {
+
+  
+  specialitie: any[] = []; // Arreglo para almacenar los pacientes
+  selectedSpecialitie: any = null; // Paciente seleccionado para ver detalles
   loading: boolean = true; // Control de carga
   public authService: AuthService | undefined;
 
   constructor(
-    private patientService: PatientService,
+    private specialitieService: SpecialitieService,
     authService: AuthService
   ) {
     this.authService = authService;
   }
 
   ngOnInit(): void {
-    this.loadPatients(); // Cargar la lista de pacientes al iniciar el componente
+    this.loadSpecialitie(); // Cargar la lista de pacientes al iniciar el componente
   }
 
   // Método para cargar la lista de pacientes desde el servicio
-  loadPatients() {
-    this.patientService.listPatients().subscribe(
+  loadSpecialitie() {
+    this.specialitieService.listSpecialitie().subscribe(
       (response: any) => {
-        console.log('Pacientes recibidos:', response.patient); // Verifica los pacientes dentro de 'patient'
-        this.patients = response.patient || []; // Asigna los pacientes correctamente desde 'response.patient'
+        console.log('Especialidades recibidos:', response.specialitie); // Verifica los pacientes dentro de 'specialitie'
+        this.specialitie = response.specialitie || []; // Asigna los pacientes correctamente desde 'response.specialitie'
         this.loading = false; // Desactiva el indicador de carga
       },
       (error) => {
@@ -45,28 +48,11 @@ export class PatientListComponent implements OnInit {
   }
 
   // Método para ver los detalles de un paciente
-  viewPatientDetails(patient: any) {
-    this.selectedPatient = patient; // Asigna el paciente seleccionado
+  viewSpecialitieDetails(specialitie: any) {
+    this.selectedSpecialitie = specialitie; // Asigna el paciente seleccionado
   }
 
-  // Método para eliminar un paciente
-  /* deletePatient(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este paciente?')) {
-      this.patientService.deletePatient(id).subscribe(
-        (response) => {
-          console.log('Paciente eliminado exitosamente:', response);
-          // Eliminar el paciente de la lista en el frontend sin necesidad de recargar
-          this.patients = this.patients.filter(patient => patient.id !== id);
-        },
-        (error) => {
-          console.error('Error al eliminar el paciente:', error);
-          alert('Error al eliminar el paciente');
-        }
-      );
-    }
-  } */
-
-  deletePatient(id: number): void {
+  deleteSpecialitie(id: number): void {
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¡No podrás revertir esto!',
@@ -77,12 +63,12 @@ export class PatientListComponent implements OnInit {
       confirmButtonText: 'Sí, ¡elimínalo!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.patientService.deletePatient(id).subscribe(
+        this.specialitieService.deleteSpecialitie(id).subscribe(
           (response) => {
             console.log('Paciente eliminado exitosamente:', response);
             // Eliminar el paciente de la lista en el frontend sin necesidad de recargar
-            this.patients = this.patients.filter(
-              (patient) => patient.id !== id
+            this.specialitie = this.specialitie.filter(
+              (specialitie) => specialitie.id !== id
             );
             Swal.fire({
               title: '¡Eliminado!',
@@ -118,38 +104,30 @@ export class PatientListComponent implements OnInit {
     (doc as any).autoTable({
       head: [
         [
-          'CI',
+
           'Nombre',
-          'Apellido',
-          'Edad',
-          'Email',
-          'Teléfono',
-          'Tipo de Sangre',
+          'Descripcion',
         ],
       ],
-      body: this.patients.map((patient) => [
-        patient.ci,
-        patient.name,
-        patient.surname,
-        patient.edad,
-        patient.email,
-        patient.phone,
-        patient.blood_type,
+      body: this.specialitie.map((specialitie) => [
+
+        specialitie.name,
+        specialitie.description,
       ]),
     });
-    doc.save('patients.pdf');
+    doc.save('specialitie.pdf');
   }
 
   // Método para exportar la tabla a Excel
   exportExcel() {
     import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.patients);
+      const worksheet = xlsx.utils.json_to_sheet(this.specialitie);
       const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, {
         bookType: 'xlsx',
         type: 'array',
       });
-      this.saveAsExcelFile(excelBuffer, 'patients');
+      this.saveAsExcelFile(excelBuffer, 'specialitie');
     });
   }
 
@@ -163,4 +141,5 @@ export class PatientListComponent implements OnInit {
       fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
     );
   }
+
 }

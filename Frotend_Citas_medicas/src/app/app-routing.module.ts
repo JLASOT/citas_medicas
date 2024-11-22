@@ -25,6 +25,21 @@ export const routes:Routes =[
     loadChildren:() => import("./modules/patient/patient.module").then(m => m.PatientModule),
   },
   {
+    canActivate: [authGuard],
+    path:'specialitie',
+    loadChildren:() => import("./modules/specialitie/specialitie.module").then(m => m.SpecialitieModule),
+  },
+  {
+    canActivate: [authGuard],
+    path:'tutor',
+    loadChildren:() => import("./modules/tutor/tutor.module").then(m => m.TutorModule),
+  },
+  {
+    canActivate: [authGuard],
+    path:'user',
+    loadChildren:() => import("./modules/user/user.module").then(m => m.UserModule),
+  },
+  {
     path:'',
     redirectTo: '/',
     pathMatch: 'full'

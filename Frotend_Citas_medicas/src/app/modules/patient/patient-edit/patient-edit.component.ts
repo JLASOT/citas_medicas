@@ -53,7 +53,6 @@ export class PatientEditComponent implements OnInit {
       { label: 'Femenino', value: 'F' },
     ];
     this.blood_type = [
-      { label: 'OR+', value: 'OR+' },
       { label: 'A+', value: 'A+' },
       { label: 'A-', value: 'A-' },
       { label: 'B+', value: 'B+' },
