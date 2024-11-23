@@ -1,0 +1,22 @@
+<div class="patient-form-container">
+      <h2 class="form-title">Registrar Especialidad</h2>
+      <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
+        <div class="form-group">
+          <span class="p-float-label">
+            <input pInputText id="name" name="name" required [(ngModel)]="specialitie.name" />
+            <label htmlFor="name">Nombre</label>
+          </span>
+        </div>
+      
+        <div class="card flex justify-content-center">
+            <span class="p-float-label" style="margin-top: 10px;">
+                <textarea  id="float-input" rows="5" cols="36" id="description" name="description" required [(ngModel)]="specialitie.description" pInputTextarea></textarea>
+                <label for="float-input">Descripcion</label>
+            </span>
+        </div>
+        <div class="form-group full-width">
+          <button pButton pRipple type="submit"  label="Registrar" icon="pi pi-save" [disabled]="!patientForm.form.valid"></button>
+          <p-button [style]="{'margin-left':'5px'}" icon="pi pi-times" label="Cancelar" severity="secondary" routerLink="/specialitie/lista" ></p-button>
+        </div>
+      </form>
+</div>

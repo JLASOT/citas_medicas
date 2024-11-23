@@ -64,7 +64,11 @@ export default {
                     tutor: tutor
                 })
             } else {
-                const tutor = await models.Tutor.findAll();
+                const tutor = await models.Tutor.findAll({
+                    include: [{ 
+                        model: models.Patient,
+                    }]
+                });
                 return res.status(200).json({
                     tutor: tutor,
                 })

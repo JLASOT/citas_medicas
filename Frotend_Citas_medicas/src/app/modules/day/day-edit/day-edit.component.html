@@ -1,1 +1,16 @@
-<p>day-edit works!</p>
+<div class="day-form-container">
+    <h2 class="form-title">Modificar Dia</h2>
+    <form (ngSubmit)="onSubmit()" #dayForm="ngForm" class="form-grid">
+      <div class="form-group">
+        <span class="p-float-label">
+          <input pInputText id="name" name="name" required [(ngModel)]="day.name" />
+          <label htmlFor="name">Nombre</label>
+        </span>
+      </div>
+    
+      <div class="form-group full-width">
+        <button pButton pRipple type="submit"  label="Registrar" icon="pi pi-save" [disabled]="!dayForm.form.valid"></button>
+        <p-button [style]="{'margin-left':'5px'}" icon="pi pi-times" label="Cancelar" severity="secondary" routerLink="/specialitie/lista" ></p-button>
+      </div>
+    </form>
+</div>

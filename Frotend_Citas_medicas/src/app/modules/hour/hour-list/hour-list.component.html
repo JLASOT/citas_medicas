@@ -1,0 +1,64 @@
+<div class="card" style="margin-top: 10px; margin-bottom: 10px; width: 90%;">
+    <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="hour" dataKey="id"
+      [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+      [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+      [filterDelay]="0" [globalFilterFields]="['name', 'description']">
+  
+      <ng-template pTemplate="caption">
+        <div class="table-header">
+          Lista de Horas
+  
+          <div style="margin-left: 70%; ">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter($event, dt)" placeholder="Buscar" />
+            </span>
+  
+          </div>
+          <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.printTable()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+          <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+            class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+          <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+            class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+  
+          <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-plus" routerLink="/hours/register"
+            class="p-button-primary mr-2" pTooltip="NUEVO" tooltipPosition="bottom"></button>
+  
+  
+        </div>
+      </ng-template>
+  
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+          
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-day>
+        <tr>
+            <td>{{ hours.name }}</td>
+
+
+          
+          <td>
+            <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
+              [routerLink]="['/hours/edit', hours.id]" />
+            <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
+              (onClick)="deleteHour(hours.id)" />
+  
+            <!-- <p-button [style]="{'margin-right': '20px'}" (click)="viewPatientDetails(specialitie)">Ver Detalles</p-button> -->
+            <!-- <p-button *ngIf="authService?.isAdmin" [routerLink]="['/specialitie/delete', specialitie.id]">Eliminar</p-button> -->
+          </td>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No se encontraron Horas.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  
+  </div>

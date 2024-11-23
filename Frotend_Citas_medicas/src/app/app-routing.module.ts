@@ -26,17 +26,32 @@ export const routes:Routes =[
   },
   {
     canActivate: [authGuard],
-    path:'day',
+
+    path:'specialitie',
+    loadChildren:() => import("./modules/specialitie/specialitie.module").then(m => m.SpecialitieModule),
+  },
+  {
+    canActivate: [authGuard],
+    path:'tutor',
+    loadChildren:() => import("./modules/tutor/tutor.module").then(m => m.TutorModule),
+  },
+  {
+    canActivate: [authGuard],
+    path:'user',
+    loadChildren:() => import("./modules/user/user.module").then(m => m.UserModule),
+  },
+// este es de la tabla dia
+  {
+    canActivate: [authGuard],
+    path:'days',
     loadChildren:() => import("./modules/day/day.module").then(m => m.DayModule),
   },
-
-
-
-
-
-
-
-
+// hora
+  {
+    canActivate: [authGuard],
+    path:'hours',
+    loadChildren:() => import("./modules/hour/hour.module").then(m => m.HourModule),
+  },
 
   {
     path:'',

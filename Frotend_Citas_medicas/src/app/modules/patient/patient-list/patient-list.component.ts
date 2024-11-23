@@ -5,11 +5,12 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-patient-list',
   templateUrl: './patient-list.component.html',
-  styleUrls: ['./patient-list.component.css']
+  styleUrls: ['./patient-list.component.css'],
 })
 export class PatientListComponent implements OnInit {
   patients: any[] = []; // Arreglo para almacenar los pacientes
@@ -17,7 +18,10 @@ export class PatientListComponent implements OnInit {
   loading: boolean = true; // Control de carga
   public authService: AuthService | undefined;
 
-  constructor(private patientService: PatientService, authService: AuthService) {
+  constructor(
+    private patientService: PatientService,
+    authService: AuthService
+  ) {
     this.authService = authService;
   }
 
@@ -46,7 +50,7 @@ export class PatientListComponent implements OnInit {
   }
 
   // Método para eliminar un paciente
-  deletePatient(id: number): void {
+  /* deletePatient(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este paciente?')) {
       this.patientService.deletePatient(id).subscribe(
         (response) => {
@@ -60,14 +64,52 @@ export class PatientListComponent implements OnInit {
         }
       );
     }
+  } */
+
+  deletePatient(id: number): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, ¡elimínalo!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.patientService.deletePatient(id).subscribe(
+          (response) => {
+            console.log('Paciente eliminado exitosamente:', response);
+            // Eliminar el paciente de la lista en el frontend sin necesidad de recargar
+            this.patients = this.patients.filter(
+              (patient) => patient.id !== id
+            );
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'El paciente ha sido eliminado.',
+              icon: 'success',
+            });
+          },
+          (error) => {
+            console.error('Error al eliminar el paciente:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al eliminar el paciente.',
+              icon: 'error',
+            });
+          }
+        );
+      }
+    });
   }
+
   onGlobalFilter(event: Event, dt: any) {
     const inputElement = event.target as HTMLInputElement;
     dt.filterGlobal(inputElement.value, 'contains');
   }
 
-  isAdmin(): boolean { 
-    return this.authService ? this.authService.isAdmin() : false; 
+  isAdmin(): boolean {
+    return this.authService ? this.authService.isAdmin() : false;
   }
 
   // Método para exportar la tabla a PDF
@@ -98,20 +140,27 @@ export class PatientListComponent implements OnInit {
     doc.save('patients.pdf');
   }
 
-// Método para exportar la tabla a Excel
-exportExcel() {
-  import('xlsx').then((xlsx) => {
-    const worksheet = xlsx.utils.json_to_sheet(this.patients);
-    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-    this.saveAsExcelFile(excelBuffer, 'patients');
-  });
-}
+  // Método para exportar la tabla a Excel
+  exportExcel() {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.patients);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      this.saveAsExcelFile(excelBuffer, 'patients');
+    });
+  }
 
-saveAsExcelFile(buffer: any, fileName: string): void {
-  const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  const EXCEL_EXTENSION = '.xlsx';
-  const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-  FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-}
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(
+      data,
+      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
 }

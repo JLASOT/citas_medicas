@@ -13,8 +13,41 @@ export class SidebarComponent implements OnInit {
     ngOnInit() {
         this.items = [
             {
-                label: 'Pacientes',
+                label: 'Users',
+                icon: 'pi pi-fw pi-user',
+                items: [
+                    {
+                        label: 'New',
+                        icon: 'pi pi-fw pi-user-plus',
+                        routerLink: '/user/register'
+                    },
+                    {
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: '/user/lista'
+                    },
+                ]
+            },
+            {
+                label: 'Especialidad',
                 icon: 'pi pi-fw pi-file',
+                items: [
+                    {
+                        label: 'Nuevo',
+                        icon: 'pi pi-fw pi-plus',
+                        routerLink: '/specialitie/register'
+                    },
+                    {
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: '/specialitie/lista'
+                    },
+
+                ]
+            },
+            {
+                label: 'Pacientes',
+                icon: 'pi pi-fw pi-user',
                 items: [
                     {
                         label: 'Nuevo',
@@ -41,6 +74,19 @@ export class SidebarComponent implements OnInit {
                     } */
                 ]
             },
+
+            {
+                label: 'Tutores',
+                icon: 'pi pi-fw pi-file',
+                items: [
+                    {
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: '/tutor/lista'
+                    },
+
+                ]
+            },
             {
                 label: 'citas medicas',
                 icon: 'pi pi-fw pi-pencil',
@@ -63,40 +109,7 @@ export class SidebarComponent implements OnInit {
                     }
                 ]
             },
-            {
-                label: 'Users',
-                icon: 'pi pi-fw pi-user',
-                items: [
-                    {
-                        label: 'New',
-                        icon: 'pi pi-fw pi-user-plus'
-                    },
-                    {
-                        label: 'Delete',
-                        icon: 'pi pi-fw pi-user-minus'
-                    },
-                    {
-                        label: 'Search',
-                        icon: 'pi pi-fw pi-users',
-                        items: [
-                            {
-                                label: 'Filter',
-                                icon: 'pi pi-fw pi-filter',
-                                items: [
-                                    {
-                                        label: 'Print',
-                                        icon: 'pi pi-fw pi-print'
-                                    }
-                                ]
-                            },
-                            {
-                                icon: 'pi pi-fw pi-bars',
-                                label: 'List'
-                            }
-                        ]
-                    }
-                ]
-            },
+
             {
                 label: 'Events',
                 icon: 'pi pi-fw pi-calendar',
@@ -153,12 +166,12 @@ export class SidebarComponent implements OnInit {
                         {
                             label: 'Nuevo',
                             icon: 'pi pi-fw pi-plus',
-                            routerLink: '/patient/register'
+                            routerLink: '/hours/register'
                         },
                         {
                             label: 'Lista',
                             icon: 'pi pi-fw pi-list',
-                            routerLink: '/patient/lista'
+                            routerLink: '/hours/lista'
                         },
                 ]
             }
