@@ -25,6 +25,20 @@ export const routes:Routes =[
     loadChildren:() => import("./modules/patient/patient.module").then(m => m.PatientModule),
   },
   {
+    canActivate: [authGuard],
+    path:'day',
+    loadChildren:() => import("./modules/day/day.module").then(m => m.DayModule),
+  },
+
+
+
+
+
+
+
+
+
+  {
     path:'',
     redirectTo: '/',
     pathMatch: 'full'

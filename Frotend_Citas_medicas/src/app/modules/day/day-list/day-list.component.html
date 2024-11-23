@@ -1,0 +1,86 @@
+<app-header></app-header>
+<main class="dashboard">
+  <div class="content">
+    <app-sidebar></app-sidebar>
+    <div class="card" style="margin: 10px auto; width: 90%;">
+      <p-table 
+        [value]="days" 
+        dataKey="id" 
+        [rows]="10" 
+        [paginator]="true" 
+        [loading]="loading"
+        [rowsPerPageOptions]="[10, 25, 50]" 
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} días"
+        [globalFilterFields]="['name', 'description']"
+        #dt
+        [style]="{'padding': '20px', 'background-color':'#e9ecef'}">
+
+        <ng-template pTemplate="caption">
+          <div class="table-header">
+            <span>Lista de Días</span>
+            <div style="margin-left: auto;">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input 
+                  pInputText 
+                  type="text" 
+                  (input)="onGlobalFilter($event, dt)" 
+                  placeholder="Buscar" />
+              </span>
+            </div>
+            <button type="button" style="margin: 5px;" 
+              pButton 
+              pRipple 
+              icon="pi pi-file-excel" 
+              (click)="exportExcel()" 
+              class="p-button-success mr-2" 
+              pTooltip="Exportar a Excel"></button>
+            <button type="button" style="margin: 5px;" 
+              pButton 
+              pRipple 
+              icon="pi pi-file-pdf" 
+              (click)="exportPdf()" 
+              class="p-button-warning mr-2" 
+              pTooltip="Exportar a PDF"></button>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="description">Descripción <p-sortIcon field="description"></p-sortIcon></th>
+            <th>Acciones</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-day>
+          <tr>
+            <td>{{ day.name }}</td>
+            <td>{{ day.description }}</td>
+            <td>
+              <p-button 
+                icon="pi pi-pencil" 
+                class="mr-2" 
+                [rounded]="true" 
+                [outlined]="true" 
+                severity="success" 
+                [routerLink]="['/day/edit', day.id]"></p-button>
+              <p-button 
+                icon="pi pi-trash" 
+                severity="danger" 
+                [rounded]="true" 
+                [outlined]="true" 
+                (onClick)="deleteDay(day.id)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="3">No se encontraron días.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</main>

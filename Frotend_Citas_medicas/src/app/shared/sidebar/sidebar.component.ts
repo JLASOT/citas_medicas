@@ -126,7 +126,43 @@ export class SidebarComponent implements OnInit {
                         ]
                     }
                 ]
+            },
+
+            {
+                label: 'Dia',
+                icon: 'pi pi-fw pi-calendar-times',
+                items: [
+                    
+                        {
+                            label: 'Nuevo',
+                            icon: 'pi pi-fw pi-plus',
+                            routerLink: '/days/register'
+                        },
+                        {
+                            label: 'Lista',
+                            icon: 'pi pi-fw pi-list',
+                            routerLink: '/days/lista'
+                        },
+                ]
+            },
+            {
+                label: 'Hora',
+                icon: 'pi pi-fw pi-clock',
+                items: [
+                    
+                        {
+                            label: 'Nuevo',
+                            icon: 'pi pi-fw pi-plus',
+                            routerLink: '/patient/register'
+                        },
+                        {
+                            label: 'Lista',
+                            icon: 'pi pi-fw pi-list',
+                            routerLink: '/patient/lista'
+                        },
+                ]
             }
+
         ];
     }
 }
