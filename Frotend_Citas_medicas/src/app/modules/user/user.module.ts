@@ -18,6 +18,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { UserAddComponent } from './user-add/user-add.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { PasswordModule } from 'primeng/password';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     CheckboxModule,
     CardModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    PasswordModule
 
   ]
 })

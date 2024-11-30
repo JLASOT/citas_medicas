@@ -1,0 +1,79 @@
+<div class="card" style="margin-top: 10px; margin-bottom: 10px; width: 90%;">
+
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" routerLink="/dayhour/register" icon="pi pi-plus"
+        class="p-button-success mr-2"></button>
+      <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+        class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+      <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+
+      <!-- <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-plus" routerLink="/user/register"
+                class="p-button-primary mr-2" pTooltip="NUEVO" tooltipPosition="bottom"></button>
+         -->
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+    </ng-template>
+  </p-toolbar>
+
+
+  <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="dayHour" dataKey="id"
+    [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+    [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+    [filterDelay]="0" [globalFilterFields]="['name', 'description']">
+
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        Lista de Dias Y horas
+
+        <div style="margin-left: 70%; ">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="onGlobalFilter($event, dt)" placeholder="Buscar" />
+          </span>
+
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="Medico">Medico <p-sortIcon field="Medico"></p-sortIcon></th>
+        <th pSortableColumn="Dia">Dia <p-sortIcon field="Dia"></p-sortIcon></th>
+        <th pSortableColumn="Hora">Hora <p-sortIcon field="Hora"></p-sortIcon></th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-dayHour>
+      <tr>
+        <td>{{ dayHour.User.name }} {{dayHour.User.surname}}</td>
+        <td>{{ dayHour.Day.name }}</td>
+        <td>{{ dayHour.Hour.name }}</td>
+
+        <td>
+          <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
+            [routerLink]="['/days/edit', dayHour.id]" />
+          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
+            (onClick)="deleteDay(dayHour.id)" />
+
+          <!-- <p-button [style]="{'margin-right': '20px'}" (click)="viewPatientDetails(specialitie)">Ver Detalles</p-button> -->
+          <!-- <p-button *ngIf="authService?.isAdmin" [routerLink]="['/specialitie/delete', specialitie.id]">Eliminar</p-button> -->
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No se encontraron dias.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>
+
+
+

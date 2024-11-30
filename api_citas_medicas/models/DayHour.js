@@ -34,7 +34,12 @@ const DayHour = sequelize.define('DayHour', {
             key: 'id'
         },
         allowNull: false
-    }
+    },
+     // estado 1 = disponible 2  no disponible
+     state : {
+        type : DataTypes.INTEGER,
+        defaultValue : 1
+    },
 }, {
     timestamps: true // Agrega createdAt y updatedAt automáticamente
 });

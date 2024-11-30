@@ -42,7 +42,7 @@
 
             <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                 <span class="p-float-label">
-                    <input pInputText id="email" name="email" [(ngModel)]="user.email" required autofocus />
+                    <input pInputText type="email" id="email" name="email" [(ngModel)]="user.email" required autofocus />
                     <small class="p-error" *ngIf="submitted && !user.email">Name is required.</small>
                     <label htmlFor="email">Email</label>
                 </span>
@@ -53,8 +53,8 @@
             <div class="field col" style="margin-top: 10px ;min-width: 320px;">
 
                 <span class="p-float-label">
-                    <input pInputText type="password" id="password" name="password" [(ngModel)]="user.password" required autofocus />
-                    <small class="p-error" *ngIf="submitted && !user.password">Name is required.</small>
+                    <p-password [(ngModel)]="user.password" id="password" name="password" required [toggleMask]="true"></p-password>
+                    <small class="p-error" *ngIf="submitted && !user.password">password is required.</small>
                     <label htmlFor="password">password</label>
                 </span>
             </div>

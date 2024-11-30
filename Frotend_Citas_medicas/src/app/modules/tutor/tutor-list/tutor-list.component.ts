@@ -14,6 +14,8 @@ import { PatientService } from '../../patient/service/patient.service';
   styleUrls: ['./tutor-list.component.css'],
 })
 export class TutorListComponent implements OnInit {
+
+  //modal
   tutorDialog: boolean = false;
   submitted: boolean = false;
 
@@ -21,15 +23,19 @@ export class TutorListComponent implements OnInit {
   tutors: any = {}; // Objeto para almacenar el tutor individual en el formulario
   selectedSpecialitie: any = null; // tutor seleccionado para ver detalles
  
+  //modal
   suggestions: any[] = [];  // Sugerencias del autocompletado
+
   loading: boolean = true; // Control de carga
   public authService: AuthService | undefined;
 
+  //modal
   patients: any[] = []; // Arreglo para almacenar los pacientes  
   selectedItem: any = null; // Elemento seleccionado en el autocompletado
 
   constructor(
     private tutorService: TutorService,
+    //modal
     private patientService: PatientService,
     authService: AuthService,
     private router: Router
@@ -39,7 +45,7 @@ export class TutorListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTutor(); // Cargar la lista de pacientes al iniciar el componente
-    this.loadPatients();
+    this.loadPatients();//modal
   }
   openNew() {
     this.tutors = {};
@@ -48,6 +54,7 @@ export class TutorListComponent implements OnInit {
     this.tutorDialog = true;
   }
 
+  //modal
   hideDialog() {
     this.tutorDialog = false;
     this.submitted = false;
@@ -106,6 +113,7 @@ export class TutorListComponent implements OnInit {
   }
 
 
+  //modal
   // Método para cargar la lista de pacientes desde el servicio 
   loadPatients() {
     this.patientService.listPatients().subscribe(
@@ -124,6 +132,7 @@ export class TutorListComponent implements OnInit {
     );
   }
 
+  //modal
  // Método para manejar la búsqueda y filtrar los pacientes
  search(event: any) {
   const query = event.query.toLowerCase();

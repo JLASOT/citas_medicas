@@ -42,7 +42,7 @@ export class UserEditComponent implements OnInit {
     this.role = [
       { label: 'Administrador', value: 'admin' },
       { label: 'Enfermera', value: 'enfermera' },
-      { label: 'Doctor', value: 'doctor' },
+      { label: 'Medico', value: 'medico' },
     ]
     const userId = this.route.snapshot.paramMap.get('id');
     if (userId) {
@@ -85,6 +85,20 @@ export class UserEditComponent implements OnInit {
   }
 
   onSubmit(): void {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(this.user.email)) {
+      console.error('Email no válido');
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Por favor, ingresa un correo electrónico válido.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
+    
     if (this.selectedSpeciality) {
       this.user.specialitieId = Number(this.selectedSpeciality.id);//convierte el input a numro entero
      }

@@ -139,10 +139,11 @@
       <p-autoComplete 
         [(ngModel)]="selectedItem" 
         [suggestions]="suggestions" 
-        (completeMethod)="search($event)" 
+        (completeMethod)="search($event)"
         inputId="patient" 
         [minLength]="3"
-        field="fullName" 
+        field="fullName"
+        name="patient" 
         [size]="30"
         placeholder="nombre del paciente">
       </p-autoComplete>

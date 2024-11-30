@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SpecialitieService } from '../../specialitie/service/specialitie.service';
 
-
 interface Rol {
   label: string;
   value: string;
@@ -31,8 +30,8 @@ export class UserAddComponent implements OnInit {
     this.role = [
       { label: 'Administrador', value: 'admin' },
       { label: 'Enfermera', value: 'enfermera' },
-      { label: 'Doctor', value: 'doctor' },
-    ]
+      { label: 'medico', value: 'medico' },
+    ];
   }
 
   loadSpecialities(): void {
@@ -61,13 +60,23 @@ export class UserAddComponent implements OnInit {
   submitted: boolean = false;
 
   onSubmit(): void {
-    
-      console.log('Especialidad seleccionada:', this.selectedSpeciality); 
-      console.log('Datos del usuario a registrar:', this.user);
-      if (this.selectedSpeciality) {
-        this.user.specialitieId = Number(this.selectedSpeciality.id);//convierte el input a numro entero
-       }
-      this.userService.registerUser(this.user).subscribe(
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(this.user.email)) {
+      console.error('Email no válido');
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Por favor, ingresa un correo electrónico válido.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
+
+    console.log('Especialidad seleccionada:', this.selectedSpeciality);
+    console.log('Datos del usuario a registrar:', this.user);
+
+    this.userService.registerUser(this.user).subscribe(
       (response) => {
         console.log('Paciente registrado exitosamente:', response);
         Swal.fire({

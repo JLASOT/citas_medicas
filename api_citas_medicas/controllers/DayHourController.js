@@ -4,7 +4,7 @@ export default {
     create: async (req, res) => {
         try {
 
-            const { userId, dayId, hourId } = req.body;
+            const { userId, dayId, hourId ,state} = req.body;
             const user = await models.User.findByPk(userId);
             if(!user){
                 return res.status(404).json({

@@ -8,13 +8,13 @@
             <div >
                 <span class="p-float-label">
                     <input type="email" pInputText id="username" [(ngModel)]="email_login" class="form-input" />
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Email</label>
                 </span>
             </div>
             <div class="input-password" >
-                <span class="p-float-label">
-                    <input pInputText type="password" id="password" [(ngModel)]="password_login" class="form-input" />
-                    <label htmlFor="password">Password</label>
+                <span class="p-float-label" >
+                    <p-password  [(ngModel)]="password_login" id="password" name="password" required [feedback]="false" [toggleMask]="true"></p-password>
+                    <label htmlFor="password">password</label>
                 </span>
             </div>
             <ng-template pTemplate="footer">

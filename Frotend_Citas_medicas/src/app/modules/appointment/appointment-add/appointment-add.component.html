@@ -1,0 +1,133 @@
+<div class="patient-form-container">
+    <h2 class="form-title">Registrar Usuario</h2>
+    <p-card>
+        <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
+
+            <div class="formgrid grid" style="display: flex; gap: 1rem;">
+
+                <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                    <div class="card flex justify-content-center">
+                        <span class="p-float-label">
+                            <p-calendar [(ngModel)]="appointment.dateAppointment" name="fecha" [showIcon]="true">
+                            </p-calendar>
+                            <label htmlFor="fecha">Fecha</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                    <span class="p-float-label">
+                        <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
+                            (completeMethod)="search($event)" inputId="patient" [minLength]="3" field="fullName"
+                            name="patient" [size]="30" placeholder="nombre del paciente">
+                        </p-autoComplete>
+                        <label htmlFor="paciente">Paciente</label>
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
+
+
+                <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="specialities" [(ngModel)]="selectedSpeciality" name="selectedSpeciality"
+                            optionLabel="name" [showClear]="true" placeholder="Seleccione especialidad"
+                            (onChange)="onSpecialityChange()">
+                        </p-dropdown>
+                        <label htmlFor="especialidad">Especialidad</label>
+                    </span>
+                </div>
+
+                
+                <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                    
+                    <p-listbox [options]="filteredUsers" [(ngModel)]="selectedUser" optionLabel="fullName"
+                        [style]="{'width':'15rem'}" (onChange)="onUserChange($event)" name="Medicos"
+                        [listStyle]="{'max-height': '220px'}">
+                    </p-listbox>
+                    
+               
+                </div>
+
+
+                        <!-- Lista de Días y Horas Disponibles del Usuario Seleccionado -->
+                <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                    <p-listbox 
+                        [options]="dayHours" 
+                        [(ngModel)]="appointment.dayHourId" 
+                        optionLabel="displayName" 
+                        [style]="{'width':'15rem'}" 
+                        name="dayhour" 
+                        [listStyle]="{'max-height': '220px'}">
+                    </p-listbox>
+                </div>
+
+            </div>
+
+            <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
+
+                <!--  <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="userId" type="number" name="phone" [(ngModel)]="appointment.userId" required
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !appointment.userId">Name is required.</small>
+                    <label htmlFor="phone">doctor</label>
+                </span>
+            </div> -->
+
+                <!-- Lista de Días y Horas Disponibles del Usuario Seleccionado -->
+
+
+            </div>
+            <!-- 
+        <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
+            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="address" name="address" [(ngModel)]="user.address" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.address">Name is required.</small>
+                    <label htmlFor="address">Direccion</label>
+                </span>
+            </div> -->
+            <!--       <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <input pInputText id="specialitieId" name="specialitieId" [(ngModel)]="user.specialitieId" required
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.specialitieId">Name is required.</small>
+                    <label htmlFor="specialitieId">especilidad</label>
+                </span>
+            </div> -->
+
+            <!--         <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+                <span class="p-float-label">
+                    <p-dropdown [options]="specialities" [(ngModel)]="selectedSpeciality" name="selectedSpeciality"
+                        optionLabel="name" [showClear]="true" placeholder="Seleccione especialidad">
+                    </p-dropdown>
+                    <label htmlFor="especialidad">Especialidad</label>
+                </span>
+            </div>
+        </div> -->
+            <div class="form-group full-width">
+                <button pButton pRipple type="submit" label="Registrar" icon="pi pi-save"
+                    [disabled]="!patientForm.form.valid"></button>
+                <p-button [style]="{'margin-left':'5px'}" icon="pi pi-times" label="Cancelar" severity="secondary"
+                    routerLink="/appointment/lista"></p-button>
+            </div>
+
+            <!-- <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+            <label for="doctor">Usuarios con esta especialidad</label>
+            <ul *ngIf="filteredUsers.length > 0">
+              <li *ngFor="let user of filteredUsers">
+                {{ user.name }} {{ user.surname }}
+              </li>
+            </ul>
+            <p *ngIf="filteredUsers.length === 0">No hay usuarios disponibles para esta especialidad.</p>
+          </div> -->
+
+
+
+
+
+        </form>
+    </p-card>
+</div>

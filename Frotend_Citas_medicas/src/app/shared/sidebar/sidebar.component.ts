@@ -92,21 +92,15 @@ export class SidebarComponent implements OnInit {
                 icon: 'pi pi-fw pi-pencil',
                 items: [
                     {
-                        label: 'Left',
-                        icon: 'pi pi-fw pi-align-left'
+                        label: 'Lista',
+                        icon: 'pi pi-fw pi-list',
+                        routerLink: '/appointment/lista'
                     },
                     {
                         label: 'Right',
-                        icon: 'pi pi-fw pi-align-right'
+                        icon: 'pi pi-fw pi-align-right',
+                        routerLink: '/tutor/lista'
                     },
-                    {
-                        label: 'Center',
-                        icon: 'pi pi-fw pi-align-center'
-                    },
-                    {
-                        label: 'Justify',
-                        icon: 'pi pi-fw pi-align-justify'
-                    }
                 ]
             },
 
@@ -172,6 +166,23 @@ export class SidebarComponent implements OnInit {
                             label: 'Lista',
                             icon: 'pi pi-fw pi-list',
                             routerLink: '/hours/lista'
+                        },
+                ]
+            },
+            {
+                label: 'Day Hora',
+                icon: 'pi pi-fw pi-clock',
+                items: [
+                    
+                        {
+                            label: 'Nuevo',
+                            icon: 'pi pi-fw pi-plus',
+                            routerLink: '/dayhour/register'
+                        },
+                        {
+                            label: 'Lista',
+                            icon: 'pi pi-fw pi-list',
+                            routerLink: '/dayhour/lista'
                         },
                 ]
             }

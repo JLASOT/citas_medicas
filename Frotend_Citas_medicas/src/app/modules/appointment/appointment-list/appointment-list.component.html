@@ -1,14 +1,13 @@
 <div class="card" style="margin-top: 10px; margin-bottom: 10px; width: 100%;">
-
     <p-toolbar styleClass="mb-4 gap-2">
       <ng-template pTemplate="left">
-          <button pButton pRipple label="New" routerLink="/user/register"icon="pi pi-plus" class="p-button-success mr-2" ></button>
+          <button pButton pRipple label="New" routerLink="/appointment/register"icon="pi pi-plus" class="p-button-success mr-2" ></button>
           <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
               class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
             <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
               class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
     
-            <!-- <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-plus" routerLink="/user/register"
+            <!-- <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-plus" routerLink="/appointment/register"
               class="p-button-primary mr-2" pTooltip="NUEVO" tooltipPosition="bottom"></button>
        -->
         </ng-template>
@@ -17,9 +16,7 @@
          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
       </ng-template>
   </p-toolbar>
-  
-  
-      <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="users" dataKey="id"
+      <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="appointments" dataKey="id"
         [rowHover]="true" 
         [rows]="10" 
         [showCurrentPageReport]="true" 
@@ -34,7 +31,7 @@
     
         <ng-template pTemplate="caption">
           <div class="table-header">
-            Lista de Usuarios
+            Lista de Cipas Medicas
     
             <div style="margin-left: 70%; ">
               <span class="p-input-icon-left">
@@ -52,40 +49,41 @@
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="i" style="min-width: 5rem;">N<p-sortIcon field="i"></p-sortIcon></th>
-            <th pSortableColumn="name" style="min-width: 10rem;">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="surname"style="min-width: 10rem;">Apellidos <p-sortIcon field="surname"></p-sortIcon></th>
-            <th pSortableColumn="rol"style="min-width: 7rem;">ROL <p-sortIcon field="ci"></p-sortIcon></th>
-            <th pSortableColumn="email"style="min-width: 12rem;">EMAIL <p-sortIcon field="email"></p-sortIcon></th>
-            <th pSortableColumn="phone"style="min-width: 10rem;">CELULAR <p-sortIcon field="relationship"></p-sortIcon></th>
-            <th pSortableColumn="address"style="min-width: 12rem;">DIRECCION <p-sortIcon field="paciente"></p-sortIcon></th>
-            <th pSortableColumn="specialitieId"style="min-width: 12rem;">especialidad <p-sortIcon field="specialitieId"></p-sortIcon></th>
+            <th pSortableColumn="name" style="min-width: 7rem;">Fecha <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="surname"style="min-width: 7rem;">Estado <p-sortIcon field="surname"></p-sortIcon></th>
+            <th pSortableColumn="rol"style="min-width: 7rem;">Paciente <p-sortIcon field="ci"></p-sortIcon></th>
+            <th pSortableColumn="email"style="min-width: 11rem;">especialidad <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="phone"style="min-width: 10rem;">Medico <p-sortIcon field="relationship"></p-sortIcon></th>
+            <th pSortableColumn="address"style="min-width: 7rem;">Dia <p-sortIcon field="paciente"></p-sortIcon></th>
+            <th pSortableColumn="hour"style="min-width: 7rem;">Hora <p-sortIcon field="hour"></p-sortIcon></th>
             <th>Acciones</th>
           </tr>
         </ng-template>
     
-        <ng-template pTemplate="body" let-user let-i="rowIndex">
-          <tr>
-            <td>{{ i + 1 }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.surname }}</td>
-            <td>{{ user.rol }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.address }}</td>
-            <td>{{ user.Specialitie?.name || 'Sin especialidad' }}</td>
-           <!--  <td>{{ user.Specialitie?.description || 'Sin especialidad' }}</td> -->
+          <ng-template pTemplate="body" let-appointment let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ appointment.dateAppointment }}</td>
+            <!-- <td>{{ appointment.stateAppointment }}</td> -->
+            <td> <p-tag [value]="getStateLabel(appointment.stateAppointment)" [severity]="getSeverity(appointment.stateAppointment)"></p-tag> </td>            <td>{{ appointment.Patient.name	 }} {{appointment.Patient.surname}}</td>
+            <td>{{ appointment.Specialitie?.name || 'Sin especialidad' }}</td>
+            <td>{{ appointment.User?.name }}</td>
+            <td>{{ appointment.DayHour?.Day.name }}</td>
+            <td>{{ appointment.DayHour?.Hour.name }}</td>
+            
+           <!--  <td>{{ appointment.Specialitie?.description || 'Sin especialidad' }}</td> -->
 
-          <!--   <td>{{ user.Patient.name}} {{user.Patient.surname}}</td> -->
+          <!--   <td>{{ appointment.Patient.name}} {{appointment.Patient.surname}}</td> -->
             <td>
               <!-- <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
-                [routerLink]="['/user/edit', user.id]" /> -->
+                [routerLink]="['/appointment/edit', appointment.id]" /> -->
                 <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
-              [routerLink]="['/user/edit', user.id]" />
-              <p-button icon="pi pi-trash" (onClick)="deleteUser(user.id)" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
+              [routerLink]="['/appointment/edit', appointment.id]" />
+              <p-button icon="pi pi-trash" (onClick)="deleteUser(appointment.id)" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
                 />
     
-              <!-- <p-button [style]="{'margin-right': '20px'}"    (onClick)="deleteSpecialitie(user.id)"  (click)="viewPatientDetails(user)">Ver Detalles</p-button> -->
-              <!-- <p-button *ngIf="authService?.isAdmin" [routerLink]="['/user/delete', user.id]">Eliminar</p-button> -->
+              <!-- <p-button [style]="{'margin-right': '20px'}"    (onClick)="deleteSpecialitie(appointment.id)"  (click)="viewPatientDetails(appointment)">Ver Detalles</p-button> -->
+              <!-- <p-button *ngIf="authService?.isAdmin" [routerLink]="['/appointment/delete', appointment.id]">Eliminar</p-button> -->
             </td>
           </tr>
         </ng-template>
@@ -98,7 +96,7 @@
       </p-table>
     
       <!-- Detalles del paciente seleccionado -->
-<!--       <div *ngIf="selectedSpecialitie" class="user-details">
+<!--       <div *ngIf="selectedSpecialitie" class="appointment-details">
         <h3>Detalles del Paciente</h3>
         <p><strong>NOMBRE:</strong> {{ selectedSpecialitie.name }}</p>
         <p><strong>DESCRIPCION:</strong> {{ selectedSpecialitie.description }}</p>
@@ -113,34 +111,34 @@
           <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/tutor/' + tutor.image" [alt]="tutor.image" class="block m-auto pb-3" *ngIf="tutor.image" /> -->
       <!--     <div class="field">
               <label for="name">Name</label>
-              <input type="text" pInputText id="name" [(ngModel)]="user.name" required autofocus />
-              <small class="p-error" *ngIf="submitted && !user.name">Name is required.</small>
+              <input type="text" pInputText id="name" [(ngModel)]="appointment.name" required autofocus />
+              <small class="p-error" *ngIf="submitted && !appointment.name">Name is required.</small>
           </div> -->
           
       <!--     <div class="field"style="margin-top: 10px ;">
             <label for="surname">apellidos</label>
-            <input type="text" pInputText id="surname" [(ngModel)]="user.surname" required autofocus />
-            <small class="p-error" *ngIf="submitted && !user.name">Name is required.</small>
+            <input type="text" pInputText id="surname" [(ngModel)]="appointment.surname" required autofocus />
+            <small class="p-error" *ngIf="submitted && !appointment.name">Name is required.</small>
         </div> -->
           
        <!--    <div class="field"style="margin-top: 10px ;">
             <label for="ci">CI</label>
-            <input type="number" pInputText id="ci" [(ngModel)]="user.ci" required autofocus />
-            <small class="p-error" *ngIf="submitted && !user.ci">CI is required.</small>
+            <input type="number" pInputText id="ci" [(ngModel)]="appointment.ci" required autofocus />
+            <small class="p-error" *ngIf="submitted && !appointment.ci">CI is required.</small>
         </div> -->
   
     <div class="formgrid grid" style="display: flex; gap: 1rem;">
   
         <!-- <div class="field col" style="margin-top: 10px ;">
           <label for="email">EMAIL</label>
-          <input type="email" pInputText id="email" [(ngModel)]="user.email" required autofocus />
-          <small class="p-error" *ngIf="submitted && !user.email">Name is required.</small>
+          <input type="email" pInputText id="email" [(ngModel)]="appointment.email" required autofocus />
+          <small class="p-error" *ngIf="submitted && !appointment.email">Name is required.</small>
         </div> -->
   
         <div class="field col" style="margin-top: 10px ;">
           <!-- <label for="patient">paciente</label>
-          <input type="number" pInputText id="patient" [(ngModel)]="user.patientId" required autofocus />
-          <small class="p-error" *ngIf="submitted && !user.phone">Name is required.</small>
+          <input type="number" pInputText id="patient" [(ngModel)]="appointment.patientId" required autofocus />
+          <small class="p-error" *ngIf="submitted && !appointment.phone">Name is required.</small>
        -->
        <!-- <label for="paciente">Paciente</label>
         <p-autoComplete 
@@ -160,8 +158,8 @@
   <!--   <div class="formgrid grid" style="display: flex; gap: 1rem;">     
               <div class="field col" style="margin-top: 10px ;">
                   <label for="relationship">Parentesco</label>
-                  <input type="text" pInputText id="relationship" [(ngModel)]="user.relationship" required autofocus />
-                  <small class="p-error" *ngIf="submitted && !user.phone">Name is required.</small>
+                  <input type="text" pInputText id="relationship" [(ngModel)]="appointment.relationship" required autofocus />
+                  <small class="p-error" *ngIf="submitted && !appointment.phone">Name is required.</small>
               </div>   
     </div> -->
   

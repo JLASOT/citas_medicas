@@ -14,7 +14,7 @@ const Appointment = sequelize.define('Appointment',{
         allowNull: false,
     },
     dateAppointment:{
-        type: DataTypes.STRING(20),
+        type: DataTypes.DATE,
         allowNull: false
     },
     // estado 1 = en proceso 2  atendido  0 cancelado
