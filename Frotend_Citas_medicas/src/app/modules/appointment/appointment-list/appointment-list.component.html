@@ -31,7 +31,7 @@
     
         <ng-template pTemplate="caption">
           <div class="table-header">
-            Lista de Cipas Medicas
+            Lista de Citas Medicas
     
             <div style="margin-left: 70%; ">
               <span class="p-input-icon-left">
@@ -64,27 +64,21 @@
             <tr>
               <td>{{ i + 1 }}</td>
               <td>{{ appointment.dateAppointment }}</td>
-            <!-- <td>{{ appointment.stateAppointment }}</td> -->
-            <td> <p-tag [value]="getStateLabel(appointment.stateAppointment)" [severity]="getSeverity(appointment.stateAppointment)"></p-tag> </td>            <td>{{ appointment.Patient.name	 }} {{appointment.Patient.surname}}</td>
+            <td> <p-tag [value]="getStateLabel(appointment.stateAppointment)" [severity]="getSeverity(appointment.stateAppointment)"></p-tag> </td>            
+            <td>{{ appointment.Patient.name	 }} {{appointment.Patient.surname}}</td>
             <td>{{ appointment.Specialitie?.name || 'Sin especialidad' }}</td>
-            <td>{{ appointment.User?.name }}</td>
+            <td>{{ appointment.User.name }} {{appointment.User.surname}}</td>
             <td>{{ appointment.DayHour?.Day.name }}</td>
             <td>{{ appointment.DayHour?.Hour.name }}</td>
-            
-           <!--  <td>{{ appointment.Specialitie?.description || 'Sin especialidad' }}</td> -->
-
-          <!--   <td>{{ appointment.Patient.name}} {{appointment.Patient.surname}}</td> -->
+          
             <td>
-              <!-- <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
-                [routerLink]="['/appointment/edit', appointment.id]" /> -->
+           
                 <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
               [routerLink]="['/appointment/edit', appointment.id]" />
               <p-button icon="pi pi-trash" (onClick)="deleteUser(appointment.id)" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
                 />
     
-              <!-- <p-button [style]="{'margin-right': '20px'}"    (onClick)="deleteSpecialitie(appointment.id)"  (click)="viewPatientDetails(appointment)">Ver Detalles</p-button> -->
-              <!-- <p-button *ngIf="authService?.isAdmin" [routerLink]="['/appointment/delete', appointment.id]">Eliminar</p-button> -->
-            </td>
+              </td>
           </tr>
         </ng-template>
     
@@ -95,81 +89,19 @@
         </ng-template>
       </p-table>
     
-      <!-- Detalles del paciente seleccionado -->
-<!--       <div *ngIf="selectedSpecialitie" class="appointment-details">
-        <h3>Detalles del Paciente</h3>
-        <p><strong>NOMBRE:</strong> {{ selectedSpecialitie.name }}</p>
-        <p><strong>DESCRIPCION:</strong> {{ selectedSpecialitie.description }}</p>
-    
-      </div> -->
+
     </div>
   
   
-    <!-- modal para agregar un nuvo tutor y editar  -->
-    <!-- <p-dialog [(visible)]="tutorDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true" styleClass="p-fluid">
-      <ng-template pTemplate="content"> -->
-          <!-- <img [src]="'https://primefaces.org/cdn/primeng/images/demo/tutor/' + tutor.image" [alt]="tutor.image" class="block m-auto pb-3" *ngIf="tutor.image" /> -->
-      <!--     <div class="field">
-              <label for="name">Name</label>
-              <input type="text" pInputText id="name" [(ngModel)]="appointment.name" required autofocus />
-              <small class="p-error" *ngIf="submitted && !appointment.name">Name is required.</small>
-          </div> -->
-          
-      <!--     <div class="field"style="margin-top: 10px ;">
-            <label for="surname">apellidos</label>
-            <input type="text" pInputText id="surname" [(ngModel)]="appointment.surname" required autofocus />
-            <small class="p-error" *ngIf="submitted && !appointment.name">Name is required.</small>
-        </div> -->
-          
-       <!--    <div class="field"style="margin-top: 10px ;">
-            <label for="ci">CI</label>
-            <input type="number" pInputText id="ci" [(ngModel)]="appointment.ci" required autofocus />
-            <small class="p-error" *ngIf="submitted && !appointment.ci">CI is required.</small>
-        </div> -->
+   
   
     <div class="formgrid grid" style="display: flex; gap: 1rem;">
   
-        <!-- <div class="field col" style="margin-top: 10px ;">
-          <label for="email">EMAIL</label>
-          <input type="email" pInputText id="email" [(ngModel)]="appointment.email" required autofocus />
-          <small class="p-error" *ngIf="submitted && !appointment.email">Name is required.</small>
-        </div> -->
+       
   
         <div class="field col" style="margin-top: 10px ;">
-          <!-- <label for="patient">paciente</label>
-          <input type="number" pInputText id="patient" [(ngModel)]="appointment.patientId" required autofocus />
-          <small class="p-error" *ngIf="submitted && !appointment.phone">Name is required.</small>
-       -->
-       <!-- <label for="paciente">Paciente</label>
-        <p-autoComplete 
-          [(ngModel)]="selectedItem" 
-          [suggestions]="suggestions" 
-          (completeMethod)="search($event)" 
-          inputId="patient" 
-          [minLength]="3"
-          field="fullName" 
-          [size]="30"
-          placeholder="nombre del paciente">
-        </p-autoComplete> -->
+         
       </div>
   
     </div>
   
-  <!--   <div class="formgrid grid" style="display: flex; gap: 1rem;">     
-              <div class="field col" style="margin-top: 10px ;">
-                  <label for="relationship">Parentesco</label>
-                  <input type="text" pInputText id="relationship" [(ngModel)]="appointment.relationship" required autofocus />
-                  <small class="p-error" *ngIf="submitted && !appointment.phone">Name is required.</small>
-              </div>   
-    </div> -->
-  
-  
-  
-      <!-- </ng-template> -->
-  
-<!--       <ng-template pTemplate="footer">
-          <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-          <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveTutors()"></button>
-      </ng-template>
-  </p-dialog>
- -->

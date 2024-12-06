@@ -1,5 +1,5 @@
 <div class="patient-form-container">
-    <h2 class="form-title">Registrar Usuario</h2>
+    <h2 class="form-title">Actualizar Citas</h2>
     <p-card>
         <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
 
@@ -8,7 +8,7 @@
                 <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                     <div class="card flex justify-content-center">
                         <span class="p-float-label">
-                            <p-calendar  name="fecha" [showIcon]="true">
+                            <p-calendar [(ngModel)]="appointment.dateAppointment" name="fecha" [showIcon]="true"dateFormat="dd/mm/yy">
                             </p-calendar>
                             <label htmlFor="fecha">Fecha</label>
                         </span>
@@ -16,8 +16,8 @@
                 </div>
                 <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                     <span class="p-float-label">
-                        <p-autoComplete  
-                             inputId="patient" [minLength]="3" field="fullName"
+                        <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
+                            (completeMethod)="search($event)" inputId="patient" [minLength]="3" field="fullName"
                             name="patient" [size]="30" placeholder="nombre del paciente">
                         </p-autoComplete>
                         <label htmlFor="paciente">Paciente</label>
@@ -31,34 +31,30 @@
 
                 <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                     <span class="p-float-label">
-                        <p-dropdown name="selectedSpeciality"
+                        <p-dropdown [options]="specialities" [(ngModel)]="selectedSpeciality" name="selectedSpeciality"
                             optionLabel="name" [showClear]="true" placeholder="Seleccione especialidad"
-                            >
+                            (onChange)="onSpecialityChange()">
                         </p-dropdown>
                         <label htmlFor="especialidad">Especialidad</label>
                     </span>
                 </div>
 
-                
+
                 <div class="field col" style="margin-top: 10px ;min-width: 320px;">
-                    
-                    <p-listbox optionLabel="fullName"
-                        [style]="{'width':'15rem'}"  name="Medicos"
+
+                    <p-listbox [options]="filteredUsers" [(ngModel)]="selectedUser" optionLabel="fullName"
+                        [style]="{'width':'15rem'}" (onChange)="onUserChange($event)" name="Medicos"
                         [listStyle]="{'max-height': '220px'}">
                     </p-listbox>
-                    
-               
+
+
                 </div>
 
 
-                        <!-- Lista de Días y Horas Disponibles del Usuario Seleccionado -->
+                <!-- Lista de Días y Horas Disponibles del Usuario Seleccionado -->
                 <div class="field col" style="margin-top: 10px ;min-width: 320px;">
-                    <p-listbox 
-
-                        optionLabel="displayName" 
-                        [style]="{'width':'15rem'}" 
-                        name="dayhour" 
-                        [listStyle]="{'max-height': '220px'}">
+                    <p-listbox [options]="dayHours" [(ngModel)]="appointment.dayHourId" optionLabel="displayName"
+                        [style]="{'width':'15rem'}" name="dayhour" [listStyle]="{'max-height': '220px'}">
                     </p-listbox>
                 </div>
 
@@ -66,17 +62,27 @@
 
             <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
 
-        
-
-
-            </div>
-       
+                <div class="form-group full-width">
+                    <p-dropdown
+                      [options]="stateOptions"
+                      [(ngModel)]="appointment.stateAppointment"
+                      optionLabel="label"
+                      optionValue="value"
+                      [showClear]="true"
+                      placeholder="Cambiar de estado"
+                      id="gender"
+                      name="gender">
+                    </p-dropdown>
+                  </div>
+           
             <div class="form-group full-width">
                 <button pButton pRipple type="submit" label="Registrar" icon="pi pi-save"
                     [disabled]="!patientForm.form.valid"></button>
                 <p-button [style]="{'margin-left':'5px'}" icon="pi pi-times" label="Cancelar" severity="secondary"
                     routerLink="/appointment/lista"></p-button>
             </div>
+        </div>
+
 
         </form>
     </p-card>

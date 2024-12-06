@@ -17,7 +17,7 @@ import { AppointmentService } from '../service/appointment.service';
 })
 export class AppointmentListComponent implements OnInit {
   ngOnInit(): void {
-    this.loadUser(); // Cargar la lista de pacientes al iniciar el componente
+    this.loadAppointment(); // Cargar la lista de pacientes al iniciar el componente
   }
 
   appointments: any[] = []; // Arreglo para almacenar los pacientes
@@ -35,7 +35,7 @@ export class AppointmentListComponent implements OnInit {
   }
 
   // Método para cargar la lista de pacientes desde el servicio
-  loadUser() {
+  loadAppointment() {
     this.appointmentService.listAppointment().subscribe(
       (response: any) => {
         console.log('Users recibidos:', response.appointments); // Verifica los pacientes dentro de 'tutor'
@@ -74,7 +74,7 @@ export class AppointmentListComponent implements OnInit {
         this.appointmentService.deleteAppointment(id).subscribe(
           (response) => {
             console.log('Tutor eliminado exitosamente:', response);
-            this.loadUser(); // Recarga la lista de usuarios desde el servidor
+            this.loadAppointment(); // Recarga la lista de usuarios desde el servidor
             // Eliminar el paciente de la lista en el frontend sin necesidad de recargar
             this.appointments = this.appointments.filter(
               (user) => this.appointment.id !== id
@@ -135,14 +135,50 @@ export class AppointmentListComponent implements OnInit {
   }
 
   // Método para exportar la tabla a PDF
-  exportPdf() {
-    const doc = new jsPDF();
-    (doc as any).autoTable({
-      head: [['Fecha', 'estado','paciente']],
-      body: this.appointments.map((appointment) => [appointment.dateAppointment, appointment.stateAppointment,appointment.patientId]),
-    });
-    doc.save('appointment.pdf');
-  }
+ exportPdf() {
+  const doc = new jsPDF();
+
+  // Agregar título
+  doc.setFontSize(18);
+  doc.text('Lista de Citas Médicas', 14, 20); // Título centrado en la parte superior
+
+  // Establecer estilo para la tabla
+  const tableOptions = {
+    startY: 30, // Comienza la tabla después del título
+    head: [['Fecha', 'Estado', 'Paciente', 'Especialidad', 'Médico', 'Día y Hora']],
+    body: this.appointments.map((appointment) => [
+      appointment.dateAppointment,
+      this.getStateLabel(appointment.stateAppointment),
+      `${appointment.Patient.name} ${appointment.Patient.surname}`,
+      appointment.Specialitie.name,
+      `${appointment.User.name} ${appointment.User.surname}`,
+      `${appointment.DayHour.Day.name} ${appointment.DayHour.Hour.name}`
+    ]),
+    styles: {
+      fontSize: 10,
+      cellPadding: 5,
+      halign: 'center', // Centrado en las celdas
+      valign: 'middle',
+    },
+    headStyles: {
+      fillColor: [63, 81, 181], // Color de fondo de las cabeceras
+      textColor: [255, 255, 255], // Color del texto de las cabeceras
+      fontSize: 12,
+      halign: 'center',
+    },
+    alternateRowStyles: {
+      fillColor: [245, 245, 245], // Color de fondo alternativo para las filas
+    },
+    margin: { top: 30, bottom: 20 }, // Márgenes
+  };
+
+  // Generar la tabla con las opciones
+  (doc as any).autoTable(tableOptions);
+
+  // Guardar el archivo PDF
+  doc.save('appointment.pdf');
+}
+
 
   // Método para exportar la tabla a Excel
   exportExcel() {

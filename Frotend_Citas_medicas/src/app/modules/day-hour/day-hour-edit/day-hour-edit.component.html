@@ -1,1 +1,48 @@
-<p>day-hour-edit works!</p>
+
+  <div class="patient-form-container">
+    <h2 class="form-title">Registrar Dias medico y hora</h2>
+     <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
+      
+        <div class="form-group">
+        <span class="p-float-label">
+            <p-dropdown [options]="days" [required]="true" [(ngModel)]="selectedDay" name="selectedDay" 
+                optionLabel="name" [showClear]="true" placeholder="Seleccione especialidad">
+            </p-dropdown>
+            <label htmlFor="day">Dia</label>
+        </span>
+       </div>
+
+      <div class="form-group">
+        <span class="p-float-label">
+            <p-dropdown [options]="hours" [required]="true" [(ngModel)]="selectedHour" name="selectedHour"
+                optionLabel="name" [showClear]="true" placeholder="Seleccione la hora">
+            </p-dropdown>
+            <label htmlFor="hour">hora</label>
+        </span>
+    </div>
+
+      <div class="form-group">
+        <label for="user">Doctor</label>
+      <p-autoComplete 
+        [(ngModel)]="selectedItem" 
+        [suggestions]="suggestions" 
+        (completeMethod)="search($event)" 
+        (onSelect)="onSelectUser($event)"
+        inputId="user" 
+        name="user"
+        [minLength]="3"
+        field="fullName" 
+        [size]="30"
+        placeholder="nombre del doctor"
+        [required]="true">
+      </p-autoComplete>
+      </div>
+    
+      <div class="form-group full-width">
+        <button pButton pRipple type="submit"  label="Actualizar" icon="pi pi-save" ></button>
+        <p-button [style]="{'margin-left':'5px'}" icon="pi pi-times" label="Cancelar" severity="secondary" routerLink="/dayhour/lista" ></p-button>
+      </div>
+    </form>
+
+</div>
+

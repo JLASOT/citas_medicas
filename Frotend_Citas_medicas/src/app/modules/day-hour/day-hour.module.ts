@@ -16,6 +16,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ToolbarModule,
     DialogModule,
     DropdownModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CardModule
 
     
     

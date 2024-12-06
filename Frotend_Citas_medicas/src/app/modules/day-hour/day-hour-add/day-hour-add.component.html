@@ -10,11 +10,6 @@
         </span>
     </div>
 
-      <!-- <span class="p-float-label">
-        <input pInputText id="HourId" name="hourId" required [(ngModel)]="dayHour.hourId" />
-        <label htmlFor="name">hora</label>
-        
-      </span> -->
       <div class="form-group">
         <span class="p-float-label">
             <p-dropdown [options]="hours" [required]="true" [(ngModel)]="selectedHour" name="selectedHour"
@@ -25,11 +20,6 @@
     </div>
 
       <div class="form-group">
-        <!-- <span class="p-float-label">
-          <input pInputText id="userId" name="userId" required [(ngModel)]="dayHour.userId" />
-          <label htmlFor="name">user</label>
-          
-        </span> -->
         <label for="user">Doctor</label>
       <p-autoComplete 
         [(ngModel)]="selectedItem" 

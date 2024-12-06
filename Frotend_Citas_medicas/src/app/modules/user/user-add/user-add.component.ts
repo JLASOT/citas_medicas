@@ -24,6 +24,21 @@ export class UserAddComponent implements OnInit {
     private specialitieService: SpecialitieService // Añadir SpecialitieService al constructor
   ) {}
 
+
+  user: any = {
+    name: '',
+    surname: '',
+    rol: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    specilitieId: '',
+  };
+
+
+
+
   ngOnInit(): void {
     // Implementar ngOnInit para cargar las especialidades
     this.loadSpecialities();
@@ -46,16 +61,6 @@ export class UserAddComponent implements OnInit {
     );
   }
 
-  user: any = {
-    name: '',
-    surname: '',
-    rol: '',
-    email: '',
-    password: '',
-    phone: '',
-    address: '',
-    specilitieId: '',
-  };
 
   submitted: boolean = false;
 
@@ -75,6 +80,9 @@ export class UserAddComponent implements OnInit {
 
     console.log('Especialidad seleccionada:', this.selectedSpeciality);
     console.log('Datos del usuario a registrar:', this.user);
+    if (this.selectedSpeciality) {
+      this.user.specialitieId = Number(this.selectedSpeciality.id);//convierte el input a numro entero
+     }
 
     this.userService.registerUser(this.user).subscribe(
       (response) => {

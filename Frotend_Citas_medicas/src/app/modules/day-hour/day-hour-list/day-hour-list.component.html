@@ -56,7 +56,7 @@
 
         <td>
           <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
-            [routerLink]="['/days/edit', dayHour.id]" />
+            [routerLink]="['/dayhour/edit', dayHour.id]" />
           <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
             (onClick)="deleteDay(dayHour.id)" />
 
