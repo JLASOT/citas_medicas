@@ -1,0 +1,40 @@
+<div id="printableArea">  <!-- gregar el #tableContainer -->
+  <!-- <button  (click)="printReport()">Imprimir Reporte</button> -->
+   <!-- Botón para descargar PDF -->
+   <!-- <button #pdfButton (click)="downloadPDF()">Descargar PDF</button> -->
+
+   <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      
+        <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-print" (click)="printReport()"
+            class="p-button-success mr-2" pTooltip="PRINT" tooltipPosition="bottom"></button>
+          <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="downloadPDF()"
+            class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+  
+          <!-- <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-plus" routerLink="/user/register"
+            class="p-button-primary mr-2" pTooltip="NUEVO" tooltipPosition="bottom"></button>
+     -->
+      </ng-template>
+
+   
+</p-toolbar>
+<div class="card" #tableContainer >
+  <h2>{{ title }}</h2>
+ 
+  <p-table *ngIf="data.length > 0" [value]="data" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of columns">{{ col }}</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td *ngFor="let col of columns">{{ row[col] }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p *ngIf="data.length === 0">No hay datos disponibles.</p>
+</div>
+</div>

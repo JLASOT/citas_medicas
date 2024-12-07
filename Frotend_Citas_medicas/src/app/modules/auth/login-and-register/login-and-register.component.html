@@ -2,12 +2,12 @@
 <div class="login-container">
     <div class="card">
         <p-card header="LOG IN" subheader="" [style]="{ 'width': '400px', 'margin':'0px auto' }">
-            <ng-template pTemplate="header">
-                <img alt="Card" src="assets/images/imgH.webp" />
+            <ng-template pTemplate="header" >
+                <img style="border: 5px solid #7aa4b2; border-radius: 5px;" alt="Card" src="assets/images/imgH.webp" />
             </ng-template>
             <div >
                 <span class="p-float-label">
-                    <input type="email" pInputText id="username" [(ngModel)]="email_login" class="form-input" />
+                    <input style="width: 275px;" type="email" pInputText id="username" [(ngModel)]="email_login" class="form-input" />
                     <label htmlFor="username">Email</label>
                 </span>
             </div>

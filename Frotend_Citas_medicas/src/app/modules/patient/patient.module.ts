@@ -24,6 +24,7 @@ import { CardModule } from 'primeng/card';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { DropdownModule } from 'primeng/dropdown';
+import { ToolbarModule } from 'primeng/toolbar';
 
 
 
@@ -50,7 +51,8 @@ import { DropdownModule } from 'primeng/dropdown';
     CheckboxModule,
     CardModule,
     RadioButtonModule,
-    DropdownModule
+    DropdownModule,
+    ToolbarModule
     
   ]
 })

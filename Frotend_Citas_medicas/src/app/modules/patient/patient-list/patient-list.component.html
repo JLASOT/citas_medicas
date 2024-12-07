@@ -4,7 +4,24 @@
   <div class="content">
     <app-sidebar></app-sidebar>
   <div class="card" style="margin-top: 10px; margin-bottom: 10px; width: 90%;">
-    <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}"
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+          <button pButton pRipple label="New" routerLink="/patient/register"icon="pi pi-plus" class="p-button-success mr-2" ></button>
+          <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+              class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+            <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+              class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+    
+            <!-- <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-plus" routerLink="/user/register"
+              class="p-button-primary mr-2" pTooltip="NUEVO" tooltipPosition="bottom"></button>
+       -->
+        </ng-template>
+  
+      <ng-template pTemplate="right">
+         <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+      </ng-template>
+  </p-toolbar>
+    <p-table [scrollable]="true" scrollHeight="400px"  [style]="{'padding': '20px', 'background-color':'#e9ecef'}"
       #dt
       [value]="patients"
       dataKey="id"
@@ -31,10 +48,10 @@
             
           </div> 
 <!-- <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.printTable()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
-<button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+<!-- <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
 <button type="button" style="margin: 5px;" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
 
-            
+         -->    
         </div>
       </ng-template>
   

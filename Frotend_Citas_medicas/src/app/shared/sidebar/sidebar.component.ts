@@ -185,8 +185,21 @@ export class SidebarComponent implements OnInit {
                             routerLink: '/dayhour/lista'
                         },
                 ]
+            },
+            {
+                label: 'Reportes',
+                icon: 'pi pi-fw pi-book',
+                items: [
+                        {
+                            label: 'Lista',
+                            icon: 'pi pi-fw pi-list',
+                            routerLink: '/report/lista'
+                        },
+                ]
             }
+
 
         ];
     }
+    
 }

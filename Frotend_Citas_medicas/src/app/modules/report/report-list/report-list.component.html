@@ -1,0 +1,36 @@
+<div class="report-parent">
+  <p-card>
+  <h3>Reportes</h3>
+  <div class="formgrid grid" style="display: flex; gap: 1rem;">
+
+    <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+     
+    <p-dropdown [options]="reportOptions" [(ngModel)]="selectedReport" optionLabel="label" [showClear]="true"
+    placeholder="Seleccione un reporte" id="report-select" name="report">
+  </p-dropdown>
+    </div>
+
+    <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+      <div *ngIf="selectedReport?.key === 'patientsByDoctor' || selectedReport?.key === 'apppointmentsByDoctor'  ">
+        <!-- <label for="doctor-name">Nombre del médico:</label> -->
+        <span class="p-float-label">
+          <input pInputText type="text" id="doctor-name" [(ngModel)]="selectedDoctorName"
+            placeholder="Ingresa el nombre del médico">
+          <label htmlFor="doctor-name">Nombre del médico</label>
+        </span>
+      </div>
+    </div>
+
+</div>
+  <div class="formgrid grid" style="display: flex; gap: 1rem;">
+  <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+  <div>
+    <p-button (click)="loadReport()">Cargar Reporte</p-button>
+  </div>
+</div>
+</div>
+
+  <app-report-child *ngIf="reportData.length > 0" [title]="selectedReport.label" [data]="reportData"></app-report-child>
+
+</p-card>
+</div>

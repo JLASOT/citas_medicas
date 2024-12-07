@@ -62,6 +62,11 @@ export const routes:Routes =[
     path:'dayhour',
     loadChildren:()=> import("./modules/day-hour/day-hour.module").then(m => m.DayHourModule),
   },
+  {
+    canActivate: [authGuard],
+    path:'report',
+    loadChildren:()=> import("./modules/report/report.module").then(m => m.ReportModule),
+  },
 
   {
     path:'',
