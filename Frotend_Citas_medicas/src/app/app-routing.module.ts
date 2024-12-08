@@ -67,6 +67,12 @@ export const routes:Routes =[
     path:'report',
     loadChildren:()=> import("./modules/report/report.module").then(m => m.ReportModule),
   },
+  {
+    canActivate: [authGuard],
+    path:'calendar',
+    loadChildren:()=> import("./modules/calendar/calendar.module").then(m => m.CalendarModule),
+  },
+
 
   {
     path:'',
