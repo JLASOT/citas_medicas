@@ -28,7 +28,7 @@ const Patient = sequelize.define('Patient',{
         type : DataTypes.INTEGER,
         allowNull: false
     },
-    antecedent_allergic : {
+   /*  antecedent_allergic : {
         type : DataTypes.STRING(250),
         allowNull : true
     },
@@ -39,7 +39,7 @@ const Patient = sequelize.define('Patient',{
     antecedent_personal : {
         type : DataTypes.STRING(250),
         allowNull : true
-    },
+    }, */
     blood_type : {
         type : DataTypes.STRING(10),
         allowNull : false

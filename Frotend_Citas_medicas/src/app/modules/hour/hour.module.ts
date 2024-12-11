@@ -16,6 +16,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     InputTextModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    CalendarModule
 
   ]
 })

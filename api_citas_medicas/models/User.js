@@ -35,10 +35,10 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING(30),
         allowNull: true
     },
-    birthday: {
+   /*  birthday: {
         type: DataTypes.STRING(30),
         allowNull: true
-    },
+    }, */
     address:{
         type: DataTypes.STRING(60),
     },

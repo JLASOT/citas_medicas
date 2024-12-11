@@ -54,8 +54,8 @@
             <th pSortableColumn="rol"style="min-width: 7rem;">Paciente <p-sortIcon field="ci"></p-sortIcon></th>
             <th pSortableColumn="email"style="min-width: 11rem;">especialidad <p-sortIcon field="email"></p-sortIcon></th>
             <th pSortableColumn="phone"style="min-width: 10rem;">Medico <p-sortIcon field="relationship"></p-sortIcon></th>
-            <th pSortableColumn="address"style="min-width: 7rem;">Dia <p-sortIcon field="paciente"></p-sortIcon></th>
-            <th pSortableColumn="hour"style="min-width: 7rem;">Hora <p-sortIcon field="hour"></p-sortIcon></th>
+            <th pSortableColumn="address"style="min-width: 6em;">Dia <p-sortIcon field="paciente"></p-sortIcon></th>
+            <th pSortableColumn="hour"style="min-width: 6rem;">Hora <p-sortIcon field="hour"></p-sortIcon></th>
             <th>Acciones</th>
           </tr>
         </ng-template>
@@ -73,7 +73,7 @@
           
             <td>
            
-                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
+                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success" 
               [routerLink]="['/appointment/edit', appointment.id]" />
               <p-button icon="pi pi-trash" (onClick)="deleteUser(appointment.id)" severity="danger" [rounded]="true" [outlined]="true" [disabled]="!isAdmin()"
                 />

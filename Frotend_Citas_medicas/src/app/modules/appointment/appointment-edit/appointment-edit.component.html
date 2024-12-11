@@ -8,7 +8,11 @@
                 <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                     <div class="card flex justify-content-center">
                         <span class="p-float-label">
-                            <p-calendar [(ngModel)]="appointment.dateAppointment" name="fecha" [showIcon]="true"dateFormat="dd/mm/yy">
+                            <p-calendar [(ngModel)]="appointment.dateAppointment" 
+                            name="fecha"
+                            (onSelect)="onDateChange()" 
+                            [minDate]="today"
+                            [showIcon]="true"dateFormat="dd/mm/yy">
                             </p-calendar>
                             <label htmlFor="fecha">Fecha</label>
                         </span>

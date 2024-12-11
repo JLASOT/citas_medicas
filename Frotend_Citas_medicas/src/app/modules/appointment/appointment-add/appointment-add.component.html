@@ -1,11 +1,11 @@
 <div class="patient-form-container">
-    <h2 class="form-title">Registrar Usuario</h2>
+    <h2 class="form-title">Registrar Cita </h2>
     <p-card>
         <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
 
             <div class="formgrid grid" style="display: flex; gap: 1rem;">
 
-                <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+               <!--  <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                     <div class="card flex justify-content-center">
                         <span class="p-float-label">
                             <p-calendar [(ngModel)]="appointment.dateAppointment" name="fecha" [showIcon]="true" dateFormat="dd/mm/yy">
@@ -13,10 +13,26 @@
                             <label htmlFor="fecha">Fecha</label>
                         </span>
                     </div>
+                </div> -->
+                <div class="field col" style="margin-top: 10px; min-width: 320px;">
+                    <div class="card flex justify-content-center">
+                        <span class="p-float-label">
+                            <p-calendar 
+                                [(ngModel)]="appointment.dateAppointment" 
+                                name="fecha" 
+                                [showIcon]="true" 
+                                [minDate]="today"
+                                dateFormat="dd/mm/yy"
+                                (onSelect)="onDateChange()"> <!-- Llama al método onDateChange -->
+                            </p-calendar>
+                            <label htmlFor="fecha">Fecha</label>
+                        </span>
+                    </div>
                 </div>
+                
                 <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                     <span class="p-float-label">
-                        <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
+                        <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"  (ngModelChange)="onDateChange()" 
                             (completeMethod)="search($event)" inputId="patient" [minLength]="3" field="fullName"
                             name="patient" [size]="30" placeholder="nombre del paciente">
                         </p-autoComplete>

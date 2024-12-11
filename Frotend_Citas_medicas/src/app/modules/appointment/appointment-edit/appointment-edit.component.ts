@@ -42,6 +42,9 @@ export class AppointmentEditComponent implements OnInit {
    */
   dayHours: DayHour[] = [];
 
+  //para evitar q se seleccione una fecah anterior
+  today: Date = new Date();
+
   submitted: boolean = false;
 
   loading: boolean = true; // Control de carga
@@ -50,6 +53,10 @@ export class AppointmentEditComponent implements OnInit {
   previousDayHourId: number | null = null;
 
   stateOptions: StateOption[] | undefined;
+
+  selectedDayOfWeek: string = ''; // Aquí se almacenará el nombre del día (ej: "lunes")
+
+  selectedDay: string | null = null; // Variable para almacenar el día seleccionado
 
   appointment: any = {
     dateAppointment: new Date(),
@@ -191,12 +198,59 @@ export class AppointmentEditComponent implements OnInit {
     this.filterUsersBySpeciality();
   }
 
+  /*   onDayChange() {
+    if (this.selectedDay) {
+      this.dayHours = this.dayHours.filter(
+        (dayHour) => dayHour.day.toLowerCase() === this.selectedDay.toLowerCase()
+      );
+      console.log('Horarios filtrados por día:', this.dayHours);
+    } else {
+      // Si no se ha seleccionado un día, puedes mostrar todas las horas
+      console.log('No se ha seleccionado un día. Mostrando todos los horarios.');
+    }
+  } */
+  // Método que maneja el cambio de fecha
+  onDateChange() {
+    const selectedDate = this.appointment.dateAppointment;
+    if (selectedDate) {
+      // Ajustar la fecha a la zona horaria local
+      const correctedDate = new Date(
+        selectedDate.getTime() + selectedDate.getTimezoneOffset() * 60000
+      );
+
+      // Asignar la fecha corregida
+      this.appointment.dateAppointment = correctedDate;
+
+      // Obtener el día de la semana de la fecha seleccionada
+      this.selectedDayOfWeek = correctedDate.toLocaleString('es-ES', {
+        weekday: 'long',
+      });
+      console.log('Día seleccionado:', this.selectedDayOfWeek);
+
+      // Refiltrar las horas según la nueva fecha seleccionada
+      if (this.selectedUser) {
+        this.loadDayHours(this.selectedUser.id); // Refiltra usando el usuario seleccionado
+      }
+    } else {
+      console.warn('Fecha seleccionada no válida.');
+    }
+  }
+
   loadDayHours(userId: number) {
     this.dayHourService.listDayHour().subscribe(
       (response: any) => {
         // Filtrar solo los registros para el usuario seleccionado
-        this.dayHours = response.dayHours.filter(
+        /*  this.dayHours = response.dayHours.filter(
           (dayHour: any) => dayHour.User.id === userId && dayHour.state === 1
+        ); */
+
+        // Filtra las horas por el día seleccionado y el estado de disponibilidad
+        this.dayHours = response.dayHours.filter(
+          (dayHour: any) =>
+            dayHour.User.id === userId && // Verifica que el ID del usuario sea el correcto
+            dayHour.Day.name.toLowerCase() ===
+              this.selectedDayOfWeek.toLowerCase() && // Filtra por el día de la semana
+            dayHour.state === 1 // Filtra por el estado de disponibilidad (1 = disponible)
         );
 
         // Asignar el displayName para cada elemento
@@ -236,7 +290,25 @@ export class AppointmentEditComponent implements OnInit {
     );
   }
 
+  /////////para poder validar qla fecha del input seleccionado conicida el lunes con el dia q tiene la cita
+  // Método para obtener el nombre del día a partir de una fecha
+  getDayName(date: Date): string {
+    const days = [
+      'domingo',
+      'lunes',
+      'martes',
+      'miércoles',
+      'jueves',
+      'viernes',
+      'sábado',
+    ];
+    return days[date.getDay()];
+  }
+
   onSubmit(): void {
+    // Guardamos la fecha original antes de hacer cualquier cambio
+    const originalDate = new Date(this.appointment.dateAppointment);
+
     // Ajustar la fecha a la zona horaria local
     const localDate = new Date(this.appointment.dateAppointment);
     localDate.setMinutes(
@@ -245,6 +317,48 @@ export class AppointmentEditComponent implements OnInit {
     this.appointment.dateAppointment = localDate.toISOString().slice(0, 19); // Eliminar la "Z"
 
     console.log('Fecha seleccionada:', this.appointment.dateAppointment);
+
+    // Verificamos si el `dayHour` ha cambiado
+    const isDayHourChanged =
+      this.appointment.dayHourId !== this.previousDayHourId;
+
+    // Solo validamos el día si el `dayHour` no ha cambiado
+    if (!isDayHourChanged) {
+      const selectedDayName = this.getDayName(localDate); // Obtén el día de la semana de la fecha seleccionada
+      // Obtener el nombre del día de la cita
+      const expectedDayName = this.appointment.DayHour.Day.name; // "lunes"
+
+      // Si el día no coincide, mostramos un mensaje de error
+      if (selectedDayName !== expectedDayName) {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error de validación!',
+          text: `El día seleccionado (${selectedDayName}) no coincide con el día esperado (${expectedDayName}).`,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
+        });
+        return;
+      }
+    }
+
+    // Validar que el día de la semana coincida
+    /* const selectedDayName = this.getDayName(localDate); // Obtén el día de la semana de la fecha seleccionada
+  const expectedDayName = this.dayHours.find(
+    (dh) => dh.id === this.appointment.dayHourId
+  )?.day.toLowerCase(); // Nombre del día esperado en minúsculas
+
+  if (selectedDayName !== expectedDayName) {
+    Swal.fire({
+      icon: 'error',
+      title: '¡Error de validación!',
+      text: `El día seleccionado (${selectedDayName}) no coincide con el día esperado (${expectedDayName}).`,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK',
+    });
+    return;
+  }
+  */
+
     console.log('ID del día y hora seleccionado:', this.appointment.dayHourId);
 
     // Verificar que solo estamos enviando los IDs y no los objetos completos

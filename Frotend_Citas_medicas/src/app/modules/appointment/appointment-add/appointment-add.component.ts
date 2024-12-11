@@ -6,6 +6,9 @@ import { SpecialitieService } from '../../specialitie/service/specialitie.servic
 import { PatientService } from '../../patient/service/patient.service';
 import { AppointmentService } from '../service/appointment.service';
 import { DayHourService } from '../../day-hour/service/day-hour.service';
+//para poder obtener la fecha de la url
+import { ActivatedRoute } from '@angular/router';  // Importar ActivatedRoute
+
 
 interface DayHour {
   id: number;
@@ -39,6 +42,11 @@ export class AppointmentAddComponent implements OnInit {
 
   submitted: boolean = false;
 
+  selectedDayOfWeek: string = '';  // Inicializamos con un valor vacío o cualquier valor por defecto
+
+
+  today: Date = new Date();
+
   loading: boolean = true; // Control de carga
   constructor(
     private userService: UserService,
@@ -46,11 +54,36 @@ export class AppointmentAddComponent implements OnInit {
     private specialitieService: SpecialitieService, // Añadir SpecialitieService al constructor
     private patientService: PatientService,
     private appointmentService: AppointmentService,
-    private dayHourService: DayHourService
+    private dayHourService: DayHourService,
+    private route: ActivatedRoute  // Inyectar ActivatedRoute
   
   ) {}
 
   ngOnInit(): void {
+
+
+  // Obtener la fecha desde la URL (en formato '2024-12-11')
+  this.route.queryParams.subscribe(params => {
+    const selectedDate = params['date'];  // Asume que la fecha es un parámetro en la URL
+    if (selectedDate) {
+      // Crear un objeto Date a partir de la fecha de la URL
+      const date = new Date(selectedDate);
+
+      // Corregir el desfase horario (zona horaria local)
+      // Esto puede hacer que la fecha aparezca correcta en el input
+      const correctedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+      
+      // Asignar la fecha corregida al objeto appointment
+      this.appointment.dateAppointment = correctedDate;
+
+
+      //validar el dia lunes q no se elija otra fecha 
+        // Obtener el día de la semana de la fecha seleccionada (Lunes, Martes, etc.)
+    this.selectedDayOfWeek = correctedDate.toLocaleString('es-ES', { weekday: 'long' });
+    console.log('Día seleccionado:', this.selectedDayOfWeek);
+    }
+  });
+
     // Implementar ngOnInit para cargar las especialidades
     this.loadPatients();
     this.loadSpecialities();
@@ -109,21 +142,39 @@ export class AppointmentAddComponent implements OnInit {
   }
 
 
-  loadDayHours(userId: number) {
+ loadDayHours(userId: number) {
 
     
     this.dayHourService.listDayHour().subscribe(
       (response: any) => {
-        // Filtrar solo los registros para el usuario seleccionado
-        this.dayHours = response.dayHours.filter(
-          (dayHour: any) => dayHour.User.id === userId && dayHour.state === 1
-        );
+        console.log('Respuesta de días y horas:', response.dayHours);  // Verifica la estructura de los datos
+    
+       // Asegúrate de que this.selectedDayOfWeek contiene el nombre del día (ej. "Lunes")
+       console.log('Día seleccionado:', this.selectedDayOfWeek);
+
+
+
+       // Filtrar por Day.name y estado (state === 1 para disponible)
+       this.dayHours = response.dayHours.filter((dayHour: any) => 
+         dayHour.User.id === userId &&  // Verifica el ID del usuario
+         dayHour.Day.name === this.selectedDayOfWeek &&  // Compara el nombre del día con selectedDayOfWeek
+         dayHour.state === 1  // Verifica que el estado sea "1" (disponible)
+       );
+ 
+       console.log('Días y horas después de filtrar:', this.dayHours);
   
+
+
+
+
+
         // Asignar el displayName para cada elemento
         this.dayHours = this.dayHours.map((dayHour: any) => {
           dayHour.displayName = `${dayHour.Day.name} - ${dayHour.Hour.name}`;
           return dayHour;
         });
+
+        console.log('Días y horas disponibles para el usuario:', this.dayHours);
   
         // Si tienes un valor previamente seleccionado en appointment.dayHourId
         if (this.appointment.dayHourId) {
@@ -140,9 +191,53 @@ export class AppointmentAddComponent implements OnInit {
         console.error('Error al cargar los días y horas:', error);
       }
     );
-  }
-  
+  } 
+   
 
+  // Método para manejar el cambio de fecha desde el calendario o manualmente
+onDateChange() {
+  const selectedDate = this.appointment.dateAppointment;
+  if (selectedDate) {
+    // Formatear la fecha seleccionada
+    //const formattedDate = selectedDate.toISOString().split('T')[0];
+
+    // Ajustar la fecha a la zona horaria local
+    const correctedDate = new Date(
+      selectedDate.getTime() + selectedDate.getTimezoneOffset() * 60000
+    );
+
+    //this.appointment.dateAppointment = new Date(formattedDate);
+    // Asignar la fecha corregida
+    this.appointment.dateAppointment = correctedDate;
+
+
+    // Obtener el día de la semana de la fecha seleccionada
+    this.selectedDayOfWeek = selectedDate.toLocaleString('es-ES', { weekday: 'long' });
+    console.log('Día seleccionado manualmente:', this.selectedDayOfWeek);
+
+    // Refiltrar los días y horas según la nueva fecha seleccionada
+    if (this.selectedUser) {
+      this.loadDayHours(this.selectedUser.id); // Refiltra usando el usuario seleccionado
+    }
+  } else {
+    console.warn('Fecha seleccionada no válida.');
+  }
+}
+
+
+
+    
+
+   // Método para manejar el cambio de fecha desde el calendario
+/*    onDateChange() {
+    const selectedDate = this.appointment.dateAppointment;
+    if (selectedDate) {
+      // Formateamos la fecha a string para compararla con los datos del backend si es necesario
+      const formattedDate = selectedDate.toISOString().split('T')[0];
+      this.appointment.dateAppointment = new Date(formattedDate); // Asegúrate de que la fecha esté en el formato correcto
+    }
+  }
+ */
   loadSpecialities(): void {
     this.specialitieService.listSpecialitie().subscribe(
       (data) => {

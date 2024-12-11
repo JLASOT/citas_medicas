@@ -3,7 +3,7 @@ import sequelize from '../config/database';
 
 const Hour =sequelize.define('Hour',{
     name: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.TIME,
         allowNull: false,
         unique: true
     },

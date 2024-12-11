@@ -1,12 +1,54 @@
 <div class="hour-form-container">
     <h2 class="form-title">Registrar Hora</h2>
     <form (ngSubmit)="onSubmit()" #hourForm="ngForm" class="form-grid">
-      <div class="form-group">
+      <!-- <div class="form-group">
         <span class="p-float-label">
           <input pInputText id="name" name="name" required [(ngModel)]="hour.name" />
           <label htmlFor="name">Nombre</label>
         </span>
+      </div> -->
+<!-- 
+      <div class="form-group">
+        <span class="p-float-label">
+          <p-calendar 
+            id="time" 
+            name="time" 
+            [(ngModel)]="hour.time" 
+            [showTime]="true" 
+            >
+          </p-calendar>
+          <label for="time">Hora</label>
+        </span>
+      </div> -->
+   <div class="form-group">
+
+          <input 
+            id="time" 
+            name="time" 
+            type="time" 
+            [(ngModel)]="hour.name" 
+            
+            class="p-inputtext p-component"/>
+          <label for="time">Hora</label>
+
       </div>
+      
+  <!--    <div class="form-group">
+        <span class="p-float-label">
+          <p-calendar 
+            id="time" 
+            name="time" 
+            [(ngModel)]="hour.name" 
+            [showTime]="true" 
+            [timeOnly]="true" 
+            [showButtonBar]="true"
+            >
+          </p-calendar>
+          <label for="time">Hora</label>
+        </span>
+      </div> -->
+       
+      
     
       <div class="form-group full-width">
         <button pButton pRipple type="submit"  label="Registrar" icon="pi pi-save" [disabled]="!hourForm.form.valid"></button>

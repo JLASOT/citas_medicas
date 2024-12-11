@@ -23,6 +23,20 @@ export class HourAddComponent implements OnInit {
   }
 
   onSubmit(): void {
+
+        // Asegurarse de que la hora esté en el formato adecuado (HH:mm)
+   /*   if (this.hour.name) {
+          const hour = this.hour.name; // Esto es un objeto de tipo Date
+          const formattedTime = `${hour.getHours().toString().padStart(2, '0')}:${hour.getMinutes().toString().padStart(2, '0')}`;
+          
+          this.hour.name = formattedTime;  // Solo guardamos HH:mm
+        } */
+     
+      
+        // Ahora la hora está en formato HH:mm
+        console.log("Hora a enviar:", this.hour.name);  // Verifica aquí que se envíe solo la hora en formato HH:mm
+      
+
     this.hourService.registerHour(this.hour).subscribe(
       (response) => {
         console.log('Hora registrado exitosamente:', response);

@@ -3,7 +3,15 @@ import models from "../models";
 export default{
     create: async (req, res) => {
         try {
+            
             const hour = await models.Hour.create(req.body);
+
+            console.log("Hora recibida:", hour);  // Agrega un log para verificar el valor
+
+            // Verifica si la hora es válida
+            if (!hour) {
+                return res.status(400).json({ message: "Hora no proporcionada correctamente" });
+            }
             return res.status(201).json({
                 message: 'Hora creado exitosamente',
                 hour: hour,

@@ -20,6 +20,7 @@
   
   
       <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="users" dataKey="id"
+      
         [rowHover]="true" 
         [rows]="10" 
         [showCurrentPageReport]="true" 
@@ -52,14 +53,14 @@
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="i" style="min-width: 5rem;">N<p-sortIcon field="i"></p-sortIcon></th>
-            <th pSortableColumn="name" style="min-width: 10rem;">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="name" style="min-width: 8rem;">Nombre <p-sortIcon field="name"></p-sortIcon></th>
             <th pSortableColumn="surname"style="min-width: 10rem;">Apellidos <p-sortIcon field="surname"></p-sortIcon></th>
             <th pSortableColumn="rol"style="min-width: 7rem;">ROL <p-sortIcon field="ci"></p-sortIcon></th>
             <th pSortableColumn="email"style="min-width: 12rem;">EMAIL <p-sortIcon field="email"></p-sortIcon></th>
-            <th pSortableColumn="phone"style="min-width: 10rem;">CELULAR <p-sortIcon field="relationship"></p-sortIcon></th>
+            <th pSortableColumn="phone"style="min-width: 9rem;">CELULAR <p-sortIcon field="relationship"></p-sortIcon></th>
             <th pSortableColumn="address"style="min-width: 12rem;">DIRECCION <p-sortIcon field="paciente"></p-sortIcon></th>
-            <th pSortableColumn="specialitieId"style="min-width: 12rem;">especialidad <p-sortIcon field="specialitieId"></p-sortIcon></th>
-            <th>Acciones</th>
+            <th pSortableColumn="specialitieId"style="min-width: 11rem;">especialidad <p-sortIcon field="specialitieId"></p-sortIcon></th>
+            <th style="min-width: 9rem;">Acciones</th>
           </tr>
         </ng-template>
     
