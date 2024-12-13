@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/service/auth.service';
+import esLocale from '@fullcalendar/core/locales/es';
 
 @Component({
   selector: 'app-calendar-view',
@@ -20,12 +21,13 @@ export class CalendarViewComponent {
    // Obtener la fecha actual en formato YYYY-MM-DD
    //today: string = new Date().toISOString().split('T')[0];  
 
-   today: string = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
+   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().split('T')[0];
 
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin], // Aquí se habilita el plugin
+    locale: esLocale, // Configuración para el idioma español
 
     events: [], // Aquí se cargarán los eventos dinámicamente
     editable: true,
@@ -74,10 +76,12 @@ export class CalendarViewComponent {
 
         this.appointmentService.listAppointment().subscribe((response: any) => {
           const appointments = response.appointments; // Extraemos el array de citas
+
           if (Array.isArray(appointments)) {
             // Filtrar las citas según el rol del usuario
             const filteredAppointments = appointments.filter((appointment) => {
-              if (isDoctor) {
+              
+               if (isDoctor) {
                 // Si el usuario es médico, mostrar solo sus citas
                 return (
                   appointment.stateAppointment === 1 &&
@@ -87,6 +91,7 @@ export class CalendarViewComponent {
               // Si no es médico, muestra todas las citas activas
               return appointment.stateAppointment === 1;
             });
+            
 
         /* this.calendarOptions.events = appointments.map((appointment) => {
                   console.log("Estado de la cita:", appointment.stateAppointment); // Verificar el estado
@@ -99,15 +104,21 @@ export class CalendarViewComponent {
             console.log('Estado de la cita:', appointment.stateAppointment); // Verificar el estado
 
             const dateStr = appointment.dateAppointment; // Fecha de la cita (en formato '2024-12-09T04:00:00.000Z')
+            
             const hourStr = appointment.DayHour.Hour.name; // Hora de la cita (ej. '07:00:00')
 
             // Combinar la fecha y la hora para generar un valor completo de fecha y hora
             const [hour, minute, second] = hourStr.split(':'); // Dividir la hora en partes
             const fullDate = new Date(dateStr); // Usar la fecha de la cita como base
+
+
+             // Ajustar la fecha añadiendo un día
+            fullDate.setDate(fullDate.getDate() + 1); // Añadir un día
+
             fullDate.setHours(Number(hour), Number(minute), Number(second), 0); // Establecer la hora, minuto y segundo
 
             return {
-              title: `${appointment.Patient.name} ${appointment.Patient.surname} - ${appointment.Specialitie.name}`,
+              title: `${appointment.Patient.name} ${appointment.Patient.surname} - ${appointment.Specialitie.name}- Dr(a). ${appointment.User.name.trim()} ${appointment.User.surname.trim()}`,
               start: fullDate.toISOString(), // Usamos el valor de fecha completo como inicio del evento
               extendedProps: {
                 state: appointment.stateAppointment, // Se pasa el estado del evento

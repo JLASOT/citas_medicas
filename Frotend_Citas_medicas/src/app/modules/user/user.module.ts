@@ -19,6 +19,8 @@ import { TableModule } from 'primeng/table';
 import { UserAddComponent } from './user-add/user-add.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { PasswordModule } from 'primeng/password';
+import { CalendarModule } from 'primeng/calendar';
+
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { PasswordModule } from 'primeng/password';
     CardModule,
     TableModule,
     DropdownModule,
-    PasswordModule
+    PasswordModule,
+    CalendarModule,
+ 
 
   ]
 })

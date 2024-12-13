@@ -23,10 +23,10 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING(250),
         allowNull: false
     },
-    avatar: {
+ /*    avatar: {
         type: DataTypes.STRING(250),
         allowNull: true
-    },
+    }, */
     state: {
         type: DataTypes.INTEGER,
         defaultValue: 1
@@ -41,6 +41,12 @@ const User = sequelize.define('User', {
     }, */
     address:{
         type: DataTypes.STRING(60),
+    },
+    fechaIni:{
+        type: DataTypes.DATEONLY,      
+    },
+    fechaFin:{
+        type: DataTypes.DATEONLY,      
     },
     specialitieId: { // Clave foránea
         type: DataTypes.INTEGER,

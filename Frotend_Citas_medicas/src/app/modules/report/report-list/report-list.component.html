@@ -20,6 +20,77 @@
         </span>
       </div>
     </div>
+    
+
+    <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+      <div *ngIf="selectedReport?.key === 'apppointmentsByEmpl'  ">
+        <!-- <label for="doctor-name">Nombre del médico:</label> -->
+        <span class="p-float-label">
+          <input pInputText type="text" id="empleado-name" [(ngModel)]="selectedEmpleName"
+            placeholder="Ingresa el nombre del empleado">
+          <label htmlFor="empleado-name">Nombre del empleado</label>
+        </span>
+      </div>
+    </div>
+
+   
+
+</div>
+<div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 27px;"*ngIf="selectedReport?.key === 'appointmentsByDateRange' ">
+
+  <!-- <div class="field col" style="margin-top: 10px ;min-width: 320px;" >
+    <div >
+     
+      <span class="p-float-label">
+        <input pInputText type="date" id="startDate" [(ngModel)]="startDate"
+          placeholder="Ingresa el nombre del médico">
+        <label htmlFor="startDate">Fecha de inicio:</label>
+      </span>
+    </div>
+  </div> -->
+
+  <div class="field col" style="min-width: 320px;">
+    <div class="card flex justify-content-center">
+        <span class="p-float-label">
+            <p-calendar 
+                [(ngModel)]="startDate" 
+                name="startDate" 
+                [showIcon]="true" 
+                dateFormat="dd/mm/yy"
+               > <!-- Llama al método onDateChange -->
+            </p-calendar>
+            <label htmlFor="fecha">Fecha de inicio:</label>
+        </span>
+    </div>
+</div>
+
+
+
+<!--   <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+    <div>
+      <span class="p-float-label">
+        <p-calendar pInputText type="date" id="endDate" [(ngModel)]="endDate" placeholder="Ingresa la fecha de fin"></p-calendar>
+        <label for="endDate">Fecha de fin:</label>
+      </span>
+    </div>
+    
+  </div> -->
+
+  <div class="field col" style=" min-width: 320px;">
+    <div class="card flex justify-content-center">
+        <span class="p-float-label">
+            <p-calendar 
+                [(ngModel)]="endDate" 
+                name="endDate" 
+                [showIcon]="true" 
+                dateFormat="dd/mm/yy"
+               > <!-- Llama al método onDateChange -->
+            </p-calendar>
+            <label htmlFor="fecha">Fecha de fin:</label>
+        </span>
+    </div>
+</div>
+
 
 </div>
   <div class="formgrid grid" style="display: flex; gap: 1rem;">

@@ -6,14 +6,14 @@ import 'jspdf-autotable';
 import { UserService } from '../service/user.service';
 import { AuthService } from '../../auth/service/auth.service';
 import { Router } from '@angular/router';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
 })
-export class UserListComponent implements OnInit{
-
+export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser(); // Cargar la lista de pacientes al iniciar el componente
   }
@@ -46,7 +46,6 @@ export class UserListComponent implements OnInit{
       }
     );
   }
-
 
   deleteUser(id: number): void {
     Swal.fire({
@@ -84,7 +83,6 @@ export class UserListComponent implements OnInit{
     });
   }
 
-
   onGlobalFilter(event: Event, dt: any) {
     const inputElement = event.target as HTMLInputElement;
     dt.filterGlobal(inputElement.value, 'contains');
@@ -97,11 +95,66 @@ export class UserListComponent implements OnInit{
   // Método para exportar la tabla a PDF
   exportPdf() {
     const doc = new jsPDF();
+    // Añadir un título al
+    doc.setFontSize(18);
+    doc.text('Lista de Usuarios', 14, 22);
+
+    // Añadir la fecha actual al PDF
+    const date = new Date();
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+
     (doc as any).autoTable({
-      head: [['Nombre', 'Descripcion']],
-      body: this.users.map((user) => [user.name, user.description]),
+      head: [
+        ['Nombre', 'Apellidos', 'Rol', 'Especialidad', 'Correo', 'Celular'],
+      ],
+      body: this.users.map((user) => [
+        user.name,
+        user.surname,
+        user.rol,
+        user.Specialitie ? user.Specialitie.name : 'Sin especialidad',
+        user.email,
+        user.phone,
+      ]),
+      startY: 40, // Posición donde empezará la tabla
+      theme: 'striped', // Tema de la tabla
+      headStyles: { fillColor: [22, 160, 133] },
+      // Color del encabezado
+      styles: { fontSize: 10, cellPadding: 3 }, // Estilo de las celdas
+      alternateRowStyles: { fillColor: [240, 240, 240] }, // Color de las filas alternadas
     });
-    doc.save('tutor.pdf');
+
+    doc.save('Users.pdf');
+  }
+
+  printPdf() {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Lista de Usuarios', 14, 22);
+    const date = new Date();
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+    const options = {
+      head: [
+        ['Nombre', 'Apellidos', 'Rol', 'Especialidad', 'Correo', 'Celular'],
+      ],
+      body: this.users.map((user) => [
+        user.name,
+        user.surname,
+        user.rol,
+        user.Specialitie ? user.Specialitie.name : 'Sin especialidad',
+        user.email,
+        user.phone,
+      ]),
+      startY: 40,
+      theme: 'striped',
+      headStyles: { fillColor: [22, 160, 133] },
+      styles: { fontSize: 10, cellPadding: 3 },
+      alternateRowStyles: { fillColor: [240, 240, 240] },
+    };
+    (doc as any).autoTable(options);
+    doc.autoPrint();
+    window.open(doc.output('bloburl'), '_blank');
   }
 
   // Método para exportar la tabla a Excel
@@ -113,7 +166,7 @@ export class UserListComponent implements OnInit{
         bookType: 'xlsx',
         type: 'array',
       });
-      this.saveAsExcelFile(excelBuffer, 'tutor');
+      this.saveAsExcelFile(excelBuffer, 'Users');
     });
   }
 

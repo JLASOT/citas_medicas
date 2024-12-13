@@ -7,9 +7,15 @@
           <label htmlFor="name">Nombre</label>
         </span>
       </div>
+      <div class="card flex justify-content-center">
+        <span class="p-float-label" style="margin-top: 10px;">
+            <input  rows="5" cols="36" id="Precio" name="Precio" required [(ngModel)]="specialitie.price" pInputTextarea>
+            <label for="Precio">Precio</label>
+        </span>
+    </div>
     
       <div class="card flex justify-content-center">
-          <span class="p-float-label">
+          <span class="p-float-label"style="margin-top: 25px;">
               <textarea id="float-input" rows="5" cols="36" id="description" name="description" required [(ngModel)]="specialitie.description" pInputTextarea></textarea>
               <label for="float-input">Descripcion</label>
           </span>

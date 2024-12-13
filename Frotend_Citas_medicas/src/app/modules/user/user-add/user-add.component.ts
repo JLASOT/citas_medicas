@@ -18,6 +18,10 @@ export class UserAddComponent implements OnInit {
   specialities: any[] = []; // Añadir array para almacenar las especialidades
   selectedSpeciality: any; // Añadir variable para la especialidad seleccionada
   role: Rol[] | undefined;
+
+  isDoctor: boolean = false; // Controla la visibilidad de los campos de fecha
+ 
+
   constructor(
     private userService: UserService,
     private router: Router,
@@ -33,9 +37,16 @@ export class UserAddComponent implements OnInit {
     password: '',
     phone: '',
     address: '',
+    fechaIni:new Date(),
+    fechaFin:new Date(),
     specilitieId: '',
   };
 
+
+  // Cambiar visibilidad de los campos según el rol seleccionado
+  onRoleChange(role: string): void {
+    this.isDoctor = role === 'medico';
+  }
 
 
 
@@ -77,6 +88,13 @@ export class UserAddComponent implements OnInit {
       });
       return;
     }
+
+      // Verificar el rol del usuario
+  if (this.user.rol !== 'medico') {
+    // Si no es "medico", establecer las fechas como null
+    this.user.fechaIni = null;
+    this.user.fechaFin = null;
+  }
 
     console.log('Especialidad seleccionada:', this.selectedSpeciality);
     console.log('Datos del usuario a registrar:', this.user);

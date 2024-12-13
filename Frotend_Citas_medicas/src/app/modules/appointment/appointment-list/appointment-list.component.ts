@@ -40,7 +40,7 @@ export class AppointmentListComponent implements OnInit {
       (response: any) => {
         console.log('Users recibidos:', response.appointments); // Verifica los pacientes dentro de 'tutor'
         this.appointments = response.appointments || []; // Asigna los pacientes correctamente desde 'response.tutor'
-        this.appointments = response.appointments.map((appointment: any) => {
+        /* this.appointments = response.appointments.map((appointment: any) => {
           // Convertir la fecha a un formato más legible
           appointment.dateAppointment = new Date(appointment.dateAppointment).toLocaleString('es-PE', {
             day: '2-digit',
@@ -48,9 +48,20 @@ export class AppointmentListComponent implements OnInit {
             year: 'numeric',
             // hour: '2-digit',
             // minute: '2-digit',
-          });
+          }); 
           return appointment;
-        });
+        }); */
+
+        // Modificar las citas para cambiar el formato de la fecha
+      this.appointments = this.appointments.map((appointment: any) => {
+        // Convierte la fecha al formato 'dd/mm/yyyy'
+        if (appointment.dateAppointment) {
+          const date = new Date(appointment.dateAppointment);
+          date.setDate(date.getDate() + 1);
+          appointment.dateAppointment = date.toLocaleDateString('es-PE'); // Formato 'dd/mm/yyyy'
+        }
+        return appointment;
+      });
         this.loading = false; // Desactiva el indicador de carga
       },
       (error) => {

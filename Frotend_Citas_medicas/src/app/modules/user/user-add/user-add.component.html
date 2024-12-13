@@ -1,3 +1,7 @@
+<app-header></app-header>
+<main class="dashboard">
+  <div class="content">
+    <app-sidebar></app-sidebar>
 <div class="patient-form-container">
     <h2 class="form-title">Registrar Usuario</h2>
     <form (ngSubmit)="onSubmit()" #patientForm="ngForm" class="form-grid">
@@ -27,7 +31,9 @@
             <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                 <span class="p-float-label">
                     <p-dropdown [options]="role" [(ngModel)]="user.rol" optionLabel="label" optionValue="value"
-                        [showClear]="true" placeholder="Rol" id="role" name="role">
+                        [showClear]="true" placeholder="Rol" id="role" name="role"
+                        (onChange)="onRoleChange($event.value)"
+                        >
                     </p-dropdown>
                     <label htmlFor="rol">Rol</label>
                 </span>
@@ -35,7 +41,8 @@
 
             <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                 <span class="p-float-label">
-                    <input pInputText type="email" id="email" name="email" [(ngModel)]="user.email" required autofocus />
+                    <input pInputText type="email" id="email" name="email" [(ngModel)]="user.email" required
+                        autofocus />
                     <small class="p-error" *ngIf="submitted && !user.email">email is required.</small>
                     <label htmlFor="email">Email</label>
                 </span>
@@ -45,13 +52,14 @@
         <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
             <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                 <span class="p-float-label">
-                    <p-password [(ngModel)]="user.password" id="password" name="password" required [toggleMask]="true"></p-password>
+                    <p-password [(ngModel)]="user.password" id="password" name="password" required
+                        [toggleMask]="true"></p-password>
                     <small class="p-error" *ngIf="submitted && !user.password">password is required.</small>
                     <label htmlFor="password">password</label>
                 </span>
             </div>
 
-            
+
 
             <div class="field col" style="margin-top: 10px ;min-width: 320px;">
                 <span class="p-float-label">
@@ -80,7 +88,7 @@
                 </span>
             </div> -->
 
-            <div class="field col" style="margin-top: 10px ;min-width: 320px;">
+            <div *ngIf="isDoctor"  class="field col" style="margin-top: 10px ;min-width: 320px;">
                 <span class="p-float-label">
                     <p-dropdown [options]="specialities" [(ngModel)]="selectedSpeciality" name="selectedSpeciality"
                         optionLabel="name" [showClear]="true" placeholder="Seleccione especialidad">
@@ -89,6 +97,47 @@
                 </span>
             </div>
         </div>
+
+        <div class="formgrid grid" style="display: flex; gap: 1rem; margin-top: 20px;">
+
+            <!-- Campos de fechas visibles solo si el rol seleccionado es "medico" -->
+            <div *ngIf="isDoctor" class="field col" style="margin-top: 10px ;min-width: 320px;">
+              <!--   <span class="p-float-label">
+                    <input type="date" id="fechaIni" [(ngModel)]="user.fechaIni" name="startDate" class="p-inputtext">
+                    <label htmlFor="fechaIni">Fecha Inicio</label>
+                </span> -->
+
+                <span class="p-float-label">
+                    <p-calendar 
+                        [(ngModel)]="user.fechaIni" 
+                        name="fechaIni" 
+                        [showIcon]="true" 
+                        dateFormat="dd/mm/yy"
+                        > 
+                    </p-calendar>
+                    <label htmlFor="fechaIni">Fecha Inicio</label>
+                </span>
+
+            </div>
+
+            <div *ngIf="isDoctor" lass="field col" style="margin-top: 10px ;min-width: 320px;">
+               <!--  <span class="p-float-label">
+                    <input type="date" id="fechaFin" [(ngModel)]="user.fechaFin" name="endDate" class="p-inputtext">
+                    <label htmlFor="fechaFin">Fecha Fin</label>
+                </span> -->
+                <span class="p-float-label">
+                    <p-calendar 
+                        [(ngModel)]="user.fechaFin" 
+                        name="fechaFin" 
+                        [showIcon]="true" 
+                        dateFormat="dd/mm/yy"
+                        > 
+                    </p-calendar>
+                    <label htmlFor="fechaFin">Fecha Fin</label>
+                </span>
+            </div>
+        </div>
+
         <div class="form-group full-width">
             <button pButton pRipple type="submit" label="Registrar" icon="pi pi-save"
                 [disabled]="!patientForm.form.valid"></button>
@@ -97,3 +146,5 @@
         </div>
     </form>
 </div>
+  </div>
+</main>

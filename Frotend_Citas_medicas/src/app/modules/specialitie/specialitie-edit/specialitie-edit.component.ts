@@ -13,6 +13,7 @@ export class SpecialitieEditComponent implements OnInit {
     
   specialitie: any = {
     name: '',
+    price:'',
     description: '',
   };
 

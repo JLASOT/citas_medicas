@@ -4,36 +4,34 @@
 @import "primeicons/primeicons.css";
 @import "~sweetalert2/dist/sweetalert2.min.css";
 
+html,
+body {
+  height: 100%; /* Asegura que el body ocupe toda la altura */
+  margin: 0; /* Elimina márgenes por defecto */
+  padding: 0; /* Elimina padding por defecto */
+}
 
+body {
+  min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
+  background-image: url("./assets/images/fondo.webp");
+  background-size: cover; /* Para cubrir todo el fondo */
+  background-position: center; /* Para centrar la imagen */
+  background-repeat: no-repeat; /* Para evitar que la imagen se repita */
+  background-attachment: fixed;
+}
 
-html, body {
-    height: 100%;  /* Asegura que el body ocupe toda la altura */
-    margin: 0;  /* Elimina márgenes por defecto */
-    padding: 0;  /* Elimina padding por defecto */
-  }
-  
-  body {
-    min-height: 100vh;  /* Asegura que el body ocupe al menos toda la altura de la ventana */
-    background-image: url('./assets/images/fondo.webp');
-    background-size: cover; /* Para cubrir todo el fondo */
-    background-position: center; /* Para centrar la imagen */
-    background-repeat: no-repeat; /* Para evitar que la imagen se repita */
-    background-attachment: fixed;
-  }
-  
-  .custom-popup {
-    background-color: #f5f5f5 !important;
-    border-radius: 10px;
-  }
-  
-  .custom-confirm-button {
-    background-color: #d33 !important;
-    color: #fff !important;
-  }
-  
-  .custom-cancel-button {
-    background-color: #3085d6 !important;
-    color: #fff !important;
-  }
-  
-  
+.custom-popup {
+  background-color: #f5f5f5 !important;
+  border-radius: 10px;
+}
+
+.custom-confirm-button {
+  background-color: #d33 !important;
+  color: #fff !important;
+}
+
+.custom-cancel-button {
+  background-color: #3085d6 !important;
+  color: #fff !important;
+}
+

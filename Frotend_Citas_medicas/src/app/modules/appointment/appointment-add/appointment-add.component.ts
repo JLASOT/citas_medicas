@@ -44,10 +44,35 @@ export class AppointmentAddComponent implements OnInit {
 
   selectedDayOfWeek: string = '';  // Inicializamos con un valor vacío o cualquier valor por defecto
 
+  
+  selectedSpecialityDescription: string = ''; // Descripción de la especialidad seleccionada
+
+  usrID: string = ''; // Variable para el rol del usuario
 
   today: Date = new Date();
 
+
+
   loading: boolean = true; // Control de carga
+
+  appointment: any = {
+    dateAppointment: new Date(),
+    patientId: '',
+    specialitieId: '',
+    userId: '',
+    dayHourId: '',
+    paymentAppointment:'',
+    userRegisId:'',
+  };
+
+  payment:any = {
+    monto: '',
+    metodoPago:'',
+    appointmentId:'',
+  };
+
+
+
   constructor(
     private userService: UserService,
     private router: Router,
@@ -61,6 +86,11 @@ export class AppointmentAddComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // Obtén el rol del usuario desde el localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}'); // Convierte el JSON almacenado en objeto
+    this.usrID = user.id || ''; // Extrae el rol del usuario, por ejemplo: "admin" o "medico"
+
+    console.log('usuario q re',this.usrID);
 
   // Obtener la fecha desde la URL (en formato '2024-12-11')
   this.route.queryParams.subscribe(params => {
@@ -73,6 +103,8 @@ export class AppointmentAddComponent implements OnInit {
       // Esto puede hacer que la fecha aparezca correcta en el input
       const correctedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
       
+
+
       // Asignar la fecha corregida al objeto appointment
       this.appointment.dateAppointment = correctedDate;
 
@@ -82,6 +114,8 @@ export class AppointmentAddComponent implements OnInit {
     this.selectedDayOfWeek = correctedDate.toLocaleString('es-ES', { weekday: 'long' });
     console.log('Día seleccionado:', this.selectedDayOfWeek);
     }
+
+    
   });
 
     // Implementar ngOnInit para cargar las especialidades
@@ -114,15 +148,37 @@ export class AppointmentAddComponent implements OnInit {
       this.filteredUsers = this.users.filter(
         (user) =>
           user.specialitieId !== null &&
-          user.specialitieId === this.selectedSpeciality.id
+          user.specialitieId === this.selectedSpeciality.id 
+          
       );
     } else {
       this.filteredUsers = this.users.filter(
-        (user) => user.specialitieId !== null
+        (user) => user.specialitieId !== null 
+       
+     
       );
     }
-  }
+  } 
+/* 
+    filterUsersBySpeciality() {
+      if (this.selectedSpeciality) {
+        this.filteredUsers = this.users.filter(
+          (user) =>
+            user.specialitieId !== null &&
+            user.specialitieId === this.selectedSpeciality.id &&
+            new Date(user.fechaFin) >= new Date(this.appointment.dateAppointment) // Verificar que fechaFin sea >= a la fecha seleccionada
+        );
+      } else {
+        this.filteredUsers = this.users.filter(
+          (user) => user.specialitieId !== null
+        );
+      }
+    }
+      */
 
+    
+
+   
 
 
   onUserChange(event: any) {
@@ -137,61 +193,122 @@ export class AppointmentAddComponent implements OnInit {
   
 
   // Este método se ejecutará cuando se seleccione una especialidad
-  onSpecialityChange() {
+/*   onSpecialityChange() {
     this.filterUsersBySpeciality();
   }
+ */
+  /* onSpecialityChange() {
+    this.filterUsersBySpeciality();
+    if (this.filteredUsers.length === 0) {
+      this.dayHours = []; // Resetea dayHours si no hay médicos disponibles
+      this.appointment.dayHourId = null; // Resetea el campo dayHourId
+    } else {
+      this.loadDayHours(this.selectedUser.id);
+    }
+  }
+   */
 
 
- loadDayHours(userId: number) {
 
-    
+
+
+  onSpecialityChange(): void {
+    // Filtra los médicos por especialidad
+    this.filterUsersBySpeciality();
+  
+    // Si no hay médicos disponibles, resetea las listas dependientes
+    if (!this.filteredUsers || this.filteredUsers.length === 0) {
+      console.log('No hay médicos disponibles para la especialidad seleccionada');
+      this.dayHours = []; // Limpia horarios disponibles
+      this.appointment.dayHourId = null; // Resetea el campo de día y hora
+      this.selectedUser = null; // Resetea el usuario seleccionado
+      this.selectedSpecialityDescription = ''; // Resetea la descripción
+      return;
+    }
+
+    // Actualiza la descripción de la especialidad seleccionada
+  if (this.selectedSpeciality && this.selectedSpeciality.description) {
+    this.selectedSpecialityDescription = this.selectedSpeciality.price;
+  } else {
+    this.selectedSpecialityDescription = ''; // Resetea la descripción si no se encuentra
+  }
+  
+    // Si hay médicos disponibles, asegúrate de cargar los horarios para el usuario seleccionado
+    if (this.selectedUser && this.selectedUser.id) {
+      this.loadDayHours(this.selectedUser.id);
+    } else {
+      console.log('Selecciona un médico para ver los horarios disponibles');
+      this.dayHours = []; // Limpia horarios hasta que se seleccione un médico
+    }
+  }
+
+  
+
+
+  loadDayHours(userId: number) {
+    // Paso 1: Cargar los dayHours disponibles para el usuario
     this.dayHourService.listDayHour().subscribe(
       (response: any) => {
-        console.log('Respuesta de días y horas:', response.dayHours);  // Verifica la estructura de los datos
-    
-       // Asegúrate de que this.selectedDayOfWeek contiene el nombre del día (ej. "Lunes")
-       console.log('Día seleccionado:', this.selectedDayOfWeek);
-
-
-
-       // Filtrar por Day.name y estado (state === 1 para disponible)
-       this.dayHours = response.dayHours.filter((dayHour: any) => 
-         dayHour.User.id === userId &&  // Verifica el ID del usuario
-         dayHour.Day.name === this.selectedDayOfWeek &&  // Compara el nombre del día con selectedDayOfWeek
-         dayHour.state === 1  // Verifica que el estado sea "1" (disponible)
-       );
- 
-       console.log('Días y horas después de filtrar:', this.dayHours);
-  
-
-
-
-
-
-        // Asignar el displayName para cada elemento
-        this.dayHours = this.dayHours.map((dayHour: any) => {
-          dayHour.displayName = `${dayHour.Day.name} - ${dayHour.Hour.name}`;
-          return dayHour;
+        // Filtrar los dayHours por el userId y el día seleccionado
+        let availableDayHours = response.dayHours.filter((dayHour: any) => {
+          return dayHour.User.id === userId && dayHour.Day.name === this.selectedDayOfWeek;
         });
-
-        console.log('Días y horas disponibles para el usuario:', this.dayHours);
   
-        // Si tienes un valor previamente seleccionado en appointment.dayHourId
-        if (this.appointment.dayHourId) {
-          const selectedDayHour = this.dayHours.find(dh => dh.id === this.appointment.dayHourId);
-          if (selectedDayHour) {
-            // Asegúrate de que solo el id esté asignado
-            this.appointment.dayHourId = selectedDayHour.id;
+        console.log('Días y horas disponibles:', availableDayHours);
+  
+        // Paso 2: Cargar todas las citas registradas
+        this.appointmentService.listAppointment().subscribe(
+          (appointmentsResponse: any) => {
+            const appointments = appointmentsResponse.appointments || [];
+  
+            // Paso 3: Filtrar los dayHours ocupados en la fecha seleccionada
+            availableDayHours = availableDayHours.filter((dayHour: any) => {
+              const fechaSeleccionada = new Date(this.appointment.dateAppointment);
+              let isOccupied = false;
+  
+              // Verificar si ya existe una cita con el mismo dayHourId en la misma fecha
+              appointments.forEach((appointment: any) => {
+                const citaDate = new Date(appointment.dateAppointment);
+                citaDate.setDate(citaDate.getDate() + 1);  // Ajuste por el desfase de fechas
+                if (citaDate.toLocaleDateString('es-PE') === fechaSeleccionada.toLocaleDateString('es-PE') &&
+                    appointment.dayHourId === dayHour.id) {
+                  isOccupied = true;  // Si se encuentra ocupada, se marca como ocupada
+                }
+              });
+  
+              return !isOccupied;  // Si no está ocupada, lo dejamos en los disponibles
+            });
+  
+            console.log('Días y horas disponibles para el usuario:', availableDayHours);
+  
+            // Paso 4: Asignar el displayName para cada elemento
+            this.dayHours = availableDayHours.map((dayHour: any) => {
+              dayHour.displayName = `${dayHour.Day.name} - ${dayHour.Hour.name}`;
+              return dayHour;
+            });
+  
+            console.log('Días y horas disponibles para el usuario con displayName:', this.dayHours);
+  
+            // Si tienes un valor previamente seleccionado en appointment.dayHourId
+            if (this.appointment.dayHourId) {
+              const selectedDayHour = this.dayHours.find(dh => dh.id === this.appointment.dayHourId);
+              if (selectedDayHour) {
+                // Asegúrate de que solo el id esté asignado
+                this.appointment.dayHourId = selectedDayHour.id;
+              }
+            }
+          },
+          (error) => {
+            console.error('Error al cargar las citas:', error);
           }
-        }
-  
-        console.log('Días y horas disponibles para el usuario:', this.dayHours);
+        );
       },
       (error) => {
-        console.error('Error al cargar los días y horas:', error);
+        console.error('Error al cargar los dayHours:', error);
       }
     );
-  } 
+  }
+  
    
 
   // Método para manejar el cambio de fecha desde el calendario o manualmente
@@ -202,14 +319,14 @@ onDateChange() {
     //const formattedDate = selectedDate.toISOString().split('T')[0];
 
     // Ajustar la fecha a la zona horaria local
-    const correctedDate = new Date(
+  /*   const correctedDate = new Date(
       selectedDate.getTime() + selectedDate.getTimezoneOffset() * 60000
     );
 
     //this.appointment.dateAppointment = new Date(formattedDate);
     // Asignar la fecha corregida
-    this.appointment.dateAppointment = correctedDate;
-
+    this.appointment.dateAppointment = correctedDate; */
+    
 
     // Obtener el día de la semana de la fecha seleccionada
     this.selectedDayOfWeek = selectedDate.toLocaleString('es-ES', { weekday: 'long' });
@@ -250,13 +367,7 @@ onDateChange() {
     );
   }
 
-  appointment: any = {
-    dateAppointment: new Date(),
-    patientId: '',
-    specialitieId: '',
-    userId: '',
-    dayHourId: '',
-  };
+ 
 
   onSubmit(): void {
    
@@ -275,6 +386,88 @@ onDateChange() {
     });
     return; // Detiene el submit si la fecha no es válida
   }
+
+  if (this.selectedUser && this.selectedUser.fechaFin) {
+    const fechaIni = new Date(this.selectedUser.fechaIni);
+    const fechaFin = new Date(this.selectedUser.fechaFin);
+    const fechaSeleccionada = new Date(this.appointment.dateAppointment);
+
+    // Sumar un día a fechaFin para corregir el posible desfase de zona horaria
+    fechaIni.setDate(fechaIni.getDate() + 1);
+    fechaFin.setDate(fechaFin.getDate() + 1);
+
+   // Log después de sumar un día
+   console.log('fechaIni después de sumar un día:', fechaIni);
+   console.log('fechaFin después de sumar un día:', fechaFin);
+  
+   /*  // Asegurarse de que solo se compare la parte de la fecha (sin horas, minutos, segundos)
+    fechaFin.setHours(0, 0, 0, 0); // Ajusta la hora de fechaFin a medianoche
+    fechaSeleccionada.setHours(0, 0, 0, 0); // Ajusta la hora de fechaSeleccionada a medianoche
+
+    console.log('fecahfin',fechaFin);
+    console.log('fecahsselction',fechaSeleccionada);
+  
+    // Compara solo la parte de la fecha
+    if (fechaSeleccionada > fechaFin) {
+
+       // Formatear la fecha a un formato legible (dd/mm/yyyy)
+  const fechaFinFormateada = fechaFin.toLocaleDateString('es-BO', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+      console.error('La fecha seleccionada está fuera del rango permitido.');
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: `La fecha seleccionada está fuera del rango. El medico no puede tener citas después del ${fechaFinFormateada}.`,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+      });
+      return; // Detiene el submit si la fecha está fuera de rango
+    } */
+
+      // Crear una nueva fecha para evitar modificar la original
+/* const fechaFinAjustada = new Date(fechaFin);
+fechaFinAjustada.setDate(fechaFinAjustada.getDate() + 1); // Añadir un día */
+
+// Asegurarse de que ambas fechas estén sin horas
+fechaIni.setHours(0, 0, 0, 0);
+fechaFin.setHours(0, 0, 0, 0);
+fechaSeleccionada.setHours(0, 0, 0, 0);
+
+console.log('fechaFinAjustada:', fechaIni);
+console.log('fechaFinAjustada:', fechaFin);
+console.log('fechaSeleccionada:', fechaSeleccionada);
+
+// Compara solo la parte de la fecha
+if (fechaSeleccionada > fechaFin || fechaSeleccionada < fechaIni) {
+  const fechaFinFormateada = fechaFin.toLocaleDateString('es-BO', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+  const fechaIniFormateada = fechaIni.toLocaleDateString('es-BO', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+
+
+  console.error('La fecha seleccionada está fuera del rango permitido.');
+  Swal.fire({
+    icon: 'error',
+    title: '¡Error!',
+    text: `Fecha fuera del rango. Dr(a) ${this.selectedUser.name} ${this.selectedUser.surname} no puede tener citas antes del ${fechaIniFormateada} ni  después del ${fechaFinFormateada}.`,
+    confirmButtonColor: '#3085d6',
+    confirmButtonText: 'OK',
+  });
+  return; // Detiene el submit si la fecha está fuera de rango  
+}
+
+  }
+  
+
 
     console.log('Fecha seleccionada:', this.appointment.dateAppointment);    
     console.log('ID del día y hora seleccionado:', this.appointment.dayHourId); // Debería ser solo un número (ID)
@@ -300,10 +493,29 @@ onDateChange() {
       console.error('No se seleccionó un usuario.');
     }
     console.log('Datos finales del appointment:', this.appointment);
+
   
+    this.appointment.userRegisId = this.usrID;
     this.appointmentService.registerAppointment(this.appointment).subscribe(
       (response) => {
         console.log('Paciente registrado exitosamente:', response);
+
+         // Obtener el ID de la cita registrada
+      const appointmentId = response.appointment.id;
+
+      // Preparar el objeto de pago
+      this.payment.appointmentId = appointmentId;
+      console.log('Datos del pago a registrar:', this.payment);
+
+        this.payment.appointmentId = appointmentId;
+
+        
+
+        this.appointmentService.registerPayment(this.payment).subscribe(
+          (paymentResponse) => {
+            console.log('Pago registrado exitosamente:', paymentResponse);
+          }
+        )
   
         // Después de registrar el appointment, actualizamos el estado del dayHour
         const selectedDayHour = this.dayHours.find((dh: any) => dh.id === selectedDayHourId);
@@ -320,7 +532,7 @@ onDateChange() {
               Swal.fire({
                 icon: 'success',
                 title: '¡Éxito!',
-                text: 'Paciente registrado exitosamente.',
+                text: 'cita registrado exitosamente.',
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK',
               });
@@ -333,17 +545,30 @@ onDateChange() {
         } else {
           console.error('No se encontró el DayHour seleccionado');
         }
+
+        Swal.fire({
+                  icon: 'success',
+                  title: '¡Éxito!',
+                  text: 'cita registrado exitosamente.',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'OK',
+                });
+                this.router.navigate(['/appointment/lista']);
+
   
       },
       (error) => {
-        console.error('Error al registrar el appointment:', error);
-        Swal.fire({
-          icon: 'error',
-          title: '¡Error!',
-          text: 'Error al registrar el appointment: ' + (error.error?.message || 'Error desconocido'),
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK',
-        });
+        console.error('Error al registrar la cita:', error);
+                Swal.fire({
+                  icon: 'error',
+                  title: '¡Error!',
+                  // text:
+                  //   'Error al registrar la especialidad: ' +
+                  //   (error.error?.message || 'Error desconocido'),
+                  text: error.message || 'Error desconocido',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'OK',
+                });
       }
     );
   }

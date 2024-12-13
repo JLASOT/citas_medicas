@@ -20,6 +20,7 @@ import { CardModule } from 'primeng/card';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToolbarModule } from 'primeng/toolbar';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     CardModule,
     RadioButtonModule,
     DropdownModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ToolbarModule
 
   ]
 })

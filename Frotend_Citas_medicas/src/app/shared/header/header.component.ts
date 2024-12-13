@@ -29,10 +29,10 @@ export class HeaderComponent implements OnInit {
         routerLink: '/dashboard'
       },
 
-      {
+   /*    {
         label: 'Contact',
         icon: 'pi pi-envelope'
-      }, 
+      },  */
       { 
         label: this.user ? `${this.user.name} ${this.user.surname ? this.user.surname : ''}` : 'Ingresa', 
         icon: 'pi pi-user', 

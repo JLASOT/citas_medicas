@@ -10,7 +10,15 @@ export class SidebarComponent implements OnInit {
 
   items: MenuItem[] = [];
 
+  userRole: string = ''; // Variable para el rol del usuario
+
     ngOnInit() {
+
+          // Obtén el rol del usuario desde el localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}'); // Convierte el JSON almacenado en objeto
+    this.userRole = user.rol || ''; // Extrae el rol del usuario, por ejemplo: "admin" o "medico"
+
+
         this.items = [
             {
                 label: 'Users',
@@ -182,6 +190,17 @@ export class SidebarComponent implements OnInit {
 
 
         ];
+
+         // Filtra las opciones según el rol
+     if (this.userRole !== 'admin') {
+        // Oculta el menú de "Users" si no es administrador
+        this.items = this.items.filter(item => item.label !== 'Users');
+        this.items = this.items.filter(item => item.label !== 'Especialidad');
+        this.items = this.items.filter(item => item.label !== 'Dia');
+        this.items = this.items.filter(item => item.label !== 'Hora');
+        this.items = this.items.filter(item => item.label !== 'Day Hora');
+      }
+
     }
     
 }

@@ -18,6 +18,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 
 import { ToolbarModule } from 'primeng/toolbar';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ToolbarModule } from 'primeng/toolbar';
     InputTextModule,
     DropdownModule,
     CardModule,
-    ToolbarModule
+    ToolbarModule,
+    CalendarModule
 
   ],
   providers: [DatePipe],  // Añade DatePipe en los providers

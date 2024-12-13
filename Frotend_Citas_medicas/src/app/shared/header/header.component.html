@@ -3,11 +3,11 @@
   <p-menubar [model]="items" />
 </div> -->
 
-<p-menubar [model]="items">
+<p-menubar [model]="items" [style]="{'margin-left': '10px', 'margin-right': '10px'}">
   <ng-template pTemplate="start">
-    <p-button *ngIf="user" class="user-link" [style]="{ 'margin-right': '10px' }" [rounded]="true" [text]="true" [raised]="true" severity="info" routerLink="/auth/login">
+    <!-- <p-button *ngIf="user" class="user-link" [style]="{ 'margin-right': '10px' }" [rounded]="true" [text]="true" [raised]="true" severity="info" routerLink="/auth/login">
       <i class="pi pi-user" style="color: #1465e0; margin-right: 5px;"></i>
       {{ user.name }} {{ user.surname ? user.surname : '' }}
-    </p-button>
+    </p-button> -->
   </ng-template>
 </p-menubar>

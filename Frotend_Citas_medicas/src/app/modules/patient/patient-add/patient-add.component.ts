@@ -39,6 +39,7 @@ export class PatientAddComponent implements OnInit {
     fr: null,
     pa: null,
     gender: '',
+    addres:'',
   };
 
 

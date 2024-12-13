@@ -191,6 +191,8 @@ import models from "../models";
                             { model: models.Patient },
                             { model: models.Specialitie },
                             { model: models.User },
+                            { model: models.User, as: 'UserRegis' }, // Usuario que registró la cita (userRegisId)
+                   
                             { model: models.DayHour,
                                 include:[
                                    { 
@@ -219,6 +221,7 @@ import models from "../models";
                             { model: models.Patient },
                             { model: models.Specialitie },
                             { model: models.User },
+                            { model: models.User, as: 'UserRegis' }, // Usuario que registró la cita (userRegisId)
                             { model: models.DayHour,
                                 include:[
                                     { 
@@ -233,6 +236,8 @@ import models from "../models";
                              }
                         ]
                     });
+
+         
                     return res.status(200).json({
                         appointments: appointments,
                     });

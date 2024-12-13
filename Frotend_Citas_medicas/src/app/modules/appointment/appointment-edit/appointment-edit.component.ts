@@ -133,6 +133,9 @@ export class AppointmentEditComponent implements OnInit {
           this.appointment.dateAppointment = new Date(
             data.appointment.dateAppointment
           );
+
+          //se aumenta un dia pro el desface 
+          this.appointment.dateAppointment.setDate(this.appointment.dateAppointment.getDate() + 1);
         }
 
         // this.selectedItem = data.dayHour.User
@@ -249,8 +252,8 @@ export class AppointmentEditComponent implements OnInit {
           (dayHour: any) =>
             dayHour.User.id === userId && // Verifica que el ID del usuario sea el correcto
             dayHour.Day.name.toLowerCase() ===
-              this.selectedDayOfWeek.toLowerCase() && // Filtra por el día de la semana
-            dayHour.state === 1 // Filtra por el estado de disponibilidad (1 = disponible)
+              this.selectedDayOfWeek.toLowerCase() //&& // Filtra por el día de la semana
+            //dayHour.state === 1 // Filtra por el estado de disponibilidad (1 = disponible)
         );
 
         // Asignar el displayName para cada elemento
@@ -317,6 +320,63 @@ export class AppointmentEditComponent implements OnInit {
     this.appointment.dateAppointment = localDate.toISOString().slice(0, 19); // Eliminar la "Z"
 
     console.log('Fecha seleccionada:', this.appointment.dateAppointment);
+
+    // Verificar que la fecha seleccionada esté dentro del rango del médico
+  const selectedDoctor = this.appointment.User; // El médico seleccionado
+  if (selectedDoctor) {
+    const doctorEndDate = new Date(selectedDoctor.fechaFin); // Fecha final de disponibilidad del médico
+    const selectedDate = new Date(this.appointment.dateAppointment);
+
+      // Sumar un día a fechaFin para corregir el desfase de zona horaria (si es necesario)
+      doctorEndDate.setDate(doctorEndDate.getDate() + 1);
+
+       // Asegurarse de comparar solo las fechas (sin hora)
+    doctorEndDate.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+
+      // Verifica si la fecha seleccionada está fuera del rango
+      if (selectedDate > doctorEndDate) {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error de validación!',
+          text: `La fecha seleccionada está fuera del rango. El médico no está disponible después del ${doctorEndDate.toLocaleDateString('es-BO', {
+            year: 'numeric', month: '2-digit', day: '2-digit'
+          })}.`,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
+        });
+        return; // Detiene la ejecución si la fecha está fuera de rango
+      }
+    }
+
+
+    ///para poder validar q no se pueda elejir una fecha no disponible para el medico antes de actualizar los datos
+   // Verificar que `this.appointment.User` contiene datos correctos 
+/*    const selectedDoctor = this.appointment.User; 
+   console.log('Datos del médico seleccionado:', selectedDoctor);
+
+    console.log('Fecha de fin del 12:', selectedDoctor); 
+    if (selectedDoctor) {
+      const doctorEndDate = new Date(selectedDoctor.fechaFin);
+      console.log('Fecha de fin del médico:', doctorEndDate); // Verificar si la fecha seleccionada es menor que la fecha de fin del médico
+      if (localDate <= doctorEndDate) {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error de validación!',
+          text: `El médico no está disponible en esta fecha. La fecha de fin de disponibilidad del médico es ${doctorEndDate.toLocaleDateString()}.`,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
+        });
+        return;
+      }
+    }
+ */
+    
+
+
+
+
 
     // Verificamos si el `dayHour` ha cambiado
     const isDayHourChanged =

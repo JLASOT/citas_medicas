@@ -58,5 +58,6 @@ app-sidebar {
     min-width: 250px; /* Asegura que las columnas no sean demasiado estrechas */
     max-width: 33%; /* 3 columnas */
     box-sizing: border-box;
+   
   }
   

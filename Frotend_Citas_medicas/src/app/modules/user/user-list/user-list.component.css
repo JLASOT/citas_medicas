@@ -1,0 +1,27 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+.content {
+    display: flex;
+    flex-grow: 1; /* Ocupa el espacio disponible */
+
+}
+app-header{
+    flex: 0 0 200px; /* Ancho fijo */
+    height: auto; 
+}
+
+app-sidebar {
+    flex: 0 0 200px; /* Ancho fijo */
+    padding: 10px;
+    height: auto; /* Se ajusta al contenido */
+}
+
+.main-content {
+    flex: 1; /* Ocupa el resto del espacio */
+    padding-left: 20px; /* Espacio entre el sidebar y el contenido principal */
+    border-radius: 10px;
+}

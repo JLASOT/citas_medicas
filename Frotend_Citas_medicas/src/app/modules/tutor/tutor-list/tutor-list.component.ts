@@ -196,8 +196,8 @@ export class TutorListComponent implements OnInit {
   exportPdf() {
     const doc = new jsPDF();
     (doc as any).autoTable({
-      head: [['Nombre', 'Descripcion']],
-      body: this.tutor.map((tutor) => [tutor.name, tutor.description]),
+      head: [['Ci','Nombre', 'Apellidos','Email','Parentesco','Paciente']],
+      body: this.tutor.map((tutor) => [tutor.name, tutor.ci,tutor.surname,tutor.email,tutor.relationship,tutor.Patient ? tutor.Patient.name : 'Sin tutor',]),
     });
     doc.save('tutor.pdf');
   }

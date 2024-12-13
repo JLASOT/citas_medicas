@@ -10,7 +10,7 @@
      /* Color de fondo de la barra lateral */
     color: white; /* Color del texto en la barra lateral */
     padding: 10px; /* Espaciado interno de la barra lateral */
-    overflow-y: auto; /* Permite desplazarse verticalmente si el contenido es largo */
+    /*overflow-y: auto; /* Permite desplazarse verticalmente si el contenido es largo */
   }
   
   /* Estilos para el contenido */

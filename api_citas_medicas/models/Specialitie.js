@@ -13,6 +13,10 @@ const Specialitie = sequelize.define('Specialitie',{
         type: DataTypes.STRING(30),
         allowNull: false
     },
+    price : {
+        type : DataTypes.FLOAT,
+        allowNull : false
+    },
     description:{
         type: DataTypes.STRING(250),
         allowNull: true

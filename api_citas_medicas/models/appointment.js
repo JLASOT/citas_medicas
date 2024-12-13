@@ -14,7 +14,7 @@ const Appointment = sequelize.define('Appointment',{
         allowNull: false,
     },
     dateAppointment:{
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     // estado 1 = en proceso 2  atendido  0 cancelado
@@ -53,7 +53,19 @@ const Appointment = sequelize.define('Appointment',{
             model: 'dayhours',
             key: 'id'
         }
-    }
+    },
+    paymentAppointment : {
+        type : DataTypes.FLOAT,
+        allowNull : false
+    },
+    userRegisId:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references:{
+            model: 'users',
+            key: 'id'
+        }
+    },
 },{
     timestamps: true
 });
@@ -66,6 +78,17 @@ Patient.hasMany(Appointment, {
 Appointment.belongsTo(Patient, { 
     foreignKey: 'patientId' ,
     targetKey: 'id'
+});
+
+User.hasMany(Appointment, { 
+    foreignKey: 'userRegisId',
+    sourceKey: 'id',
+    as: 'UserRegis' 
+});
+Appointment.belongsTo(User, { 
+    foreignKey: 'userRegisId' ,
+    targetKey: 'id',
+    as: 'UserRegis'  // Usa el mismo alias aquí
 });
 
 User.hasMany(Appointment, { 
