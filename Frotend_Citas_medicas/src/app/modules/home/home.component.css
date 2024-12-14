@@ -1,16 +1,34 @@
-/* Contenedor principal para alinear contenido y mantener footer en la parte inferior */
-.container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+.grid {
+    max-height: 100vh; /* Limita la altura al 80% de la ventana */
+    overflow: hidden; /* Evita que el contenido desborde */
+  }
+  
+  section {
+    padding: 1rem; /* Reduce el relleno */
+  }
+  
+  p {
+    margin: 0 0 0.5rem 0; /* Menos espacio entre párrafos */
+  }
+  
+  button {
+    margin-bottom: 0.5rem;
+  }
 
-/* Espacio expandible para el contenido principal */
-.container h2 {
-    flex-grow: 1;
-}
-
-/* Asegura que el footer esté al final */
-app-footer {
-    margin-top: auto;
-}
+  img {
+    max-height: 100%; /* Limita la altura */
+    width: 130%; /* Asegura que la imagen sea responsiva */
+    object-fit: cover; /* Ajusta la imagen al contenedor */
+  }y
+  .text-6xl {
+    font-size: 2rem; /* Ajusta el tamaño del título */
+  }
+  
+  .text-primary {
+    font-size: 1.5rem; /* Ajusta el tamaño del subtítulo */
+  }
+  
+  p {
+    font-size: 0.9rem; /* Texto más pequeño */
+  }
+    

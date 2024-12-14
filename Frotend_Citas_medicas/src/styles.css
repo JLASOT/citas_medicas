@@ -4,6 +4,8 @@
 @import "primeicons/primeicons.css";
 @import "~sweetalert2/dist/sweetalert2.min.css";
 
+@import "primeflex/primeflex.css";
+
 html,
 body {
   height: 100%; /* Asegura que el body ocupe toda la altura */
@@ -18,6 +20,9 @@ body {
   background-position: center; /* Para centrar la imagen */
   background-repeat: no-repeat; /* Para evitar que la imagen se repita */
   background-attachment: fixed;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .custom-popup {

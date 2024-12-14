@@ -1,5 +1,20 @@
 <div class="container">  
     <app-header></app-header>
-    <h2>hola esta es el home</h2>
-    <app-footer></app-footer>
+    <div   class="grid grid-nogutter surface-section text-800">
+        <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
+            <section>
+                <span class="block text-6xl font-bold mb-1">Gestión eficiente de citas</span>
+                <div class="text-6xl text-primary font-bold mb-3">Luhan, al cuidado de tu salud</div>
+                <p class="mt-0 mb-4 text-700 line-height-3"> Bienvenido al sistema de citas médicas de nuestra clínica, diseñado para ofrecer una experiencia rápida y confiable tanto para nuestros pacientes como para el equipo médico.</p>
+
+                <button pButton pRipple label="Log In" routerLink="/auth/login" type="button" class="mr-3 p-button-raised"></button>
+                
+            </section>
+        </div>
+        <div class="col-12 md:col-6 overflow-hidden">
+            <img src="https://saludconlupa.com/media/images/shutterstock_131191718.width-1920.jpg" alt="Image"
+                class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
+        </div>
+    </div>
+
 </div>
