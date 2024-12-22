@@ -1,39 +1,132 @@
 <app-header></app-header>
 
 <main class="dashboard">
-    <div class="content">
-        <app-sidebar></app-sidebar>
-        <div class="main-content">
-            <!-- Aquí puedes agregar más contenido del dashboard -->
-           <!--  <div class="card" style="width: 50%; height: 50%;background-color: aliceblue; margin-top: 10px; " >
+  <div class="content">
+    <app-sidebar></app-sidebar>
+    <div class="main-content">
+      <!-- Aquí puedes agregar más contenido del dashboard -->
+      <!--  <div class="card" style="width: 50%; height: 50%;background-color: aliceblue; margin-top: 10px; " >
                 <p-chart type="bar" [data]="basicData" [options]="basicOptions" ></p-chart>
             </div> -->
 
-            <div style="margin-top: 10px;" class="surface-ground px-4 py-5 md:px-6 lg:px-8">
-                <div class="grid">
-                    <div class="col-12 md:col-6 lg:col-3">
-                        <div class="surface-card shadow-2 p-3 border-round">
-                            <div class="flex justify-content-between mb-3">
-                                <div>
-                                    <span class="block text-500 font-medium mb-3">Usuarios Registrados</span>
-                                    <div class="text-900 font-medium text-xl">{{ userStats.totalUsers }}</div>
-                                </div>
-                                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
-                                    style="width:2.5rem;height:2.5rem">
-                                    <i class="pi pi-users text-blue-500 text-xl"></i>
-                                </div>
-                            </div>
-                            <span class="text-green-500 font-medium">{{ userStats.newUsers }} nuevos </span>
-                            <span class="text-500">en la última semana</span>
-                        </div>
-                    </div>
+      <div style="margin-top: 10px;" class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+        <div class="grid">
+          <div class="col-12 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                <div>
+                  <span class="block text-500 font-medium mb-3">Usuarios Registrados</span>
+                  <div class="text-900 font-medium text-xl">{{ userStats.totalUsers }}</div>
                 </div>
+                <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                  style="width:2.5rem;height:2.5rem">
+                  <i class="pi pi-users text-blue-500 text-xl"></i>
+                </div>
+              </div>
+              <span class="text-green-500 font-medium">{{ userStats.newUsers }} nuevos </span>
+              <span class="text-500">en la última semana</span>
             </div>
-            
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                <div>
+                  <span class="block text-500 font-medium mb-3">Citas Registradas Hoy</span>
+                  <div class="text-900 font-medium text-xl">{{ appointmentStats.todayAppointments }}</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-green-100 border-round"
+                  style="width:2.5rem;height:2.5rem">
+                  <i class="pi pi-calendar text-green-500 text-xl"></i>
+                </div>
+              </div>
+              <span class="text-blue-500 font-medium">{{ appointmentStats.totalAppointments }} </span>
+              <span class="text-500">citas registradas en total</span>
+            </div>
+          </div>
+
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                <div>
+                  <span class="block text-500 font-medium mb-3">Citas por Estado</span>
+                  <div class="text-900 font-medium text-xl">Pendientes: {{ appointmentStats.pending }}</div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                  style="width:2.5rem;height:2.5rem">
+                  <i class="pi pi-clock text-orange-500 text-xl"></i>
+                </div>
+              </div>
+              <span class="text-green-500 font-medium">Completadas: {{ appointmentStats.completed }}</span><br>
+              <span class="text-red-500 font-medium">Canceladas: {{ appointmentStats.cancelled }}</span>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round">
+              <div class="flex justify-content-between mb-3">
+                <div>
+                  <span class="block text-500 font-medium mb-3">Ingresos Totales</span>
+                  <div class="text-900 font-medium text-xl">
+                    Bs {{ appointmentStats.estimatedRevenue | number: '1.2-2' }}
+                  </div>
+                </div>
+                <div class="flex align-items-center justify-content-center bg-yellow-100 border-round"
+                  style="width:2.5rem;height:2.5rem">
+                  <i class="pi pi-dollar text-yellow-500 text-xl"></i>
+                </div>
+              </div>
+
+              <span class="text-green-500 font-medium">Bs. {{ appointmentStats.todayRevenue | number: '1.2-2' }}
+                Ingresos del Día </span>
+              <!-- <span class="text-500">en la última semana</span> -->
+            </div>
+          </div>
+
+
 
         </div>
-    </div>
-   
-</main>
 
-<app-footer></app-footer>
+
+      </div>
+
+      <div style="margin-top: 10px;" class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+        <div class="card">
+          <p-chart type="bar" [data]="chartData" [options]="chartOptions" style="height: 100px; width: 100%;"></p-chart>
+        </div>
+      </div>
+
+      <div class="surface-card shadow-2 p-4 border-round mt-4">
+        <h3 class="text-900 font-medium mb-4">Especialidades con Más Citas</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Especialidad</th>
+              <th>Cantidad de Citas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let speciality of specialitiesRanking">
+              <td>{{ speciality.name }}</td>
+              <td>{{ speciality.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+      <!--   <div style="margin-top: 10px;" class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+                <div class="grid">
+                   
+                </div>
+            </div> -->
+
+    </div>
+  </div>
+
+
+
+</main>

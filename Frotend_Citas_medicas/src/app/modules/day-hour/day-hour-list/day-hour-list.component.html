@@ -15,15 +15,16 @@
     </ng-template>
 
     <ng-template pTemplate="right">
-      <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+      <button pButton pRipple label="Print" (click)="printPdf()" icon="pi pi-print" class="p-button-help"></button>
     </ng-template>
   </p-toolbar>
 
 
-  <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="dayHour" dataKey="id"
+  <p-table [style]="{'padding': '2px', 'background-color':'#e9ecef'}" #dt [value]="dayHour" dataKey="id"
     [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
     [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-    [filterDelay]="0" [globalFilterFields]="['name', 'description']">
+    [scrollable]="true" scrollHeight="400px"
+    [filterDelay]="0" [globalFilterFields]="['User.name', 'Day.name']">
 
     <ng-template pTemplate="caption">
       <div class="table-header">

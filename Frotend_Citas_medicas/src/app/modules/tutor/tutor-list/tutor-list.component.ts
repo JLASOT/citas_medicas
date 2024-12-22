@@ -14,7 +14,6 @@ import { PatientService } from '../../patient/service/patient.service';
   styleUrls: ['./tutor-list.component.css'],
 })
 export class TutorListComponent implements OnInit {
-
   //modal
   tutorDialog: boolean = false;
   submitted: boolean = false;
@@ -22,15 +21,15 @@ export class TutorListComponent implements OnInit {
   tutor: any[] = []; // Arreglo para almacenar los pacientes
   tutors: any = {}; // Objeto para almacenar el tutor individual en el formulario
   selectedSpecialitie: any = null; // tutor seleccionado para ver detalles
- 
+
   //modal
-  suggestions: any[] = [];  // Sugerencias del autocompletado
+  suggestions: any[] = []; // Sugerencias del autocompletado
 
   loading: boolean = true; // Control de carga
   public authService: AuthService | undefined;
 
   //modal
-  patients: any[] = []; // Arreglo para almacenar los pacientes  
+  patients: any[] = []; // Arreglo para almacenar los pacientes
   selectedItem: any = null; // Elemento seleccionado en el autocompletado
 
   constructor(
@@ -45,12 +44,12 @@ export class TutorListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTutor(); // Cargar la lista de pacientes al iniciar el componente
-    this.loadPatients();//modal
+    this.loadPatients(); //modal
   }
   openNew() {
     this.tutors = {};
     this.submitted = false;
-    this.selectedItem = null;  // Restablece el paciente seleccionado
+    this.selectedItem = null; // Restablece el paciente seleccionado
     this.tutorDialog = true;
   }
 
@@ -59,7 +58,6 @@ export class TutorListComponent implements OnInit {
     this.tutorDialog = false;
     this.submitted = false;
   }
-
 
   saveTutors() {
     this.submitted = true;
@@ -112,17 +110,16 @@ export class TutorListComponent implements OnInit {
     );
   }
 
-
   //modal
-  // Método para cargar la lista de pacientes desde el servicio 
+  // Método para cargar la lista de pacientes desde el servicio
   loadPatients() {
     this.patientService.listPatients().subscribe(
       (response: any) => {
         console.log('Pacientes recibidos:', response.patient); // Verifica los pacientes dentro de 'patient'
         this.patients = response.patient || []; // Asigna los pacientes correctamente desde 'response.patient'
         this.loading = false; // Desactiva el indicador de carga
-        this.patients.forEach(patient => {
-          patient.fullName = `${patient.name} ${patient.surname}`;  // Combinamos name y surname
+        this.patients.forEach((patient) => {
+          patient.fullName = `${patient.name} ${patient.surname}`; // Combinamos name y surname
         });
       },
       (error) => {
@@ -133,15 +130,14 @@ export class TutorListComponent implements OnInit {
   }
 
   //modal
- // Método para manejar la búsqueda y filtrar los pacientes
- search(event: any) {
-  const query = event.query.toLowerCase();
-  // Filtra los pacientes por nombre o apellido
-  this.suggestions = this.patients.filter(patient =>
-    patient.fullName.toLowerCase().includes(query)
-  );
-}
-
+  // Método para manejar la búsqueda y filtrar los pacientes
+  search(event: any) {
+    const query = event.query.toLowerCase();
+    // Filtra los pacientes por nombre o apellido
+    this.suggestions = this.patients.filter((patient) =>
+      patient.fullName.toLowerCase().includes(query)
+    );
+  }
 
   // Método para ver los detalles de un paciente
   viewSpecialitieDetails(tutor: any) {
@@ -192,14 +188,64 @@ export class TutorListComponent implements OnInit {
     return this.authService ? this.authService.isAdmin() : false;
   }
 
-  // Método para exportar la tabla a PDF
   exportPdf() {
     const doc = new jsPDF();
+    // Añadir un título al
+    doc.setFontSize(18);
+    doc.text('Lista de Tutores', 14, 22);
+
+    // Añadir la fecha actual al PDF
+    const date = new Date();
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+
     (doc as any).autoTable({
-      head: [['Ci','Nombre', 'Apellidos','Email','Parentesco','Paciente']],
-      body: this.tutor.map((tutor) => [tutor.name, tutor.ci,tutor.surname,tutor.email,tutor.relationship,tutor.Patient ? tutor.Patient.name : 'Sin tutor',]),
+      head: [['Ci', 'Nombre', 'Apellidos', 'Email', 'Parentesco', 'Paciente']],
+      body: this.tutor.map((tutor) => [
+        tutor.name,
+        tutor.ci,
+        tutor.surname,
+        tutor.email,
+        tutor.relationship,
+        tutor.Patient ? tutor.Patient.name : 'Sin tutor',
+      ]),
+      startY: 40, // Posición donde empezará la tabla
+      theme: 'striped', // Tema de la tabla
+      headStyles: { fillColor: [22, 160, 133] },
+      // Color del encabezado
+      styles: { fontSize: 10, cellPadding: 3 }, // Estilo de las celdas
+      alternateRowStyles: { fillColor: [240, 240, 240] }, // Color de las filas alternadas
     });
-    doc.save('tutor.pdf');
+
+    doc.save('Tutores.pdf');
+  }
+
+  printPdf() {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Lista de Tutores', 14, 22);
+    const date = new Date();
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+    const options = {
+      head: [['Ci', 'Nombre', 'Apellidos', 'Email', 'Parentesco', 'Paciente']],
+      body: this.tutor.map((tutor) => [
+        tutor.name,
+        tutor.ci,
+        tutor.surname,
+        tutor.email,
+        tutor.relationship,
+        tutor.Patient ? tutor.Patient.name : 'Sin tutor',
+      ]),
+      startY: 40,
+      theme: 'striped',
+      headStyles: { fillColor: [22, 160, 133] },
+      styles: { fontSize: 10, cellPadding: 3 },
+      alternateRowStyles: { fillColor: [240, 240, 240] },
+    };
+    (doc as any).autoTable(options);
+    doc.autoPrint();
+    window.open(doc.output('bloburl'), '_blank');
   }
 
   // Método para exportar la tabla a Excel

@@ -8,9 +8,8 @@ router.post("/",userController.register)
 router.post("/login",userController.login)
 
 router.put("/:id",userController.update)
-router.get("/:id?",auth.veryfyAdmin,userController.list)
+router.get("/:id?",auth.veryfyMedico,userController.list)
 router.delete("/:id",auth.veryfyAdmin,userController.remove)
-
 
 export default router;
 

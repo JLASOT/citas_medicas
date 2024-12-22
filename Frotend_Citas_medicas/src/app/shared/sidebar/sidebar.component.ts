@@ -105,24 +105,25 @@ export class SidebarComponent implements OnInit {
                         routerLink: '/appointment/lista'
                     },
                     {
-                        label: 'Right',
-                        icon: 'pi pi-fw pi-align-right',
-                        routerLink: '/tutor/lista'
+                        label: 'Nuevo',
+                        icon: 'pi pi-fw pi-plus',
+                        routerLink: '/appointment/register'
                     },
                 ]
             },
 
             {
-                label: 'Calendar',
+                label: 'Calendario',
                 icon: 'pi pi-fw pi-calendar',
-                items: [
+                routerLink: '/calendar/lista'
+             /*    items: [
                     {
                         label: 'Calendario',
-                        icon: 'pi pi-fw pi-list',
+                        icon: 'pi pi-fw pi-calendar',
                         routerLink: '/calendar/lista'
                     },
                     
-                ]
+                ] */
             },
 
             {
@@ -160,7 +161,7 @@ export class SidebarComponent implements OnInit {
                 ]
             },
             {
-                label: 'Day Hora',
+                label: 'Horario Medicos',
                 icon: 'pi pi-fw pi-clock',
                 items: [
                     
@@ -200,6 +201,10 @@ export class SidebarComponent implements OnInit {
         this.items = this.items.filter(item => item.label !== 'Hora');
         this.items = this.items.filter(item => item.label !== 'Day Hora');
       }
+      if (this.userRole === 'medico') {
+        // Oculta el menú de "Horario Medicos" si el rol es "medico"
+        this.items = this.items.filter(item => item.label !== 'Horario Medicos');
+    }
 
     }
     

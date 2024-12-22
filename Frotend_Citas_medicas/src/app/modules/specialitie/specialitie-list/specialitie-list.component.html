@@ -17,7 +17,7 @@
     </ng-template>
   
     <ng-template pTemplate="right">
-      <button pButton pRipple label="Print" icon="pi pi-print" class="p-button-help"></button>
+      <button pButton pRipple label="Print" icon="pi pi-print" (click)="printPdf()" class="p-button-help"></button>
     </ng-template>
   </p-toolbar>
 
@@ -25,9 +25,10 @@
 
 
 
-  <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="specialitie" dataKey="id"
+  <p-table [style]="{'padding': '2px', 'background-color':'#e9ecef'}" #dt [value]="specialitie" dataKey="id"
     [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
     [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+    [scrollable]="true" scrollHeight="420px"
     [filterDelay]="0" [globalFilterFields]="['name', 'description','price']">
 
     
@@ -44,9 +45,9 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-        <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
+        <th pSortableColumn="precio" style="min-width: 7rem;">Precio <p-sortIcon field="precio"></p-sortIcon></th>
         <th pSortableColumn="description">Descripcion <p-sortIcon field="description"></p-sortIcon></th>
-        <th>Acciones</th>
+        <th style="min-width: 9rem;">Acciones</th>
       </tr>
     </ng-template>
 

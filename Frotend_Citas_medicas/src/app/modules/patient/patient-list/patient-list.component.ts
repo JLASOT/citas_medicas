@@ -140,6 +140,45 @@ export class PatientListComponent implements OnInit {
     doc.save('patients.pdf');
   }
 
+  printPdf() {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Lista de Pacientes', 14, 22);
+    const date = new Date();
+    doc.setFontSize(11);
+    doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+    const options = {
+      head: [
+        [
+          'CI',
+          'Nombre',
+          'Apellido',
+          'Edad',
+          'Email',
+          'Teléfono',
+          'Tipo de Sangre',
+        ],
+      ],
+      body: this.patients.map((patient) => [
+        patient.ci,
+        patient.name,
+        patient.surname,
+        patient.edad,
+        patient.email,
+        patient.phone,
+        patient.blood_type,
+      ]),
+      startY: 40,
+      theme: 'striped',
+      headStyles: { fillColor: [22, 160, 133] },
+      styles: { fontSize: 10, cellPadding: 3 },
+      alternateRowStyles: { fillColor: [240, 240, 240] },
+    };
+    (doc as any).autoTable(options);
+    doc.autoPrint();
+    window.open(doc.output('bloburl'), '_blank');
+  }
+
   // Método para exportar la tabla a Excel
   exportExcel() {
     import('xlsx').then((xlsx) => {

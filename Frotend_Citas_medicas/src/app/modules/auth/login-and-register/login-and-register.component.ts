@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-and-register',
@@ -28,7 +29,14 @@ export class LoginAndRegisterComponent {
 
   login(){
     if(!this.email_login || !this.password_login){
-      alert("NO PUEDES INGRESAR AL SISTEMA SI NO INGRESAS TODOS LOS CAMPOS");
+      //alert("NO PUEDES INGRESAR AL SISTEMA SI NO INGRESAS TODOS LOS CAMPOS");
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "NO PUEDES INGRESAR AL SISTEMA SI NO INGRESAS TODOS LOS CAMPOS",
+        showConfirmButton: false,
+        timer: 1500
+      });
       return;
     }
     this.authService.login(this.email_login,this.password_login).subscribe((resp:any)=>{
@@ -36,7 +44,14 @@ export class LoginAndRegisterComponent {
       if(resp){
         window.location.reload();
       }else{
-        alert("LAS CREDENCIALES SON INCORRECTAS");
+        //alert("LAS CREDENCIALES SON INCORRECTAS");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "LAS CREDENCIALES SON INCORRECTAS",
+          showConfirmButton: false,
+          timer: 1500
+        });
       }
     })
   }

@@ -139,6 +139,8 @@
               <p-button type="submit" class="btn btn-primary" [disabled]="!patientForm.form.valid">
                 Actualizar Paciente
               </p-button>
+              <p-button [style]="{'margin-left':'5px'}" icon="pi pi-times" label="Cancelar" severity="secondary"
+              routerLink="/patient/lista"></p-button>
             </div>
           </p-card>
         </form>

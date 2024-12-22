@@ -14,11 +14,11 @@ import 'jspdf-autotable';
 })
 export class ReportListComponent {
   reportOptions = [
-    { label: 'Pacientes mayores de 20 años', key: 'patientsByAge' },
+    { label: 'Pacientes mayores o igual a 18 años', key: 'patientsByAge' },
     // { label: 'Ganancias del día', key: 'dailyEarnings' },
     { label: 'Pacientes por médico', key: 'patientsByDoctor' }, // Opción para el reporte de pacientes por médico
     { label: 'Citas por médico', key: 'apppointmentsByDoctor' }, // Opción para el reporte de pacientes por médico
-    { label: 'Citas por empleado', key: 'apppointmentsByEmpl' }, // Opción para el reporte de pacientes por médico
+    { label: 'Citas por usuario', key: 'apppointmentsByEmpl' }, // Opción para el reporte de pacientes por médico
     { label: 'Citas por rango de fechas', key: 'appointmentsByDateRange' }, // Nueva opción
   ];
   selectedReport: any = null;
@@ -48,7 +48,7 @@ export class ReportListComponent {
             console.log('Pacientes recibidos:', response.patient);
             // Asegúrate de que 'response.patient' existe y es un arreglo
             this.reportData =
-              response.patient?.filter((patient: any) => patient.edad > 18) ||
+              response.patient?.filter((patient: any) => patient.edad >= 18) ||
               [];
 
             // Eliminar columnas no deseadas de cada paciente
@@ -283,8 +283,10 @@ export class ReportListComponent {
         this.reportData = response.appointments
           .filter(
             (appointment: any) =>
-              appointment.User.name.toLowerCase() ===
-              this.selectedDoctorName.trim().toLowerCase()
+             /*  appointment.User.name.toLowerCase() ===
+              this.selectedDoctorName.trim().toLowerCase() */
+              appointment.User.name.toLowerCase().includes(this.selectedDoctorName.trim().toLowerCase()) ||
+              appointment.User.surname.toLowerCase().includes(this.selectedDoctorName.trim().toLowerCase())
           )
           //.map((appointment: any) => appointment.Patient); // Obtener solo los pacientes
           .map((appointment: any) => {
@@ -330,8 +332,12 @@ export class ReportListComponent {
         this.reportData = response.appointments
           .filter(
             (appointment: any) =>
-              appointment.User.name.toLowerCase() ===
-              this.selectedDoctorName.trim().toLowerCase()
+              /* appointment.User.name.toLowerCase() ===
+              this.selectedDoctorName.trim().toLowerCase() */
+
+              appointment.User.name.toLowerCase().includes(this.selectedDoctorName.trim().toLowerCase()) ||
+              appointment.User.surname.toLowerCase().includes(this.selectedDoctorName.trim().toLowerCase())
+
           )
           .map((appointment: any) => {
             const filteredAppointment = { ...appointment };
@@ -378,16 +384,17 @@ export class ReportListComponent {
 
             // Crear nuevas propiedades con los valores que quieres mostrar
             //filteredAppointment.PatientName = patient?.name || 'No disponible';  // Nombre del paciente
-            filteredAppointment.PatientName =
+            filteredAppointment.Costo = filteredAppointment.paymentAppointment;
+            filteredAppointment.Pciente =
               `${patient?.name} ${patient?.surname}` || 'No disponible';
-            filteredAppointment.SpecialitieName =
+            filteredAppointment.Especialida =
               specialitie?.name || 'No disponible'; // Nombre de la especialidad
             filteredAppointment.Medico =
               `${user?.name} ${user?.surname}` || 'No disponible'; // Nombre del médico
-            filteredAppointment.DayHourTime = `${
+            filteredAppointment.Horario = `${
               dayHour?.Day?.name || 'No disponible'
             } ${dayHour?.Hour?.name || 'No disponible'}`; // Día y hora
-            filteredAppointment.Empleado =
+            filteredAppointment.Usuario =
             `${userRegi?.name} ${userRegi?.surname}` || 'No disponible'; // Nombre del médico
           
             // Eliminar las propiedades originales que son objetos complejos
@@ -403,6 +410,7 @@ export class ReportListComponent {
             delete filteredAppointment.userId;
             delete filteredAppointment.dayHourId;
             delete filteredAppointment.userRegisId;
+            delete filteredAppointment.paymentAppointment;
 
             return filteredAppointment;
           });
@@ -434,8 +442,11 @@ export class ReportListComponent {
         this.reportData = response.appointments
           .filter(
             (appointment: any) =>
-              appointment.UserRegis.name.toLowerCase() ===
-              this.selectedEmpleName.trim().toLowerCase()
+              /* appointment.UserRegis.name.toLowerCase() ===
+              this.selectedEmpleName.trim().toLowerCase() */
+              appointment.UserRegis.name.toLowerCase().includes(this.selectedEmpleName.trim().toLowerCase()) ||
+              appointment.UserRegis.surname.toLowerCase().includes(this.selectedEmpleName.trim().toLowerCase())
+         
           )
           .map((appointment: any) => {
             const filteredAppointment = { ...appointment };
@@ -451,21 +462,6 @@ export class ReportListComponent {
                 filteredAppointment.createdAt,
                 'dd/MM/yyyy HH:mm:ss'
               ) || 'No disponible';
-
-            // Asignar estado basado en el valor de 'stateAppointment'
-         /*    switch (filteredAppointment.stateAppointment) {
-              case 1:
-                filteredAppointment.State = 'Pendiente';
-                break;
-              case 2:
-                filteredAppointment.State = 'Completado';
-                break;
-              case 3:
-                filteredAppointment.State = 'Cancelado';
-                break;
-              default:
-                filteredAppointment.State = 'Estado desconocido';
-            } */
             // Eliminar los campos 'createdAt' y 'updatedAt' de cada cita
 
             delete filteredAppointment.createdAt;
@@ -482,17 +478,18 @@ export class ReportListComponent {
 
             // Crear nuevas propiedades con los valores que quieres mostrar
             //filteredAppointment.PatientName = patient?.name || 'No disponible';  // Nombre del paciente
-            filteredAppointment.PatientName =
+            filteredAppointment.Costo = filteredAppointment.paymentAppointment;
+            filteredAppointment.Paciente =
               `${patient?.name} ${patient?.surname}` || 'No disponible';
-            filteredAppointment.SpecialitieName =
+            filteredAppointment.Especialidad =
               specialitie?.name || 'No disponible'; // Nombre de la especialidad
             filteredAppointment.Medico =
               `${user?.name} ${user?.surname}` || 'No disponible'; // Nombre del médico
-            filteredAppointment.DayHourTime = `${
+            filteredAppointment.Horario = `${
               dayHour?.Day?.name || 'No disponible'
             } ${dayHour?.Hour?.name || 'No disponible'}`; // Día y hora
 
-            filteredAppointment.Empleado =
+            filteredAppointment.Usuario =
             `${userRegi?.name} ${userRegi?.surname}` || 'No disponible'; // Nombre del médico
             // Eliminar las propiedades originales que son objetos complejos
             delete filteredAppointment.Patient;
@@ -500,6 +497,7 @@ export class ReportListComponent {
             delete filteredAppointment.User;
             delete filteredAppointment.DayHour;
             delete filteredAppointment.UserRegis;
+            delete filteredAppointment.paymentAppointment;
 
             // Eliminar las columnas innecesarias (si no las quieres mostrar)
             delete filteredAppointment.patientId;

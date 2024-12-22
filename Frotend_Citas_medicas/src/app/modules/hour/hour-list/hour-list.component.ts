@@ -36,7 +36,7 @@ export class HourListComponent implements OnInit {
     this.loadHour(); // Cargar la lista de dias al iniciar el componente
   }
 
-  // Método para cargar la lista de pacientes desde el servicio
+  // Método para cargar la lista de horas desde el servicio
   loadHour() {
     this.hourService.listHour().subscribe(
       (response: any) => {

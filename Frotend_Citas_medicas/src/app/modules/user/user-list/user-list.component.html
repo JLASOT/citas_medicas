@@ -4,7 +4,7 @@
   <div class="content">
     <app-sidebar></app-sidebar>
 <div class="card" style="margin-top: 10px; margin-bottom: 10px; width: 83%;">
- <p-card>
+
 <p-toolbar styleClass="mb-4 gap-2">
   <ng-template pTemplate="left">
     <button pButton pRipple label="New" routerLink="/user/register" icon="pi pi-plus"
@@ -25,10 +25,10 @@
 </p-toolbar>
 
 
-<p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="users" dataKey="id" [rowHover]="true"
+<p-table [style]="{'padding': '2px', 'background-color':'#e9ecef'}" #dt [value]="users" dataKey="id" [rowHover]="true"
   [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
   currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas" [filterDelay]="0"
-  [scrollable]="true" scrollHeight="380px"
+  [scrollable]="true" scrollHeight="390px"
   
   [globalFilterFields]="['name', 'surname','rol','email','phone','Specialitie.name']">
 
@@ -96,7 +96,7 @@
       en total hay {{ users ? users.length : 0 }} Usuarios.</div>
 </ng-template>
 </p-table>
-</p-card>
+
 </div>
 
 <!-- Detalles del paciente seleccionado -->

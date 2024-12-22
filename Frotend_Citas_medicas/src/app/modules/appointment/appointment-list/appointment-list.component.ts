@@ -36,6 +36,13 @@ export class AppointmentListComponent implements OnInit {
 
   // Método para cargar la lista de pacientes desde el servicio
   loadAppointment() {
+
+     // Obtener el usuario actual desde localStorage
+  const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+  const doctorId = currentUser?.id; // Asumiendo que el ID del médico está en `id`
+
+
+
     this.appointmentService.listAppointment().subscribe(
       (response: any) => {
         console.log('Users recibidos:', response.appointments); // Verifica los pacientes dentro de 'tutor'
@@ -52,6 +59,15 @@ export class AppointmentListComponent implements OnInit {
           return appointment;
         }); */
 
+          // Verificar si el usuario tiene rol de "medico" y filtrar las citas por el ID del médico
+      if (currentUser?.rol === 'medico' && doctorId) {
+        this.appointments = this.appointments.filter((appointment: any) => {
+          // Filtrar por el ID del médico
+          return appointment.User.id === doctorId; // Asegúrate de que `appointment.User.id` tenga el ID del médico
+        });
+      }
+
+      
         // Modificar las citas para cambiar el formato de la fecha
       this.appointments = this.appointments.map((appointment: any) => {
         // Convierte la fecha al formato 'dd/mm/yyyy'
@@ -146,7 +162,7 @@ export class AppointmentListComponent implements OnInit {
   }
 
   // Método para exportar la tabla a PDF
- exportPdf() {
+ /* exportPdf() {
   const doc = new jsPDF();
 
   // Agregar título
@@ -188,6 +204,66 @@ export class AppointmentListComponent implements OnInit {
 
   // Guardar el archivo PDF
   doc.save('appointment.pdf');
+} */
+
+exportPdf() {
+  const doc = new jsPDF();
+  // Añadir un título al
+  doc.setFontSize(18);
+  doc.text('Lista de Citas Médicas', 14, 22);
+
+  // Añadir la fecha actual al PDF
+  const date = new Date();
+  doc.setFontSize(11);
+  doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+
+  (doc as any).autoTable({
+    head: [['Fecha', 'Estado', 'Paciente', 'Especialidad', 'Médico', 'Día y Hora']],
+    body: this.appointments.map((appointment) => [
+      appointment.dateAppointment,
+      this.getStateLabel(appointment.stateAppointment),
+      `${appointment.Patient.name} ${appointment.Patient.surname}`,
+      appointment.Specialitie.name,
+      `${appointment.User.name} ${appointment.User.surname}`,
+      `${appointment.DayHour.Day.name} ${appointment.DayHour.Hour.name}`
+    ]),
+    startY: 40, // Posición donde empezará la tabla
+    theme: 'striped', // Tema de la tabla
+    headStyles: { fillColor: [22, 160, 133] },
+    // Color del encabezado
+    styles: { fontSize: 10, cellPadding: 3 }, // Estilo de las celdas
+    alternateRowStyles: { fillColor: [240, 240, 240] }, // Color de las filas alternadas
+  });
+
+  doc.save('Citas_Médicas.pdf');
+}
+
+printPdf() {
+  const doc = new jsPDF();
+  doc.setFontSize(18);
+  doc.text('Lista de Citas Médicas', 14, 22);
+  const date = new Date();
+  doc.setFontSize(11);
+  doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+  const options = {
+    head: [['Fecha', 'Estado', 'Paciente', 'Especialidad', 'Médico', 'Día y Hora']],
+    body: this.appointments.map((appointment) => [
+      appointment.dateAppointment,
+      this.getStateLabel(appointment.stateAppointment),
+      `${appointment.Patient.name} ${appointment.Patient.surname}`,
+      appointment.Specialitie.name,
+      `${appointment.User.name} ${appointment.User.surname}`,
+      `${appointment.DayHour.Day.name} ${appointment.DayHour.Hour.name}`
+    ]),
+    startY: 40,
+    theme: 'striped',
+    headStyles: { fillColor: [22, 160, 133] },
+    styles: { fontSize: 10, cellPadding: 3 },
+    alternateRowStyles: { fillColor: [240, 240, 240] },
+  };
+  (doc as any).autoTable(options);
+  doc.autoPrint();
+  window.open(doc.output('bloburl'), '_blank');
 }
 
 

@@ -18,7 +18,7 @@
         </ng-template>
   
       <ng-template pTemplate="right">
-         <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+        <button pButton pRipple label="Print" icon="pi pi-print" (click)="printPdf()" class="p-button-help"></button>
       </ng-template>
   </p-toolbar>
     <p-table [scrollable]="true" scrollHeight="400px"  [style]="{'padding': '20px', 'background-color':'#e9ecef'}"
@@ -33,6 +33,8 @@
       [paginator]="true"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
       [filterDelay]="0"
+      [scrollable]="true" 
+      scrollHeight="380px"
       [globalFilterFields]="['name', 'surname', 'email', 'phone']"
     >
   
@@ -58,13 +60,14 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="ci">CI <p-sortIcon field="ci"></p-sortIcon></th>
-          <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="name" style="min-width: 9rem;">Nombre <p-sortIcon field="name"></p-sortIcon></th>
           <th pSortableColumn="surname">Apellido <p-sortIcon field="surname"></p-sortIcon></th>
-          <th pSortableColumn="edad">Edad <p-sortIcon field="edad"></p-sortIcon></th>
+          <th pSortableColumn="edad" style="min-width: 7rem;">Edad <p-sortIcon field="edad"></p-sortIcon></th>
           <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
-          <th pSortableColumn="phone">Teléfono <p-sortIcon field="phone"></p-sortIcon></th>
-          <th pSortableColumn="blood_type">Tipo de Sangre <p-sortIcon field="blood_type"></p-sortIcon></th>
-          <th>Acciones</th>
+          <th pSortableColumn="phone" style="min-width: 9rem;">Teléfono <p-sortIcon field="phone"></p-sortIcon></th>
+          <th pSortableColumn="blood_type" style="min-width: 12rem;">Tipo de Sangre <p-sortIcon field="blood_type"></p-sortIcon></th>
+          <th pSortableColumn="talla" style="min-width: 8rem;">Estatura<p-sortIcon field="talla"></p-sortIcon></th>
+          <th style="min-width: 9rem;">Acciones</th>
         </tr>
       </ng-template>
   
@@ -77,6 +80,7 @@
           <td>{{ patient.email }}</td>
           <td>{{ patient.phone }}</td>
           <td>{{ patient.blood_type }}</td>
+          <td>{{ patient.talla }}</td>
           <td>
             <p-button 
                         icon="pi pi-pencil" 

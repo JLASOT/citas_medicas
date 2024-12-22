@@ -99,7 +99,7 @@ export class SpecialitieListComponent implements OnInit {
   }
 
   // Método para exportar la tabla a PDF
-  exportPdf() {
+ /*  exportPdf() {
     const doc = new jsPDF();
     (doc as any).autoTable({
       head: [
@@ -116,7 +116,65 @@ export class SpecialitieListComponent implements OnInit {
       ]),
     });
     doc.save('specialitie.pdf');
-  }
+  } */
+
+    exportPdf() {
+      const doc = new jsPDF();
+      // Añadir un título al
+      doc.setFontSize(18);
+      doc.text('Lista de Especialidades', 14, 22);
+  
+      // Añadir la fecha actual al PDF
+      const date = new Date();
+      doc.setFontSize(11);
+      doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+  
+      (doc as any).autoTable({
+        head: [
+          ['Especialidad', 'PTECIO', 'DESCRIPCION'],
+        ],
+        body: this.specialitie.map((specialitie) => [
+          specialitie.name,
+          specialitie.price,
+          specialitie.description,
+        ]),
+        startY: 40, // Posición donde empezará la tabla
+        theme: 'striped', // Tema de la tabla
+        headStyles: { fillColor: [22, 160, 133] },
+        // Color del encabezado
+        styles: { fontSize: 10, cellPadding: 3 }, // Estilo de las celdas
+        alternateRowStyles: { fillColor: [240, 240, 240] }, // Color de las filas alternadas
+      });
+  
+      doc.save('especialidades.pdf');
+    }
+
+    printPdf() {
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text('Lista de Especialidades', 14, 22);
+      const date = new Date();
+      doc.setFontSize(11);
+      doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+      const options = {
+        head: [
+          ['Especialidad', 'PTECIO', 'DESCRIPCION'],
+        ],
+        body: this.specialitie.map((specialitie) => [
+          specialitie.name,
+          specialitie.price,
+          specialitie.description,
+        ]),
+        startY: 40,
+        theme: 'striped',
+        headStyles: { fillColor: [22, 160, 133] },
+        styles: { fontSize: 10, cellPadding: 3 },
+        alternateRowStyles: { fillColor: [240, 240, 240] },
+      };
+      (doc as any).autoTable(options);
+      doc.autoPrint();
+      window.open(doc.output('bloburl'), '_blank');
+    }
 
   // Método para exportar la tabla a Excel
   exportExcel() {

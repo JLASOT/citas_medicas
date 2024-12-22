@@ -12,6 +12,7 @@ const routes: Routes = [
     component: SpecialitieComponent,
     children:[
       {
+        canActivate:[adminGuard],
         path:'lista',
         component: SpecialitieListComponent
       },
@@ -21,6 +22,7 @@ const routes: Routes = [
         component: SpecialitieAddComponent
       },
       {
+        canActivate:[adminGuard],
         path:'edit/:id',
         component: SpecialitieEditComponent
       },

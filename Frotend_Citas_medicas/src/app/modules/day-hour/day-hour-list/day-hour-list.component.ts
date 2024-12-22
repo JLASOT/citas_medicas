@@ -103,14 +103,74 @@ export class DayHourListComponent implements OnInit {
   }
 
   // Método para exportar la tabla a PDF
-  exportPdf() {
+/*   exportPdf() {
     const doc = new jsPDF();
     (doc as any).autoTable({
-      head: [['Nombre']],
-      body: this.dayHour.map((dayHour) => [dayHour.name]),
+      head: [['Medico','Dia','Horario']],
+      body: this.dayHour.map((dayHour) => [ 
+        dayHour.User ? `${dayHour.User.name} ${dayHour.User.surname}` : 'Sin médico',
+        dayHour.Day ? dayHour.Day.name  : 'Sin dia',
+        dayHour.Hour ? dayHour.Hour.name  : 'Sin horas',
+      ]),
     });
     doc.save('day.pdf');
-  }
+  } */
+
+    // Método para exportar la tabla a PDF
+    exportPdf() {
+      const doc = new jsPDF();
+      // Añadir un título al
+      doc.setFontSize(18);
+      doc.text('Lista de Horatio Medicos', 14, 22);
+  
+      // Añadir la fecha actual al PDF
+      const date = new Date();
+      doc.setFontSize(11);
+      doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+  
+      (doc as any).autoTable({
+        head: [['Medico','Dia','Horario']],
+      body: this.dayHour.map((dayHour) => [ 
+        dayHour.User ? `${dayHour.User.name} ${dayHour.User.surname}` : 'Sin médico',
+        dayHour.Day ? dayHour.Day.name  : 'Sin dia',
+        dayHour.Hour ? dayHour.Hour.name  : 'Sin horas',
+      ]),
+        startY: 40, // Posición donde empezará la tabla
+        theme: 'striped', // Tema de la tabla
+        headStyles: { fillColor: [22, 160, 133] },
+        // Color del encabezado
+        styles: { fontSize: 10, cellPadding: 3 }, // Estilo de las celdas
+        alternateRowStyles: { fillColor: [240, 240, 240] }, // Color de las filas alternadas
+      });
+  
+      doc.save('Horario_Medicos.pdf');
+    }
+
+    printPdf() {
+        const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text('Lista de Horario Medico', 14, 22);
+        const date = new Date();
+        doc.setFontSize(11);
+        doc.text(`Fecha: ${date.toLocaleDateString()}`, 14, 32);
+        const options = {
+          head: [['Medico','Dia','Horario']],
+          body: this.dayHour.map((dayHour) => [ 
+            dayHour.User ? `${dayHour.User.name} ${dayHour.User.surname}` : 'Sin médico',
+            dayHour.Day ? dayHour.Day.name  : 'Sin dia',
+            dayHour.Hour ? dayHour.Hour.name  : 'Sin horas',
+          ]),
+          startY: 40,
+          theme: 'striped',
+          headStyles: { fillColor: [22, 160, 133] },
+          styles: { fontSize: 10, cellPadding: 3 },
+          alternateRowStyles: { fillColor: [240, 240, 240] },
+        };
+        (doc as any).autoTable(options);
+        doc.autoPrint();
+        window.open(doc.output('bloburl'), '_blank');
+      }
+    
 
   // Método para exportar la tabla a Excel
   exportExcel() {
@@ -124,6 +184,8 @@ export class DayHourListComponent implements OnInit {
       this.saveAsExcelFile(excelBuffer, 'day');
     });
   }
+
+
 
   saveAsExcelFile(buffer: any, fileName: string): void {
     const EXCEL_TYPE =

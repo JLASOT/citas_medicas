@@ -8,8 +8,11 @@ export default {
             });
         }
         const response = await token.decode(req.headers.token);
+        
+        console.log('Token decodificado:', response); // Aquí logueamos el token decodificado
+    
         if(response){
-            if(response.rol == 'medico' || response.rol == 'admin'){
+            if(response.rol == 'medico' || response.rol == 'admin' || response.rol == 'enfermera'){
                 next()
             }else{
                 res.status(403).send({
@@ -29,10 +32,12 @@ export default {
             });
         }
         const response = await token.decode(req.headers.token);
+        console.log('Token decodificado:', response); // Verifica el contenido del token decodificado
+
         //console.log('Decodificación de token:', response); // Verifica el contenido del token decodificado
         
         if(response){
-            if(response.rol == 'admin'){
+            if(response.rol == 'admin'/* || response.rol== 'medico' || response.rol == 'enfermera' */){
                 console.log('Usuario es administrador');
                 next()
             }else{

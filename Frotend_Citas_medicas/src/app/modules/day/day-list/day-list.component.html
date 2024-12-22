@@ -2,6 +2,8 @@
     <p-table [style]="{'padding': '20px', 'background-color':'#e9ecef'}" #dt [value]="day" dataKey="id"
       [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
       [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+      [scrollable]="true" 
+      scrollHeight="425px"
       [filterDelay]="0" [globalFilterFields]="['name', 'description']">
   
       <ng-template pTemplate="caption">

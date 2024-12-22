@@ -36,13 +36,13 @@ export const routes:Routes =[
     loadChildren:() => import("./modules/tutor/tutor.module").then(m => m.TutorModule),
   },
   {
-    canActivate: [authGuard],
+    canActivate: [authGuard,adminGuard],
     path:'user',
     loadChildren:() => import("./modules/user/user.module").then(m => m.UserModule),
   },
 // este es de la tabla dia
   {
-    canActivate: [authGuard],
+    canActivate: [authGuard,adminGuard],
     path:'days',
     loadChildren:() => import("./modules/day/day.module").then(m => m.DayModule),
   },
